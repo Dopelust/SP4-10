@@ -130,7 +130,7 @@ Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, flo
 	return entity;
 }
 
-Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector4 & color)
+Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector4 & color, int layer)
 {
 	Entity* entity = new Entity("Graphic");
 	entity->transform->SetPosition(position.x, position.y);
@@ -138,7 +138,8 @@ Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & 
 
 	entity->AddComponent<Graphic2D>()->SetTexture(texture);
 	entity->GetComponent<Graphic2D>()->SetColor(color.x, color.y, color.z, color.w);
-
+	entity->GetComponent<Graphic2D>()->SetLayer(layer);
+	
 	return entity;
 }
 
@@ -172,11 +173,19 @@ Entity * EntityFactory::CreateTextGUI(const Vector2 & position, const char * tex
 
 Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
+	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
 	Vector3 index = scene->grid->GetIndex(entity->transform->GetPosition());
 
 	entity->AddComponent<TowerController>()->index = Vector2(index.x, index.y);
 	entity->GetComponent<TowerController>()->Init(type);
+
+	if (type == "archer")
+	{
+		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Archer"));
+		entity->transform->Size() *= 1.75f;
+	}
+
+	entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 
 	Generate(scene->root, entity);
 	return entity;

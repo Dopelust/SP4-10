@@ -25,6 +25,8 @@ void TowerPlacerGUI::Init(Entity* entity)
 }
 
 #include "../../../Tower/TowerDatabase.h"
+#include "../Graphic2D.h"
+#include "../../../../Assets.h"
 
 void TowerPlacerGUI::Update(double dt)
 {
@@ -34,6 +36,10 @@ void TowerPlacerGUI::Update(double dt)
 		{
 			placer->type = b.first;
 			placer->ShowInfo(&TowerDatabase::GetData(placer->type.c_str())["INITIAL"]);
+
+			placer->graphic->SetTexture(Resource.GetTexture("Archer"));
+			placer->transform->SetSize(TileWidth * 1.75f, TileHeight * 1.75f);
+
 			break;
 		}
 	}

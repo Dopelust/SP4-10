@@ -33,6 +33,8 @@ bool TowerPlacer::IsPlacing()
 	return !type.empty();
 }
 
+#include "StageManager.h"
+
 void TowerPlacer::Update(double dt)
 {
 	Tile* tile = selector->GetSelection();
@@ -54,22 +56,25 @@ void TowerPlacer::Update(double dt)
 			}
 			else
 			{
-				if (!tile->index)
+				if (!tile->index && !GetTower(transform->GetPosition()))
 				{
-					graphic->SetColor(0, 1, 0, 0.5f);
+					graphic->SetColor(0.5f, 1, 0.5f, 0.5f);
 
-					if (Input.IsMousePress(0) && !GetTower(transform->GetPosition()))
+					if (Input.IsMousePress(0))
 					{
 						Input.ApplyMouseBuffer(0);
 
 						towerMap[transform->GetPosition()] = EntityFactory::GenerateTower(transform->GetPosition().GetVector2(), type);
 						type = "";
 						ShowInfo(NULL);
+
+						Vector3 index = Scene::scene->grid->GetIndex(transform->GetPosition());
+						stage->AddObstruction(index.x, index.y);
 					}
 				}
 				else
 				{
-					graphic->SetColor(1, 0, 0, 0.5f);
+					graphic->SetColor(1, 0.2f, 0.2f, 0.5f);
 				}
 
 				ShowIndicator(true);
@@ -80,7 +85,7 @@ void TowerPlacer::Update(double dt)
 		ShowIndicator(false);
 }
 
-void TowerPlacer::ShowIndicator(bool show)
+void TowerPlacer::ShowIndicator(bool show, bool turret)
 {
 	graphic->SetActive(show);
 	range->SetActive(show);
@@ -88,6 +93,11 @@ void TowerPlacer::ShowIndicator(bool show)
 	if (show)
 	{
 		transform->Position() = selector->transform->GetPosition();
+	}
+
+	if (turret)
+	{
+		graphic->SetActive(false);
 	}
 }
 

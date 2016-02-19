@@ -10,6 +10,7 @@ public:
 	Graphic2D();
 	~Graphic2D();
 
+	void SetLayer(int layer);
 	void SetTexture(Texture* texture);
 
 	void SetUV(float u1, float v1, float u2, float v2);
@@ -23,6 +24,7 @@ protected:
 	Texture* texture;
 	Vector4 uv;
 	Vector4 color;
+	int layer;
 
 	void Draw(const Mtx44& parent);
 };

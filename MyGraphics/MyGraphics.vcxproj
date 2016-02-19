@@ -163,6 +163,7 @@
     <ClInclude Include="Source\Assets.h" />
     <ClInclude Include="Source\GBuffer.h" />
     <ClInclude Include="Source\MenuState.h" />
+    <ClInclude Include="Source\MeshLayer.h" />
     <ClInclude Include="Source\PlayState.h" />
     <ClInclude Include="Source\Scene\AStar\AStar.h" />
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h" />

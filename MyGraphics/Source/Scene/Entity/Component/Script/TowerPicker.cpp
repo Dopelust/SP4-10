@@ -41,6 +41,9 @@ void TowerPicker::Update(double dt)
 
 			if (tile)
 			{
+				if (tower)
+					tower->GetComponent<Graphic2D>()->SetColor(1, 1, 1, 1);
+
 				tower = placer->GetTower(placer->selector->transform->GetPosition());
 
 				if (!tower)
@@ -52,12 +55,18 @@ void TowerPicker::Update(double dt)
 		}
 	}
 	else
+	{
+		if (tower)
+			tower->GetComponent<Graphic2D>()->SetColor(1, 1, 1, 1);
+
 		tower = NULL;
+	}
 
 	if (tower)
 	{
-		placer->ShowIndicator(true);
+		placer->ShowIndicator(true, true);
 		placer->ShowInfo(tower->GetComponent<TowerController>()->GetData());
+		tower->GetComponent<Graphic2D>()->SetColor(2,2,2,1);
 
 		transform->Position() = tower->transform->GetPosition();
 	}

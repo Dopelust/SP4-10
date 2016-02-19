@@ -72,6 +72,8 @@ void Assets::Init()
 	mesh["sphere"] = MeshBuilder::GenerateSphere(Vector3(1, 1, 1), 20, 20, 1);
 
 	//Texture
+	texture["Occlusion"] = new Texture("Assets//occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Archer"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Circle"] = new Texture("Assets//circle.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Range"] = new Texture("Assets//range_indicator.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
@@ -87,28 +89,4 @@ void Assets::Init()
 		s->SetUV(uv);
 		s->SetTexture(texture["Tileset"]);
 	}
-
-	texture["Girl"] = new Texture("Assets//girl.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	texture["Girl"]->MaxAnisotropy();
-
-	sprite["Girl"] = new Spritesheet();
-	animation["Girl"] = new Animation();
-	animator["Girl"] = new Animator();
-
-	for (int i = 0; i < 4; ++i)
-	{
-		Sprite* s = sprite["Girl"]->AddSprite();
-		Vector4 uv = Texture::GetUV(i, 4);
-		uv.y = 0;
-		uv.w = 1;
-
-		s->SetUV(uv);
-		s->SetTexture(texture["Girl"]);
-	}
-
-	for (int i = 0; i < 4; ++i)
-		animation["Girl"]->AddFrame(sprite["Girl"]->GetSprite(i));
-	animation["Girl"]->SetFramerate(0.1f);
-
-	animator["Girl"]->AddAnimation("Move", animation["Girl"]);
 }

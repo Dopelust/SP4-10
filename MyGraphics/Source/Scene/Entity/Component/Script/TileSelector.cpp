@@ -31,11 +31,11 @@ void TileSelector::Init(Entity* entity)
 
 void TileSelector::Update(double dt)
 {
-	Vector3 index = Scene::scene->grid->GetIndex(Scene::scene->camera.position + Input.GetCursorPos().GetVector3() + Vector3(TileWidth * 0.5f, TileHeight * 0.5f));
-	transform->Position() = (index - Vector3(0.5f, 0.5f)) * Vector2(TileWidth, TileHeight).GetVector3();
+	Vector3 index = Scene::scene->grid->GetIndex(Scene::scene->camera.position + Input.GetCursorPos().GetVector3());
+	transform->Position() = (index + Vector3(0.5f, 0.5f)) * Vector2(TileWidth, TileHeight).GetVector3();
 
 	if (Canvas.GetFocus())
 		tile = NULL;
 	else
-		tile = Scene::scene->grid->GetTile(index.x - 1, index.y - 1);
+		tile = Scene::scene->grid->GetTile(index.x, index.y);
 }

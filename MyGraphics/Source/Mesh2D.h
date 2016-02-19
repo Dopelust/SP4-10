@@ -6,7 +6,7 @@
 
 #include "vertex.h"
 #include "GL\glew.h"
-#include "DrawInstance2D.h"
+#include "MeshLayer.h"
 
 using namespace::std;
 
@@ -23,7 +23,7 @@ public:
 
 	static Mesh2D& Instance();
 
-	DrawInstance2D& GetInstance(Texture* texture);
+	DrawInstance2D& GetInstance(Texture* texture, int layer = 0);
 
 private:
 	Mesh2D();
@@ -43,8 +43,7 @@ private:
 	unsigned buffer[NUM_BUFFERS];
 	unsigned indexSize;
 
-	vector<Texture*> instances;
-	map<Texture*, DrawInstance2D> instanceMap;
+	map<int, MeshLayer> layerMap;
 
 	friend DrawInstance2D;
 };

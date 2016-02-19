@@ -6,6 +6,7 @@
 #include <string>
 using namespace::std;
 
+class StageManager;
 struct Vector3;
 class Transform;
 class TowerPlacerGUI;
@@ -20,6 +21,7 @@ public:
 	TowerPlacer();
 	~TowerPlacer();
 
+	StageManager* stage;
 	TileSelector* selector;
 	TowerInfoGUI* info;
 
@@ -27,7 +29,7 @@ public:
 
 	void Init(Entity* ent);
 	void Update(double dt);
-	void ShowIndicator(bool show);
+	void ShowIndicator(bool show, bool turret = false);
 	void ShowInfo(TowerData* tower = NULL);
 
 	bool IsPlacing();

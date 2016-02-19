@@ -91,28 +91,34 @@ void Mesh2D::RenderInstances(const char* shader, bool identity)
 	Graphics.UpdateP(Resource.GetShader(shader), true);
 	Graphics.UpdateV(Resource.GetShader(shader), identity);
 
-	for (auto& i : instances)
+	for (auto& layer : layerMap)
 	{
-		if (instanceMap[i].NumInstance())
+		if (layer.second.instances.empty())
+			continue;
+
+		for (auto& i : layer.second.instances)
 		{
-			if (i)
+			if (layer.second.instanceMap[i].NumInstance())
 			{
-				i->Bind();
-				Resource.GetShader(shader)->SetUniform1i("textureEnabled", true);
+				if (i)
+				{
+					i->Bind();
+					Resource.GetShader(shader)->SetUniform1i("textureEnabled", true);
+				}
+				else
+					Resource.GetShader(shader)->SetUniform1i("textureEnabled", false);
+
+				layer.second.instanceMap[i].Bind(this);
+
+				glBindVertexArray(VAO);
+				glDrawElementsInstanced(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0, layer.second.instanceMap[i].NumInstance());
+				glBindVertexArray(0);
 			}
-			else
-				Resource.GetShader(shader)->SetUniform1i("textureEnabled", false);
-
-			instanceMap[i].Bind(this);
-
-			glBindVertexArray(VAO);
-			glDrawElementsInstanced(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0, instanceMap[i].NumInstance());
-			glBindVertexArray(0);
 		}
-	}
 
-	instances.clear();
-	instanceMap.clear();
+		layer.second.instances.clear();
+		layer.second.instanceMap.clear();
+	}
 }
 
 void Mesh2D::Render(const DrawInstance2D & instance)
@@ -130,12 +136,12 @@ Mesh2D& Mesh2D::Instance()
 	return mesh2D;
 }
 
-DrawInstance2D & Mesh2D::GetInstance(Texture * texture)
+DrawInstance2D & Mesh2D::GetInstance(Texture * texture, int layer)
 {
-	if (instanceMap.find(texture) == instanceMap.end())
-		instances.push_back(texture);
+	if (layerMap[layer].instanceMap.find(texture) == layerMap[layer].instanceMap.end())
+		layerMap[layer].instances.push_back(texture);
 	
-	return instanceMap[texture];
+	return layerMap[layer].instanceMap[texture];
 }
 
 Mesh2D::Mesh2D() : indexSize(0)

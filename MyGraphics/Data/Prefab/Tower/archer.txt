@@ -1,5 +1,5 @@
 // Stage, 	Name, 			Cost, 	Range, 	Cooldown, 	Texture, 	Projectile, 	Description
-INITIAL, 	ARCHER, 		10, 	128,	1, 		ArrowTower0, 	normalArrow, 	Shoots arrow
+INITIAL, 	ARCHER, 		10, 	128,	1, 		Archer, 	normalArrow, 	Shoots arrow
 UPGRADE1, 	TRAINEE ARCHER, 	20,	128,	1, 		ArrowTower1, 	normalArrow, 	Longer Range
 UPGRADE2, 	MASTER ARCHER, 		30, 	128,	1, 		ArrowTower2, 	normalArrow, 	Even More Range
 PATH1UPGRADE1, 	ELITE ARCHER, 		40, 	128,	1, 		ArrowTower3, 	normalArrow, 	+1 Pierce

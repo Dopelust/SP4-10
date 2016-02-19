@@ -195,7 +195,7 @@ Vector3 Grid::GetIndex(const Vector3& position)
 	pos.x /= GridWidth; pos.x *= NumberOfCellsX * NumberOfTilesX;
 	pos.y /= GridHeight; pos.y *= NumberOfCellsY * NumberOfTilesY;
 
-	return Vector3((int)(pos.x + 0.5f),  (int)(pos.y + 0.5f), (int)(pos.z + 0.5f));
+	return Vector3((int)pos.x,  (int)pos.y, (int)pos.z);
 }
 
 vector<Vector2> Grid::GetTilesWithIndex(int index)

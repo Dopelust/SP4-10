@@ -99,13 +99,15 @@ void StageManager::UpdatePathFinders()
 		for (int j = 0; j < endPoints.size(); ++j)
 		{
 			ent->GetComponent<PathFinder>()->SetEnd(endPoints[j]);
-			ent->GetComponent<PathFinder>()->CalculatePath();
-			int length = ent->GetComponent<PathFinder>()->GetPathLength();
-
-			if (length < shortestPathLength)
+			if (ent->GetComponent<PathFinder>()->CalculatePath())
 			{
-				shortestPathLength = length;
-				shortestEnd = endPoints[j];
+				int length = ent->GetComponent<PathFinder>()->GetPathLength();
+
+				if (length < shortestPathLength)
+				{
+					shortestPathLength = length;
+					shortestEnd = endPoints[j];
+				}
 			}
 		}
 
@@ -135,6 +137,7 @@ void StageManager::UpdateFreeTime(double dt)
 	if (freeTimer > freeTime)
 	{
 		state = WAVE;
+		UpdatePathFinders();
 		SpawnEnemies();
 	}
 }
@@ -198,13 +201,11 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 void StageManager::AddObstruction(int i, int j)
 {
 	tileMap[i][j] = true;
-	UpdatePathFinders();
 }
 
 void StageManager::RemoveObstruction(int i, int j)
 {
 	tileMap[i][j] = false;
-	UpdatePathFinders();
 }
 
 bool StageManager::CheckObstruction(int i, int j)

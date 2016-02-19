@@ -1,6 +1,11 @@
 #include "Graphic2D.h"
 #include "../../../Mesh2D.h"
 
+void Graphic2D::SetLayer(int layer)
+{
+	this->layer = layer;
+}
+
 void Graphic2D::SetTexture(Texture * texture)
 {
 	this->texture = texture;
@@ -33,7 +38,7 @@ Vector4& Graphic2D::GetColor()
 	return color;
 }
 
-Graphic2D::Graphic2D() : texture(NULL), color(1,1,1,1), uv(0, 0, 1, 1)
+Graphic2D::Graphic2D() : texture(NULL), color(1,1,1,1), uv(0, 0, 1, 1), layer(0)
 {
 }
 
@@ -46,5 +51,5 @@ void Graphic2D::Draw(const Mtx44 & parent)
 	Mtx44 T;
 	T.SetToTranslation(-0.5f, -0.5f, 0);
 
-	Quad.GetInstance(texture).Add(parent * T, color, uv);
+	Quad.GetInstance(texture, layer).Add(parent * T, color, uv);
 }

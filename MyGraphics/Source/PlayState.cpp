@@ -65,19 +65,20 @@ void PlayState::Init()
 		entity->transform->SetPosition(1200, 656);
 
 		TowerDatabase::Init("archer");
-		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(1, 1, 1)));
+		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Archer"), Vector4(1,1,1,1)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Archer", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("archer")["INITIAL"].cost).c_str(), 200));
 		editor->GetComponent<TowerPlacerGUI>()->AddButton("archer", child->GetComponent<Button>());
 
 		TowerDatabase::Init("water");
-		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64), Vector2(48, 48), NULL, Vector3(1, 1, 1)));
+		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Water", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("water")["INITIAL"].cost).c_str(), 200));
 		editor->GetComponent<TowerPlacerGUI>()->AddButton("water", child->GetComponent<Button>());
 
 		TowerDatabase::Init("sniper");
-		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -128), Vector2(48, 48), NULL, Vector3(1, 1, 1)));
+		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -128), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Sniper", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("sniper")["INITIAL"].cost).c_str(), 200));
 		editor->GetComponent<TowerPlacerGUI>()->AddButton("sniper", child->GetComponent<Button>());
@@ -124,6 +125,7 @@ void PlayState::Init()
 	stageManager->AddComponent<StageManager>()->LateInit("test", scene->grid, a);
 
 	scene->root->AttachChild(stageManager);
+	editor->GetComponent<TowerPlacer>()->stage = stageManager->GetComponent<StageManager>();
 
 	Resume();
 }

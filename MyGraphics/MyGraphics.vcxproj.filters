@@ -546,6 +546,9 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h">
       <Filter>Scene\Entity\Component\Script\Play</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MeshLayer.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Main.vertexshader">
