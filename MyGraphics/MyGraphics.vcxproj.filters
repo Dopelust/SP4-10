@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{458dd43e-e434-4a9a-8396-e4cc0ffb50c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shader\Post Processing">
+      <UniqueIdentifier>{7788c544-b2fd-4e4b-aab3-029f22093572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spatial Partition">
+      <UniqueIdentifier>{9dfdf2aa-3b81-4cee-afa0-c45d9b4b5123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{d6587420-2e03-4278-965c-c35d1db9e237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{43a2c8de-ebc1-40ea-9d25-fb25a137fe23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{881140b3-a322-49d4-bad8-d5f206819ade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture">
+      <UniqueIdentifier>{406db001-e159-4180-92bd-7e9400503782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Text">
+      <UniqueIdentifier>{86d11e58-e446-4de3-9dda-76d8f9569ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine">
+      <UniqueIdentifier>{59c355c9-4e79-4014-9b86-194791a3f901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader">
+      <UniqueIdentifier>{0a2ca454-e5e3-4cad-b836-d8726f14947a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\FBO">
+      <UniqueIdentifier>{30f05054-763b-447b-b25e-fa64ff965622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PostProcessing">
+      <UniqueIdentifier>{24aecaae-353c-405b-83f9-fdb43d0056f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\2D">
+      <UniqueIdentifier>{651f6b98-fc03-407c-b067-d7713b7973a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{5bea8610-4eff-432f-9bd4-a51dec368d42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity">
+      <UniqueIdentifier>{7ceb63e1-54ec-4ede-a402-06be99c1f416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component">
+      <UniqueIdentifier>{fba67ced-1748-497d-8797-c3572847902b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture\Sprite">
+      <UniqueIdentifier>{aef257e1-8561-402e-8eac-7f7bc8f141c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\GUI">
+      <UniqueIdentifier>{711e75d3-b077-48be-a31a-abf3aef3594e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script">
+      <UniqueIdentifier>{0c5d9537-0164-42b1-b255-d45a71175a5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Physics">
+      <UniqueIdentifier>{1e17f65c-85bc-4002-9680-adbaf0aefa76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Camera">
+      <UniqueIdentifier>{139fdd56-f7a3-4cb1-b6e9-943802f19cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\PostProcessing\Bloom">
+      <UniqueIdentifier>{823fef88-aff1-4f14-8eef-c38dc494eed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Mesh">
+      <UniqueIdentifier>{6876760e-ae9c-4639-86a0-71ae34b9fed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Screen">
+      <UniqueIdentifier>{35cf84ef-b77b-429a-af7e-05380056d9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{ad8a649f-d4f5-4b86-aa1b-e5371310ff7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Level Editor">
+      <UniqueIdentifier>{2b864afd-5067-49d4-b314-dbc84d49d5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play">
+      <UniqueIdentifier>{1d306ac3-a30a-4ac4-b16a-a3f9715571e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play\Tower">
+      <UniqueIdentifier>{d6a2687c-0b4e-49c5-9d12-e6a1db570003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play\Projectile">
+      <UniqueIdentifier>{6c05e849-8e8b-4bda-b2c9-f65eac537243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AStar">
+      <UniqueIdentifier>{b46f8394-c4c9-4521-916f-908cb74593df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play\Enemy">
+      <UniqueIdentifier>{e28d01ae-ef9e-4d72-964c-d33325b60dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play\Player">
+      <UniqueIdentifier>{a4744aa1-6db9-4ede-8517-8f9844692e9c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Grid.cpp">
+      <Filter>Spatial Partition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cell.cpp">
+      <Filter>Spatial Partition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputHandler.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Instance.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameEngine.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shader.cpp">
+      <Filter>Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GraphicsEngine.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderManager.cpp">
+      <Filter>Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Font.cpp">
+      <Filter>Graphics\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FontManager.cpp">
+      <Filter>Graphics\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FBO.cpp">
+      <Filter>Graphics\FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PostProcess.cpp">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PostProcessor.cpp">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrawInstance2D.cpp">
+      <Filter>Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh2D.cpp">
+      <Filter>Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Component.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Transform.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Entity.cpp">
+      <Filter>Scene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Graphic2D.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\SpriteRenderer.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\TextRenderer2D.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Button.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spritesheet.cpp">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animator.cpp">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\EntityFactory.cpp">
+      <Filter>Scene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\InputField.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionQuery.cpp">
+      <Filter>Spatial Partition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Physics\BoxCollider.cpp">
+      <Filter>Scene\Entity\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Physics\RigidBody.cpp">
+      <Filter>Scene\Entity\Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadOBJ.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Toggle.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Checkbox.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Slider.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bloom.cpp">
+      <Filter>Graphics\PostProcessing\Bloom</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Camera.cpp">
+      <Filter>Scene\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Screen.cpp">
+      <Filter>App\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Assets.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\SpriteAnimator.cpp">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tile.cpp">
+      <Filter>Spatial Partition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TileSelector.cpp">
+      <Filter>Scene\Entity\Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GBuffer.cpp">
+      <Filter>Graphics\FBO</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditor.cpp">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditorGUI.cpp">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerController.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Tower\TowerDatabase.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Projectile\ProjectileDatabase.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\WorldZoomScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\AStar\AStar.cpp">
+      <Filter>AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\PathFinder.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPicker.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacer.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp">
+      <Filter>Scene\Entity\Component\Script\Play</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\GameState.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Grid.h">
+      <Filter>Spatial Partition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cell.h">
+      <Filter>Spatial Partition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputHandler.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Instance.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameEngine.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shader.h">
+      <Filter>Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderManager.h">
+      <Filter>Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GraphicsEngine.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Font.h">
+      <Filter>Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FontManager.h">
+      <Filter>Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FBO.h">
+      <Filter>Graphics\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PostProcess.h">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PostProcessor.h">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrawInstance2D.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh2D.h">
+      <Filter>Graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Component.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Transform.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Entity.h">
+      <Filter>Scene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Graphic2D.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\SpriteRenderer.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\TextRenderer2D.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Button.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animator.h">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spritesheet.h">
+      <Filter>Graphics\Texture\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\EntityFactory.h">
+      <Filter>Scene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\InputField.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GridInfo.h">
+      <Filter>Spatial Partition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionQuery.h">
+      <Filter>Spatial Partition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Physics\BoxCollider.h">
+      <Filter>Scene\Entity\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Physics\RigidBody.h">
+      <Filter>Scene\Entity\Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Collision.h">
+      <Filter>Scene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Toggle.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Checkbox.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Slider.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bloom.h">
+      <Filter>Graphics\PostProcessing\Bloom</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Camera.h">
+      <Filter>Scene\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\vertex.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadOBJ.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Screen.h">
+      <Filter>App\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestState.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\SpriteAnimator.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tile.h">
+      <Filter>Spatial Partition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TileSelector.h">
+      <Filter>Scene\Entity\Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Assets.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GBuffer.h">
+      <Filter>Graphics\FBO</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuState.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayState.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditorGUI.h">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditor.h">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerController.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Tower\TowerData.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Tower\TowerDatabase.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h">
+      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Projectile\ProjectileData.h">
+      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Projectile\ProjectileDatabase.h">
+      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Resolution.h">
+      <Filter>Scene\Entity\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\WorldZoomScript.h">
+      <Filter>Scene\Entity\Component\Script\Level Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\AStar\AStar.h">
+      <Filter>AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\PathFinder.h">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h">
+      <Filter>Scene\Entity\Component\Script\Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPicker.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacer.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h">
+      <Filter>Scene\Entity\Component\Script\Play</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\Main.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Main.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Text.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\GBuffer.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\GBuffer.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\DirLightPass.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\FXAA.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Terrain.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Gaussian.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\DoF.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Blur.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\SSAO.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Voxel.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Voxel.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\SSAOBlur.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\2D.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\2D.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Framebuffer.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Framebuffer.vertexshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\MotionBlur.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Bloom.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\Combine.fragmentshader">
+      <Filter>Shader\Post Processing</Filter>
+    </None>
+    <None Include="Shader\GBuffer2D.fragmentshader">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\GBuffer2D.vertexshader">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+#version 330 core
+
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec3 vertexNormal;
+layout(location = 3) in vec2 vertexTexCoord;
+layout (location = 4) in mat4 M;
+layout (location = 8) in vec4 color;
+layout (location = 9) in vec2 vertexTexOffset;
+
+out vec3 worldPos;
+out vec4 fragmentColor;
+out vec2 texCoord;
+out vec2 texOffset;
+
+uniform mat4 V;
+uniform mat4 P;
+
+void main()
+{
+	vec4 modelPos =  M * vec4(vertexPosition, 1);
+	vec4 modelViewPos = V * modelPos;
+	gl_Position =  P * modelViewPos;
+	worldPos = modelPos.xyz;
+
+	fragmentColor = color;
+	texCoord = vertexTexCoord;
+	texOffset  = vertexTexOffset;
+}
+

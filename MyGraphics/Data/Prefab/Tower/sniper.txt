@@ -1,0 +1,2 @@
+// Stage, 	Name, 		Cost, 	Range, 	Cooldown, 	Texture, 	Projectile, 	Description
+INITIAL, 	SNIPER,		100, 	512,	1.5, 		ArrowTower0, 	normalArrow, 	Splashes water

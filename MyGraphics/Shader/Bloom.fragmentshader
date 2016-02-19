@@ -1,0 +1,14 @@
+#version 330 core
+
+in vec2 texCoord;
+out vec4 color;
+
+uniform sampler2D colorTexture;	
+
+uniform float intensity;
+uniform float amount;
+
+void main()
+{
+	color = pow(texture2D(colorTexture, texCoord), vec4(amount, amount, amount, 1)) * intensity;
+}
