@@ -301,20 +301,14 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.cpp">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPicker.cpp">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacer.cpp">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.cpp">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp">
       <Filter>Scene\Entity\Component\Script\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerGUI.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerManager.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -531,23 +525,17 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h">
       <Filter>Scene\Entity\Component\Script\Play\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.h">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPicker.h">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacer.h">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.h">
-      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h">
       <Filter>Scene\Entity\Component\Script\Play</Filter>
     </ClInclude>
     <ClInclude Include="Source\MeshLayer.h">
       <Filter>Graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerGUI.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerManager.h">
+      <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

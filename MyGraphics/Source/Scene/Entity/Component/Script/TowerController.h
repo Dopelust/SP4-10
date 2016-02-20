@@ -39,7 +39,10 @@ public:
 	void Init(string type);
 
 	void Update(double dt);
-	bool Upgrade(bool path, int pathNo);
+
+	bool Upgrade();
+	bool IsMaxUpgrade();
+
 	bool Hover(Vector2& hoverIndex);
 	
 	Entity* owner;
@@ -47,10 +50,12 @@ public:
 	// Which index on the grid the tower is on
 	Vector2 index; 
 
-	string type, upgrade;
+	string type;
+	int upgrade;
 
 	TowerData* GetData();
 	int GetCost();
+	int GetDamage();
 	float GetCooldown();
 	int GetRange();
 	string GetProjectileType();

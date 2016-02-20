@@ -6,42 +6,58 @@
 #include <string>
 using namespace::std;
 
+class Tile;
 class StageManager;
 struct Vector3;
 class Transform;
 class TowerPlacerGUI;
 class TileSelector;
 class Graphic2D;
-class TowerInfoGUI;
+class TowerGUI;
 struct TowerData;
 
-class TowerPlacer : public Component
+class TowerManager : public Component
 {
 public:
-	TowerPlacer();
-	~TowerPlacer();
+	TowerManager();
+	~TowerManager();
 
 	StageManager* stage;
 	TileSelector* selector;
-	TowerInfoGUI* info;
+	TowerGUI* gui;
 
 	Entity* range;
 
 	void Init(Entity* ent);
 	void Update(double dt);
-	void ShowIndicator(bool show, bool turret = false);
-	void ShowInfo(TowerData* tower = NULL);
+
+	void ShowIndicator(bool shadow = true);
+	void HideIndicator();
+
+	void ShowInfo(Entity* tower);
+	void ShowInfo(string type);
+	void HideInfo();
+
+	void Unselect();
+	void Select(Entity* tower);
+	void UpgradeTower();
+
+	void SetToPlace(const char* type);
+	void CancelPlacement();
 
 	bool IsPlacing();
+	bool CanPlace(Tile* tile);
+
+	bool PlaceTower();
+
 	Entity* GetTower(const Vector3& position);
 
 private:
-	friend TowerPlacerGUI;
-
 	string type;
 
 	Transform* transform;
 	Graphic2D* graphic;
 
+	Entity* selection;
 	map<Vector3, Entity*> towerMap;
 };

@@ -62,24 +62,6 @@ vector<string> FileSystem::GetLines(string filepath)
 	return lines;
 }
 
-vector<float> FileSystem::ParseLine(const string & line, const char * ignore)
-{
-	vector<float> data;
-
-	char * dup = strdup(line.c_str());
-	char * token = strtok(dup, " [,]");
-
-	while (token != NULL)
-	{
-		data.push_back(atof(token));
-		token = strtok(NULL, " [,]");
-	}
-
-	free(dup);
-
-	return data;
-}
-
 FileSystem::FileSystem()
 {
 }

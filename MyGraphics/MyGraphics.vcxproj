@@ -101,10 +101,8 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditorGUI.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileSelector.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TowerController.cpp" />
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.cpp" />
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPicker.cpp" />
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacer.cpp" />
-    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerGUI.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\TowerManager.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\WorldZoomScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\SpriteAnimator.cpp" />
     <ClCompile Include="Source\Scene\Projectile\ProjectileDatabase.cpp" />
@@ -177,10 +175,8 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditorGUI.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileSelector.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TowerController.h" />
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerInfoGUI.h" />
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPicker.h" />
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacer.h" />
-    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerPlacerGUI.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerGUI.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\TowerManager.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\WorldZoomScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\SpriteAnimator.h" />
     <ClInclude Include="Source\Scene\Projectile\ProjectileData.h" />

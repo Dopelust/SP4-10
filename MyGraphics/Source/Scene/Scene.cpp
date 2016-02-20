@@ -144,7 +144,7 @@ bool Scene::Save()
 	return true;
 }
 
-#include "FileSystem.h"
+#include "Utility.h"
 
 bool Scene::Load()
 {
@@ -152,8 +152,8 @@ bool Scene::Load()
 
 	if (lua.Load(GetCameraSavePath().c_str()))
 	{
-		vector<float> position = FileSystem::Instance()->ParseLine(lua.GetGlobalString("CAMERA_POSITION"));
-		vector<float> orientation = FileSystem::Instance()->ParseLine(lua.GetGlobalString("CAMERA_ORIENTATION"));
+		vector<float> position = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_POSITION")));
+		vector<float> orientation = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_ORIENTATION")));
 
 		camera.position.Set(position[0], position[1], position[2]);
 		camera.orientation.Set(orientation[0], orientation[1]);

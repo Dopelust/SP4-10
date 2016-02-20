@@ -6,6 +6,7 @@
 #include "Scene\Scene.h"
 
 #include "FileSystem.h"
+#include "Utility.h"
 
 bool Grid::Save(const char* filepath)
 {
@@ -37,7 +38,7 @@ bool Grid::Load(const char* filepath)
 
 	for (int y = NumberOfTilesY - 1; y >= 0; --y)
 	{
-		vector<float>& tiles = file->ParseLine(lines[NumberOfTilesY - 1 - y], ",");
+		vector<float>& tiles = VectorStoF(ParseLine(lines[NumberOfTilesY - 1 - y], ","));
 
 		for (int x = 0; x < NumberOfTilesX; ++x)
 		{

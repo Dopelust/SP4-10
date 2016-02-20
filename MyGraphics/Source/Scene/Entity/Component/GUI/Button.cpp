@@ -16,6 +16,17 @@ Vector3 Button::GetMinCoord()
 	return transform->GetPosition() - transform->GetSize() * 0.5f;
 }
 
+Vector4 Button::GetDisabledColor()
+{
+	Vector4 color = this->color;
+
+	color.x *= 0.5f;
+	color.y *= 0.5f;
+	color.z *= 0.5f;
+
+	return color;
+}
+
 Vector4 Button::GetHoverColor()
 {
 	Vector4 color = this->color;
@@ -57,7 +68,7 @@ bool Button::IsHover()
 	return false;
 }
 
-Button::Button() : state(ButtonState::STATE_NULL)
+Button::Button() : state(ButtonState::STATE_NULL), enabled(true)
 {
 }
 
@@ -76,7 +87,10 @@ void Button::Init(Entity * ent)
 #include "Utility.h"
 void Button::Update(double dt)
 {
-	UpdateState();
+	if (enabled)
+		UpdateState();
+	else
+		state = STATE_NULL;
 }
 
 #include "../../../../SoundEngine.h"
@@ -136,4 +150,18 @@ void Button::UpdateState()
 
 		break;
 	}
+}
+
+void Button::Enable()
+{
+	enabled = true;
+
+	graphic->GetColor() = color;
+}
+
+void Button::Disable()
+{
+	enabled = false;
+
+	graphic->GetColor() = GetDisabledColor();
 }

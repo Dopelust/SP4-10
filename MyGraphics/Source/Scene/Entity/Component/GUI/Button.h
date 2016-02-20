@@ -31,12 +31,17 @@ public:
 
 	Transform* transform;
 
+	void Enable();
+	void Disable();
+
 private:
+	bool enabled;
 	ButtonState state;
 
 	Graphic2D* graphic;
 	Vector4 color;
 
+	Vector4 GetDisabledColor();
 	Vector4 GetHoverColor();
 	Vector4 GetClickColor();
 };

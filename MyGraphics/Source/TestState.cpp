@@ -54,6 +54,7 @@ void TestState::Init()
 
 	scene = new Scene("Data//Scene//Test");
 	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
+	scene->camera.position.Set(0, 0, 0);
 
 	scene->root->AddComponent<WorldZoomScript>();
 

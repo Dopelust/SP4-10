@@ -11,10 +11,13 @@ class TowerDatabase
 public:
 	// Parse data file and store
 	static bool Init(const char * type);
-	static map<string, TowerData>& GetData(const char* type);
+	static void Exit();
+
+	static vector<TowerData>& GetData(const char* type);
+	static int GetMaxUpgrade(const char* type);
 
 private:
-	static map<string, map<string, TowerData>> towerData;
+	static map<string, vector<TowerData>> towerData;
 
 	TowerDatabase();
 	~TowerDatabase();

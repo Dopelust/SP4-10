@@ -16,6 +16,7 @@ struct TowerData
 	cost(-1),
 	range(-1),
 	cooldown(-1),
+	damage(-1),
 	textureName(""),
 	projectileName(""),
 	description("")
@@ -23,10 +24,11 @@ struct TowerData
 
 	}
 
-	inline void Set(string name, int cost, int range, float cooldown, string textureName, string projectileName, string description)
+	inline void Set(string name, int cost, int damage, int range, float cooldown, string textureName, string projectileName, string description)
 	{
 		this->name = name;
 		this->cost = cost;
+		this->damage = damage;
 		this->range = range;
 		this->cooldown = cooldown;
 		this->textureName = textureName;
@@ -37,6 +39,7 @@ struct TowerData
 	string name = "";
 	int cost = -1;
 	int range = -1;
+	int damage = -1;
 	float cooldown = -1;
 	string textureName = ""; 
 	string projectileName = "";

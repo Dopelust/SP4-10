@@ -30,10 +30,8 @@ PlayState::~PlayState()
 #include "Scene\Tower\TowerDatabase.h"
 
 #include "Scene\Entity\Component\Script\TileSelector.h"
-#include "Scene\Entity\Component\Script\TowerPlacer.h"
-#include "Scene\Entity\Component\Script\TowerPicker.h"
-#include "Scene\Entity\Component\Script\TowerPlacerGUI.h"
-#include "Scene\Entity\Component\Script\TowerInfoGUI.h"
+#include "Scene\Entity\Component\Script\TowerManager.h"
+#include "Scene\Entity\Component\Script\TowerGUI.h"
 #include "Scene\Entity\Component\TextRenderer2D.h"
 #include "Scene\Entity\Component\Script\StageManager.h"
 
@@ -53,12 +51,11 @@ void PlayState::Init()
 	menu = entity->GetComponent<Button>();
 
 	Entity* editor = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.2f)));
-	editor->AddComponent<TowerPlacer>()->range = editor->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(), Resource.GetTexture("Range"), Vector4(1, 1, 1, 0.33f)));
-	editor->AddComponent<TowerPlacerGUI>();
-	editor->AddComponent<TowerPicker>();
+	editor->AddComponent<TowerManager>()->range = editor->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(), Resource.GetTexture("Range"), Vector4(1, 1, 1, 0.33f)));
+	editor->AddComponent<TowerGUI>();
 
 	Entity* selector = scene->root->AddChild("Selector");
-	editor->GetComponent<TowerPlacer>()->selector = selector->AddComponent<TileSelector>();
+	editor->GetComponent<TowerManager>()->selector = selector->AddComponent<TileSelector>();
 
 	{
 		entity = scene->canvas->AddChild("Hotbar");
@@ -68,54 +65,64 @@ void PlayState::Init()
 		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Archer"), Vector4(1,1,1,1)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Archer", 128));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("archer")["INITIAL"].cost).c_str(), 200));
-		editor->GetComponent<TowerPlacerGUI>()->AddButton("archer", child->GetComponent<Button>());
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("archer")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("archer", child->GetComponent<Button>());
 
 		TowerDatabase::Init("water");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Water", 128));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("water")["INITIAL"].cost).c_str(), 200));
-		editor->GetComponent<TowerPlacerGUI>()->AddButton("water", child->GetComponent<Button>());
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("water")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("water", child->GetComponent<Button>());
 
 		TowerDatabase::Init("sniper");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -128), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Sniper", 128));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("sniper")["INITIAL"].cost).c_str(), 200));
-		editor->GetComponent<TowerPlacerGUI>()->AddButton("sniper", child->GetComponent<Button>());
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("sniper")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("sniper", child->GetComponent<Button>());
 	}
 
 	{
 		entity = scene->canvas->AddChild("Info");
 		entity->transform->SetPosition(1050, 350);
-		entity->AddComponent<TowerInfoGUI>();
 
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, 0), "Damage:", 150, false));
-			child->GetComponent<TextRenderer2D>()->SetColor(1, 0, 0);
-
-			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
-			child->GetComponent<TextRenderer2D>()->SetColor(1, 0, 0);
-
-			entity->GetComponent<TowerInfoGUI>()->damage = child->GetComponent<TextRenderer2D>();
- 		}
-		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -32), "Range:", 150, false));
-			child->GetComponent<TextRenderer2D>()->SetColor(0.25f, 0.25f, 1);
-
-			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
-			child->GetComponent<TextRenderer2D>()->SetColor(0.25f, 0.25f, 1);
-
-			entity->GetComponent<TowerInfoGUI>()->range = child->GetComponent<TextRenderer2D>();
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, 0), "", 256, false));
+			editor->GetComponent<TowerGUI>()->name = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -64), "Speed:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -32), "Damage:", 150, false));
+			child->GetComponent<TextRenderer2D>()->SetColor(1, 0, 0);
+
+			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
+			child->GetComponent<TextRenderer2D>()->SetColor(1, 0, 0);
+
+			editor->GetComponent<TowerGUI>()->damage = child->GetComponent<TextRenderer2D>();
+ 		}
+		{
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -64), "Range:", 150, false));
+			child->GetComponent<TextRenderer2D>()->SetColor(0.25f, 0.25f, 1);
+
+			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
+			child->GetComponent<TextRenderer2D>()->SetColor(0.25f, 0.25f, 1);
+
+			editor->GetComponent<TowerGUI>()->range = child->GetComponent<TextRenderer2D>();
+		}
+		{
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -96), "Speed:", 150, false));
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
 
-			entity->GetComponent<TowerInfoGUI>()->cost = child->GetComponent<TextRenderer2D>();
+			editor->GetComponent<TowerGUI>()->cost = child->GetComponent<TextRenderer2D>();
+		}
+		{
+			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -150), Vector2(96, 32), NULL, Vector3(0.8f, 0.8f, 0.8f)));
+			child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, 0), "Upgrade", 150));
+
+			editor->GetComponent<TowerGUI>()->upgrade = child->GetComponent<Button>();
 		}
 	}
 
-	editor->GetComponent<TowerPlacer>()->info = entity->GetComponent<TowerInfoGUI>();
+	editor->GetComponent<TowerManager>()->gui = editor->GetComponent<TowerGUI>();
+	editor->GetComponent<TowerGUI>()->DisableUpgrades();
 
 	Entity* stageManager;
 	stageManager = new Entity();
@@ -125,7 +132,7 @@ void PlayState::Init()
 	stageManager->AddComponent<StageManager>()->LateInit("test", scene->grid, a);
 
 	scene->root->AttachChild(stageManager);
-	editor->GetComponent<TowerPlacer>()->stage = stageManager->GetComponent<StageManager>();
+	editor->GetComponent<TowerManager>()->stage = stageManager->GetComponent<StageManager>();
 
 	Resume();
 }
@@ -139,6 +146,8 @@ void PlayState::Exit()
 		delete scene;
 		scene = NULL;
 	}
+
+	TowerDatabase::Exit();
 }
 
 void PlayState::Update(float dt)

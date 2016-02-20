@@ -3,7 +3,7 @@
 #include <fstream>
 #include <istream>
 
-map<string, map<string, TowerData>> TowerDatabase::towerData;
+map<string, vector<TowerData>> TowerDatabase::towerData;
 
 TowerDatabase::TowerDatabase()
 {
@@ -16,76 +16,46 @@ TowerDatabase::~TowerDatabase()
 
 using namespace std;
 
+#include "FileSystem.h"
 #include "Utility.h"
 
 bool TowerDatabase::Init(const char * type)
 {
 	cout << "Initializing tower database" << endl;
 
-	ifstream towerDataFile(ToString("Data//Prefab//Tower//", type, ".txt").c_str());
+	vector<string>& lines = FileSystem::Instance()->GetLines(ToString("Data//Prefab//Tower//", type, ".txt"));
 
-	string line;
-	string invis;
+	if (lines.empty())
+		return false;
 
-	string name;
-	string towerName;
-	string buildCost;
-	string range;
-	string cooldown;
-	string textureName;
-	string projectileName;
-	string description;
-
-	if (towerDataFile.is_open())
+	for (auto& line : lines)
 	{
-		while (!towerDataFile.eof())
-		{
-			getline(towerDataFile, line, ' ');
+		if (line.size() > 2 && line[0] == '/' && line[1] == '/')
+			continue;
 
-			if (!(line.size() > 2 && line[0] == line[1] == '/'))
-			{
-				getline(towerDataFile, name, '\n');
+		RemoveChar(line, '	'); //Remove whitespaces
+		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
 
-				for (int i = 0; i < 7; ++i)
-				{
-					getline(towerDataFile, line, ',');
-					getline(towerDataFile, invis, '	');
+		TowerData tower;
+		tower.Set(data[1], stoi(data[2]), stoi(data[3]), stoi(data[4]), stof(data[5]), data[6], data[7], data[8]);
 
-					getline(towerDataFile, towerName, ',');
-					getline(towerDataFile, invis, '	');
-
-					getline(towerDataFile, buildCost, ',');
-					getline(towerDataFile, invis, '	');
-
-					getline(towerDataFile, range, ',');
-					getline(towerDataFile, invis, '	');
-
-					getline(towerDataFile, cooldown, ',');
-					getline(towerDataFile, invis, '	');
-					
-					getline(towerDataFile, textureName, ',');
-					getline(towerDataFile, invis, '	');
-
-					getline(towerDataFile, projectileName, ',');
-					getline(towerDataFile, invis, '	');
-
-					getline(towerDataFile, description, '\n');
-
-					TowerData tower;
-					tower.Set(towerName, stoi(buildCost), stoi(range), stof(cooldown), textureName, projectileName, description);
-					
-					towerData[type][line]= tower;
-				}
-			}
-		}
-
-		towerDataFile.close();
+		towerData[type].push_back(tower);
 	}
-	
+
 	return true;
 }
 
-map<string, TowerData>& TowerDatabase::GetData(const char* type)
+void TowerDatabase::Exit()
+{
+	return towerData.clear();
+}
+
+vector<TowerData>& TowerDatabase::GetData(const char* type)
 {
 	return towerData[type];
+}
+
+int TowerDatabase::GetMaxUpgrade(const char * type)
+{
+	return GetData(type).size() - 1;
 }

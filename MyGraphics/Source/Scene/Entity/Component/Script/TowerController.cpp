@@ -10,7 +10,7 @@ state(TowerState::SEARCHING),
 fireMode(FireMode::FIRST),
 owner(NULL),
 target(NULL),
-upgrade("INITIAL")
+upgrade(0)
 {
 }
 
@@ -70,43 +70,15 @@ void TowerController::Update(double dt)
 
 }
 
-bool TowerController::Upgrade(bool path, int pathNo)
+bool TowerController::Upgrade()
 {
-	if (path)
-	{
-		if (upgrade == "UPGRADE2")
-		{
-			if (pathNo == 1)
-			{
-				upgrade = "PATH1UPGRADE1";
-			}
-			else
-			{
-				upgrade = "PATH2UPGRADE1";
-			}
-		}
-	}
-	else
-	{
-		if (upgrade == "INITIAL")
-		{
-			upgrade = "UPGRADE1";
-		}
-		else if (upgrade == "UPGRADE1")
-		{
-			upgrade == "UPGRADE2";
-		}
-		else if (upgrade == "PATH1UPGRADE1")
-		{
-			upgrade = "PATH1UPGRADE2";
-		}
-		else
-		{
-			upgrade = "PATH2UPGRADE2";
-		}
-	}
-
+	upgrade++;
 	return true;
+}
+
+bool TowerController::IsMaxUpgrade()
+{
+	return upgrade == TowerDatabase::GetMaxUpgrade(type.c_str());
 }
 
 TowerData* TowerController::GetData()
@@ -117,6 +89,11 @@ TowerData* TowerController::GetData()
 int TowerController::GetCost()
 {
 	return GetData()->cost;
+}
+
+int TowerController::GetDamage()
+{
+	return GetData()->damage;
 }
 
 float TowerController::GetCooldown()
