@@ -91,6 +91,7 @@
     <ClCompile Include="Source\MenuState.cpp" />
     <ClCompile Include="Source\PlayState.cpp" />
     <ClCompile Include="Source\Scene\AStar\AStar.cpp" />
+    <ClCompile Include="Source\Scene\Enemy\EnemyDatabase.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PathFinder.cpp" />
@@ -164,6 +165,8 @@
     <ClInclude Include="Source\MeshLayer.h" />
     <ClInclude Include="Source\PlayState.h" />
     <ClInclude Include="Source\Scene\AStar\AStar.h" />
+    <ClInclude Include="Source\Scene\Enemy\EnemyData.h" />
+    <ClInclude Include="Source\Scene\Enemy\EnemyDatabase.h" />
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Resolution.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />

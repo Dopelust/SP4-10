@@ -37,7 +37,7 @@ public:
 	string name;
 	float speed;
 	float distance;
-	bool pierce;
+	int pierce;
 	ProjectileEffect effect;
 
 	inline void Set(string name, float speed, float distance, int pierce, ProjectileEffect effect)

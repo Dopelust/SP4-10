@@ -33,9 +33,9 @@ public:
 	static Entity* CreateTextGUI(const Vector2& position, const char* text, float size, bool alignCenter = true);
 
 	static Entity* GenerateTower(const Vector2& position, string type);
-	static Entity* GenerateProjectile(const Vector2& position, string type, const Vector2& velocity);
+	static Entity* GenerateProjectile(const Vector2& position, string type, const Vector2& velocity, float rotation = 0.f);
 	static Entity* GeneratePathFinder();
-	static Entity* GenerateEnemy(const Vector2& position, string enemyTexture, int enemyTier, float enemySpeed);
+	static Entity* GenerateEnemy(const Vector2& position, int enemyTier);
 
 	static Entity* Generate(Entity* root, Entity* entity);
 	static void Destroy(Entity* entity);

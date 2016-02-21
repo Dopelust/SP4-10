@@ -310,6 +310,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\TowerManager.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Enemy\EnemyDatabase.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -536,6 +539,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\TowerManager.h">
       <Filter>Scene\Entity\Component\Script\Play\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Enemy\EnemyData.h">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Enemy\EnemyDatabase.h">
+      <Filter>Scene\Entity\Component\Script\Play\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

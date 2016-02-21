@@ -28,6 +28,8 @@ PlayState::~PlayState()
 #include "Scene\Entity\EntityFactory.h"
 #include "Scene\Entity\Component\GUI\Button.h"
 #include "Scene\Tower\TowerDatabase.h"
+#include "Scene\Projectile\ProjectileDatabase.h"
+#include "Scene\Enemy\EnemyDatabase.h"
 
 #include "Scene\Entity\Component\Script\TileSelector.h"
 #include "Scene\Entity\Component\Script\TowerManager.h"
@@ -126,6 +128,7 @@ void PlayState::Init()
 
 	Entity* stageManager;
 	stageManager = new Entity();
+	stageManager->Rename("Stage Manager");
 	vector<int> a;
 	a.push_back(1);
 	a.push_back(2);
@@ -133,6 +136,9 @@ void PlayState::Init()
 
 	scene->root->AttachChild(stageManager);
 	editor->GetComponent<TowerManager>()->stage = stageManager->GetComponent<StageManager>();
+
+	ProjectileDatabase::Init("arrow");
+	EnemyDatabase::Init("jelly");
 
 	Resume();
 }

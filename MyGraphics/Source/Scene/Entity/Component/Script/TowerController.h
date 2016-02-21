@@ -5,9 +5,13 @@
 #include "Vector2.h"
 
 #include <string>
+#include <vector>
+
 using namespace::std;
 
-class TowerData;
+struct TowerData;
+class StageManager;
+class Entity;
 
 // Script that controls tower
 class TowerController : public Component
@@ -65,6 +69,10 @@ public:
 	float searchTimer;
 
 	Vector2 direction;
+	float rotation;
+
+	vector<Entity*> entityList;
+	StageManager* stageManager;
 
 private:
 	bool SearchForTarget();

@@ -70,7 +70,7 @@ bool TowerManager::PlaceTower()
 	towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), type);
 
 	Vector3& index = Scene::scene->grid->GetIndex(position);
-	stage->AddObstruction(index.x, index.y);
+	stage->AddObstruction((int)index.x, (int)index.y);
 
 	type = "";
 	HideInfo();
@@ -146,7 +146,7 @@ void TowerManager::ShowInfo(Entity * tower)
 	TowerData* data = tower->GetComponent<TowerController>()->GetData();
 
 	gui->ShowInfo(tower->GetComponent<TowerController>()->type.c_str(), data);
-	range->transform->SetSize(data->range * 2, data->range * 2);
+	range->transform->SetSize((float)(data->range * 2), (float)(data->range * 2));
 }
 
 void TowerManager::ShowInfo(string type)
@@ -154,7 +154,7 @@ void TowerManager::ShowInfo(string type)
 	TowerData* data = &TowerDatabase::GetData(type.c_str())[0];
 
 	gui->ShowInfo(type.c_str(), data);
-	range->transform->SetSize(data->range * 2, data->range * 2);
+	range->transform->SetSize((float)(data->range * 2), (float)(data->range * 2));
 }
 
 void TowerManager::HideInfo()

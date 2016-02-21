@@ -193,11 +193,12 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 #include "Component\Script\ProjectileController.h"
 
-Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type, const Vector2& velocity)
+Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type, const Vector2& velocity, float rotation)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
 
-	//entity->AddComponent<Projectile>()->LateInit(type, velocity.GetVector3());
+	entity->AddComponent<RigidBody>();
+	entity->AddComponent<Projectile>()->LateInit(type, velocity, rotation);
 
 	Generate(scene->root, entity);
 	return entity;
@@ -218,10 +219,10 @@ Entity* EntityFactory::GeneratePathFinder()
 
 #include "Component\Script\EnemyController.h"
 
-Entity* EntityFactory::GenerateEnemy(const Vector2& position, string enemyTexture, int enemyTier, float enemySpeed)
+Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
-	entity->AddComponent<EnemyController>()->LateInit(enemyTexture, enemyTier, enemySpeed);
+	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
 
 	Generate(scene->root, entity);
 	return entity;

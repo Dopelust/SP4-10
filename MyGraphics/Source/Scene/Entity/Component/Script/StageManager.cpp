@@ -8,7 +8,7 @@ using namespace std;
 StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
-freeTime(0)
+freeTime(5)
 {
 }
 
@@ -133,12 +133,13 @@ void StageManager::Update(double dt)
 
 void StageManager::UpdateFreeTime(double dt)
 {
-	freeTimer += dt;
+	freeTimer += (float)dt;
 	if (freeTimer > freeTime)
 	{
 		state = WAVE;
 		UpdatePathFinders();
 		SpawnEnemies();
+		freeTimer = 0;
 	}
 }
 
@@ -150,7 +151,7 @@ void StageManager::UpdateEnemies()
 		return;
 	}
 	
-	for (int i = 0; i < enemies.size(); ++i)
+	for (unsigned i = 0; i < enemies.size(); ++i)
 	{
 		if (enemies[i]->GetComponent<EnemyController>()->done)
 		{
@@ -167,26 +168,26 @@ void StageManager::UpdateEnemies()
 void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 {
 	tileMap.resize(NumberOfCellsX * NumberOfTilesX);
-	for (int i = 0; i < tileMap.size(); ++i)
+	for (unsigned i = 0; i < tileMap.size(); ++i)
 	{
 		tileMap[i].resize(NumberOfCellsY * NumberOfTilesY);
 	}
 
-	for (int i = 0; i < tileMap.size(); ++i)
+	for (unsigned i = 0; i < tileMap.size(); ++i)
 	{
-		for (int j = 0; j < tileMap[0].size(); ++j)
+		for (unsigned j = 0; j < tileMap[0].size(); ++j)
 		{
 			tileMap[i][j] = false;
 		}
 	}
 
 	// Init tileMap
-	for (int i = 0; i < NumberOfCellsX * NumberOfTilesX; ++i)
+	for (unsigned i = 0; i < NumberOfCellsX * NumberOfTilesX; ++i)
 	{
-		for (int j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
+		for (unsigned j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
 		{
 			tileMap[i][j] = false;
-			for (int k = 0; k < obstructionIndex.size(); ++k)
+			for (unsigned k = 0; k < obstructionIndex.size(); ++k)
 			{
 				if (Scene::scene->grid->GetTile(i, j)->index == obstructionIndex[k])
 				{
@@ -221,7 +222,7 @@ void StageManager::SpawnEnemies()
 	for (int i = 0; i < spawnPoints.size(); ++i)
 	{
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[i]);
-		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), "NightChanges", 1, 100.0f);
+		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), 1);
 		enemy->GetComponent<EnemyController>()->SetNode(pathFinders[i]->GetComponent<PathFinder>()->GetStart());
 
 		enemies.push_back(enemy);

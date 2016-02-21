@@ -4,13 +4,24 @@
 #include "../../../../Assets.h"
 #include "../../../Tower/TowerDatabase.h"
 #include "../../Component/Transform.h"
+#include "StageManager.h"
+#include "../../Entity.h"
+
+#include <iostream>
+
+#include "../../../Scene.h"
 
 TowerController::TowerController() :
 state(TowerState::SEARCHING),
 fireMode(FireMode::FIRST),
 owner(NULL),
 target(NULL),
-upgrade(0)
+upgrade(0),
+stageManager(NULL),
+searchTimer(0),
+firingTimer(0),
+direction(0, 0),
+rotation(0)
 {
 }
 
@@ -22,6 +33,7 @@ TowerController::~TowerController()
 void TowerController::Init(Entity* ent)
 {
 	this->owner = ent;
+	stageManager = Scene::scene->root->GetChild("Stage Manager")->GetComponent<StageManager>();
 }
 
 #include "../../../Projectile/ProjectileDatabase.h"
@@ -29,6 +41,7 @@ void TowerController::Init(Entity* ent)
 void TowerController::Init(string type)
 {
 	this->type = type;
+	stageManager = Scene::scene->root->GetChild("Stage Manager")->GetComponent<StageManager>();
 }
 
 void TowerController::Update(double dt)
@@ -40,7 +53,7 @@ void TowerController::Update(double dt)
 		case TowerState::SEARCHING:
 		{
 			searchTimer += (float)dt;
-			if (searchTimer > 0.5f && CheckTarget() == false)
+			if (searchTimer > 0.1f && CheckTarget())
 			{
 				searchTimer = 0;
 				if (SearchForTarget())
@@ -61,13 +74,14 @@ void TowerController::Update(double dt)
 			// Create projectile, set rotation
 			else if (firingTimer > GetCooldown())
 			{
+
 				firingTimer = 0;
+				Fire();
 			}
 			TargetRotation();
 		}
 		break;
 	}
-
 }
 
 bool TowerController::Upgrade()
@@ -119,33 +133,49 @@ bool TowerController::Hover(Vector2& hoverIndex)
 		return false;
 }
 
+#include "EnemyController.h"
+
 bool TowerController::SearchForTarget()
 {
-	/*
-	vector<Entity*> entityList;
-	vector<Entity*> targetsInRange;
-	
+	entityList.clear();
+	entityList = stageManager->enemies;
+
+	int range = GetData()->range;
+
 	if (fireMode == FireMode::FIRST)
 	{
+		Entity* first = NULL;
+		int highestStep = 0;
 		for (int i = 0; i < entityList.size(); ++i)
 		{
+			float distSq = (entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared();
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				currentTarget = entityList[i];
-				return true;
+				if (entityList[i]->GetComponent<EnemyController>()->steps > highestStep)
+				{
+					highestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					first = entityList[i];
+				}
 			}
 		}
+		target = first;
 	}
 	else if (fireMode == FireMode::LAST)
 	{
+		Entity* last = NULL;
+		int lowestStep = 999;
 		for (int i = entityList.size(); i > 0; --i)
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				currentTarget = entityList[i];
-				return true;
+				if (entityList[i]->GetComponent<EnemyController>()->steps < lowestStep)
+				{
+					lowestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					last = entityList[i];
+				}
 			}
 		}
+		target = last;
 	}
 	else
 	{
@@ -154,29 +184,37 @@ bool TowerController::SearchForTarget()
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				if (entityList[i]->GetComponent<Enemy>().health > mostHealth->GetComponent<Enemey>().health)
+				if (entityList[i]->GetComponent<EnemyController>()->tier > mostHealth->GetComponent<EnemyController>()->tier)
 				{
 					mostHealth = entityList[i];
 				}
 			}
 		}
-		currentTarget = mostHealth;
+		target = mostHealth;
+	}
+
+	if (target != NULL)
+	{
+		direction = (target->transform->GetPosition() - this->owner->transform->GetPosition()).GetVector2();
 		return true;
 	}
-	*/
+
 	return false;
 }
 
 bool TowerController::CheckTarget()
 {
 	if (target == NULL)
-		return true;
-	/*
-	else if (direction.LengthSquared() > range * range || currentTarget->GetComponent<Enemey>().dead)
 	{
 		return true;
 	}
-	*/
+	
+	else if (direction.LengthSquared() > GetData()->range * GetData()->range)
+	{
+		target = NULL;
+		return true;
+	}
+	
 	return false;
 }
 
@@ -187,13 +225,14 @@ void TowerController::TargetRotation()
 {
 	direction = (target->transform->GetPosition() - this->owner->transform->GetPosition()).GetVector2();
 
-	float rotation = Math::RadianToDegree(atan2(direction.y, direction.x));
-	this->owner->transform->SetRotation(0, rotation, 0);
+	rotation = (atan2(direction.y, direction.x) * 180.f / 3.14f) - 90.f;
+
+	this->owner->transform->SetRotation(0, 0, rotation);
 }
 
 #include "../../../Entity/EntityFactory.h"
 
 void TowerController::Fire()
 {
-	EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType(), direction.Normalized());
+	EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType(), direction.Normalized(), rotation);
 }

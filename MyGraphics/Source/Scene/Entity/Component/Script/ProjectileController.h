@@ -10,6 +10,7 @@ using std::string;
 class ProjectileData;
 class RigidBody;
 class TowerController;
+struct Vector2;
 
 class Projectile : public Component
 {
@@ -18,6 +19,7 @@ public:
 	~Projectile();
 
 	void Init(Entity* ent);
+	void LateInit(string type, Vector2 velocity, float rotation);
 	void Update(double dt);
 	void OnCollisionEnter(const Collision& col);
 	void SetType(const char* type);
@@ -29,7 +31,7 @@ public:
 	int GetEffect();
 	float GetSpeed();
 	float GetDistance();
-	float GetPierce();
+	int GetPierce();
 
 private:
 	Entity* owner;

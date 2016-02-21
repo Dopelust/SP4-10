@@ -1,4 +1,2 @@
-// Name, Speed, Distance, Pierce, Effect
-Arrow, 10, 10, 0, NORMAL
-
-// Projectile Effects, NORMAL, SLOW, STUN
+// Name, 	Speed, 	Distance, 	Pierce, 	Effect
+Arrow,		300,	3000,		0,		NORMAL

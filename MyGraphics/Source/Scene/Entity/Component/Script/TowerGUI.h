@@ -6,7 +6,7 @@
 using namespace::std;
 
 class Button;
-class TowerData;
+struct TowerData;
 class TowerManager;
 class TextRenderer2D;
 

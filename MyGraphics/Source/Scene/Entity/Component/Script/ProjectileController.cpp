@@ -4,6 +4,7 @@
 #include "../../../Projectile/ProjectileDatabase.h"
 #include "../../../Entity/EntityFactory.h"
 #include "../Physics/RigidBody.h"
+#include <iostream>
 
 Projectile::Projectile() :
 distTravelled(0),
@@ -21,6 +22,17 @@ void Projectile::Init(Entity* ent)
 {
 	this->owner = ent;
 	rigid = ent->GetComponent<RigidBody>();
+}
+
+#include "Vector2.h"
+
+void Projectile::LateInit(string type, Vector2 velocity, float rotation)
+{
+	this->type = type;
+
+	owner->transform->SetRotation(0, 0, rotation);
+
+	rigid->ApplyForce(velocity.GetVector3() * GetSpeed());
 }
 
 void Projectile::Update(double dt)
@@ -86,7 +98,7 @@ float Projectile::GetDistance()
 	return GetData().distance;
 }
 
-float Projectile::GetPierce()
+int Projectile::GetPierce()
 {
 	return GetData().pierce;
 }

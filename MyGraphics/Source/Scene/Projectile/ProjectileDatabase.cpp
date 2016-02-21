@@ -16,64 +16,48 @@ ProjectileDatabase::~ProjectileDatabase()
 
 using namespace std;
 
+#include "FileSystem.h"
+#include "Utility.h"
+
 bool ProjectileDatabase::Init(const char * fileData)
 {
-	cout << "Initializing Projectile database" << endl;
+	cout << "Initializing projectile database" << endl;
 
-	ifstream ProjectileDataFile(fileData);
+	vector<string>& lines = FileSystem::Instance()->GetLines(ToString("Data//Prefab//Projectile//", fileData, ".txt"));
 
-	string line;
-	string invis;
+	if (lines.empty())
+		return false;
 
-	string name;
-	string projectileName;
-	string speed;
-	string range;
-	string pierce;
-	string effect;
-
-	if (ProjectileDataFile.is_open())
+	for (auto& line : lines)
 	{
-		while (!ProjectileDataFile.eof())
+		if (line.size() > 2 && line[0] == '/' && line[1] == '/')
+			continue;
+
+		RemoveChar(line, '	'); //Remove whitespaces
+		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
+
+		ProjectileData::ProjectileEffect effect;
+		effect = ProjectileData::ProjectileEffect::NONE;
+
+		if (data[4] == "NORMAL")
 		{
-			getline(ProjectileDataFile, line, ' ');
-
-			if (!(line.size() > 2 && line[0] == line[1] == '/'))
-			{
-				getline(ProjectileDataFile, name, '\n');
-
-				getline(ProjectileDataFile, projectileName, ',');
-				getline(ProjectileDataFile, invis, ' ');
-
-				getline(ProjectileDataFile, speed, ',');
-				getline(ProjectileDataFile, invis, ' ');
-
-				getline(ProjectileDataFile, range, ',');
-				getline(ProjectileDataFile, invis, ' ');
-
-				getline(ProjectileDataFile, pierce, ',');
-				getline(ProjectileDataFile, invis, ' ');
-
-				getline(ProjectileDataFile, effect, '\n');
-				
-				ProjectileData::ProjectileEffect eff = ProjectileData::NONE;
-
-				if (effect == "NORMAL")
-					eff = ProjectileData::NORMAL;
-				else if (effect == "SLOW")
-					eff = ProjectileData::SLOW;
-				else if (effect == "STUN")
-					eff = ProjectileData::STUN;
-				
-				ProjectileData proj;
-				proj.Set(projectileName, stof(speed), stof(range), stoi(pierce), eff);
-
-				projectileData[name] = proj;
-			}
+			effect = ProjectileData::ProjectileEffect::NORMAL;
 		}
-		ProjectileDataFile.close();
+		else if (data[4] == "SLOW")
+		{
+			effect = ProjectileData::ProjectileEffect::SLOW;
+		}
+		else if (data[4] == "STUN")
+		{
+			effect = ProjectileData::ProjectileEffect::STUN;
+		}
+
+		ProjectileData projectile;
+		projectile.Set(data[0], stof(data[1]), stof(data[2]), stoi(data[3]), effect);
+
+		projectileData[fileData] = projectile;
 	}
-	
+
 	return true;
 }
 
