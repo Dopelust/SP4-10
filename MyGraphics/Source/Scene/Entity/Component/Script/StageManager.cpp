@@ -89,6 +89,7 @@ void StageManager::UpdatePathFinders()
 {
 	for (int i = 0; i < enemies.size(); ++i)
 	{
+		enemies[i]->GetComponent<PathFinder>()->SetStart(enemies[i]->GetComponent<EnemyController>()->indexPos);
 		enemies[i]->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
 		enemies[i]->GetComponent<EnemyController>()->UpdatePath();
 	}
