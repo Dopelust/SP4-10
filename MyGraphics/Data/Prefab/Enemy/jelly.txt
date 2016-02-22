@@ -1,2 +1,4 @@
 // Name, Tier, Speed, Split, Index
+NIL,	0,	0,	0,	0
 Red,	1,	100,	1,	0
+Blue,	2,	120,	1,	1

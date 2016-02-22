@@ -21,9 +21,9 @@ public:
 
 	ProjectileData() :
 		name(""),
+		pierce(0),
 		speed(0),
 		distance(0),
-		pierce(0),
 		effect(ProjectileEffect::NONE)
 	{
 
@@ -35,18 +35,22 @@ public:
 	}
 
 	string name;
+	int pierce;
 	float speed;
 	float distance;
-	int pierce;
 	ProjectileEffect effect;
 
-	inline void Set(string name, float speed, float distance, int pierce, ProjectileEffect effect)
+	inline void Init(string name, ProjectileEffect effect)
 	{
 		this->name = name;
+		this->effect = effect;
+	}
+
+	inline void Set(int pierce, float speed, float distance)
+	{
+		this->pierce = pierce;
 		this->speed = speed;
 		this->distance = distance;
-		this->pierce = pierce;
-		this->effect = effect;
 	}
 };
 

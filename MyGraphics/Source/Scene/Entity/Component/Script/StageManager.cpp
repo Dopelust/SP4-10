@@ -8,7 +8,8 @@ using namespace std;
 StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
-freeTime(5)
+freeTime(5),
+waveTimer(0)
 {
 }
 
@@ -126,7 +127,7 @@ void StageManager::Update(double dt)
 		UpdateFreeTime(dt);
 		break;
 	case WAVE:
-		UpdateEnemies();
+		UpdateWave(dt);
 		break;
 	}
 }
@@ -143,8 +144,8 @@ void StageManager::UpdateFreeTime(double dt)
 	}
 }
 
-void StageManager::UpdateEnemies()
-{
+void StageManager::UpdateWave(double dt)
+{	
 	if (enemies.empty())
 	{
 		state = FREETIME;

@@ -192,7 +192,7 @@ bool TowerController::SearchForTarget()
 		}
 		target = mostHealth;
 	}
-
+	
 	if (target != NULL)
 	{
 		direction = (target->transform->GetPosition() - this->owner->transform->GetPosition()).GetVector2();
@@ -209,7 +209,7 @@ bool TowerController::CheckTarget()
 		return true;
 	}
 	
-	else if (direction.LengthSquared() > GetData()->range * GetData()->range)
+	else if (direction.LengthSquared() > GetData()->range * GetData()->range || target->GetComponent<EnemyController>()->done)
 	{
 		target = NULL;
 		return true;
@@ -231,8 +231,10 @@ void TowerController::TargetRotation()
 }
 
 #include "../../../Entity/EntityFactory.h"
+#include "ProjectileController.h"
 
 void TowerController::Fire()
 {
-	EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType(), direction.Normalized(), rotation);
+	Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
+	proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Normalized(), rotation);
 }

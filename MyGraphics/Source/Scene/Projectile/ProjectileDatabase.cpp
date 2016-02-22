@@ -39,21 +39,21 @@ bool ProjectileDatabase::Init(const char * fileData)
 		ProjectileData::ProjectileEffect effect;
 		effect = ProjectileData::ProjectileEffect::NONE;
 
-		if (data[4] == "NORMAL")
+		if (data[1] == "NORMAL")
 		{
 			effect = ProjectileData::ProjectileEffect::NORMAL;
 		}
-		else if (data[4] == "SLOW")
+		else if (data[1] == "SLOW")
 		{
 			effect = ProjectileData::ProjectileEffect::SLOW;
 		}
-		else if (data[4] == "STUN")
+		else if (data[1] == "STUN")
 		{
 			effect = ProjectileData::ProjectileEffect::STUN;
 		}
 
 		ProjectileData projectile;
-		projectile.Set(data[0], stof(data[1]), stof(data[2]), stoi(data[3]), effect);
+		projectile.Init(data[0], effect);
 
 		projectileData[fileData] = projectile;
 	}

@@ -1,2 +1,2 @@
-// Name, 	Speed, 	Distance, 	Pierce, 	Effect
-Arrow,		300,	3000,		0,		NORMAL
+// Name,	EFFECT
+Arrow,		NORMAL

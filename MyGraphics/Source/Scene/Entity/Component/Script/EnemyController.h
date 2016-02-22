@@ -33,9 +33,13 @@ public:
 	int tier;
 
 private:
-	Entity* owner;
+	void UpdateDirection();
 
+	Entity* owner;
 	Node* moveNode;
+
+	Vector3 target;
+	Vector3 directionN;
 };
 
 #endif

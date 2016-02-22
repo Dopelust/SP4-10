@@ -8,6 +8,7 @@
 using std::string;
 
 class ProjectileData;
+class TowerData;
 class RigidBody;
 class TowerController;
 struct Vector2;
@@ -19,13 +20,16 @@ public:
 	~Projectile();
 
 	void Init(Entity* ent);
-	void LateInit(string type, Vector2 velocity, float rotation);
+	void LateInit(string type);
+	void SetProperties(TowerData *towerData, Vector2 velocity, float rotation);
 	void Update(double dt);
 	void OnCollisionEnter(const Collision& col);
 	void SetType(const char* type);
 
-	float distTravelled;
 	int pierce;
+	float speed;
+	float maxDist;
+	float distTravelled;
 
 	ProjectileData& GetData();
 	int GetEffect();

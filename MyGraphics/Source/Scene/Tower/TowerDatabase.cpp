@@ -37,7 +37,7 @@ bool TowerDatabase::Init(const char * type)
 		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
 
 		TowerData tower;
-		tower.Set(data[1], stoi(data[2]), stoi(data[3]), stoi(data[4]), stof(data[5]), data[6], data[7], data[8]);
+		tower.Set(data[1], stoi(data[2]), stoi(data[3]), stoi(data[4]), stof(data[5]), stoi(data[6]), stof(data[7]), stof(data[8]), data[9], data[10], data[11]);
 
 		towerData[type].push_back(tower);
 	}

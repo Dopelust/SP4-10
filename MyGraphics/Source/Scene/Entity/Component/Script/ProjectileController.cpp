@@ -4,11 +4,14 @@
 #include "../../../Projectile/ProjectileDatabase.h"
 #include "../../../Entity/EntityFactory.h"
 #include "../Physics/RigidBody.h"
+#include "../../../Tower/TowerData.h"
 #include <iostream>
 
 Projectile::Projectile() :
 distTravelled(0),
-pierce(0)
+pierce(0),
+speed(0),
+maxDist(0)
 {
 
 }
@@ -26,18 +29,25 @@ void Projectile::Init(Entity* ent)
 
 #include "Vector2.h"
 
-void Projectile::LateInit(string type, Vector2 velocity, float rotation)
+void Projectile::LateInit(string type)
 {
 	this->type = type;
+}
 
+void Projectile::SetProperties(TowerData *towerData, Vector2 velocity, float rotation)
+{
 	owner->transform->SetRotation(0, 0, rotation);
 
-	rigid->ApplyForce(velocity.GetVector3() * GetSpeed());
+	this->pierce = towerData->pierce;
+	this->speed = towerData->speed;
+	this->maxDist = towerData->distance;
+
+	rigid->ApplyForce(velocity.GetVector3() * speed);
 }
 
 void Projectile::Update(double dt)
 {
-	if (pierce < 0 || distTravelled > GetDistance()*GetDistance())
+	if (pierce < 0 || distTravelled > maxDist * maxDist)
 	{
 		EntityFactory::Destroy(this->owner);
 	}
@@ -48,6 +58,7 @@ void Projectile::Update(double dt)
 }
 
 #include "../../Collision.h"
+#include "EnemyController.h"
 
 void Projectile::OnCollisionEnter(const Collision& col)
 {
@@ -67,7 +78,7 @@ void Projectile::OnCollisionEnter(const Collision& col)
 	break;
 	case ProjectileData::STUN:
 	{
-		//col.entity->GetComponent<Enemy>()->stun(duration);
+		col.entity->GetComponent<EnemyController>()->Stun(0.5f);
 	}
 	break;
 	}
@@ -90,15 +101,18 @@ int Projectile::GetEffect()
 
 float Projectile::GetSpeed()
 {
-	return GetData().speed;
+	//return GetData().speed;
+	return speed;
 }
 
 float Projectile::GetDistance()
 {
-	return GetData().distance;
+	//return GetData().distance;
+	return maxDist;
 }
 
 int Projectile::GetPierce()
 {
-	return GetData().pierce;
+	//return GetData().pierce;
+	return pierce;
 }

@@ -54,7 +54,7 @@ private:
 	void UpdatePathFinders();
 	void CreatePathFinders();
 	void UpdateFreeTime(double dt);
-	void UpdateEnemies();
+	void UpdateWave(double dt);
 
 	Entity *owner;
 	string stageName;
@@ -63,6 +63,7 @@ private:
 	StageState state;
 	const float freeTime;
 	float freeTimer;
+	float waveTimer;
 
 	vector<vector<bool>> tileMap;
 };

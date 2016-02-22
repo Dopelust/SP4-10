@@ -76,6 +76,7 @@ void Assets::Init()
 	texture["Archer"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Circle"] = new Texture("Assets//circle.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Range"] = new Texture("Assets//range_indicator.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["BlueSlime"] = new Texture("Assets//blueslime1.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
 	texture["Tileset"] = new Texture("Assets//tileset.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 

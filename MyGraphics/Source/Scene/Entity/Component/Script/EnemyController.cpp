@@ -13,7 +13,9 @@ moveNode(NULL),
 steps(0),
 statusTimer(0),
 statusDuration(0),
-tier(0)
+tier(0),
+originalSpeed(0),
+movementSpeed(0)
 {
 }
 
@@ -35,8 +37,8 @@ void EnemyController::Init(Entity* ent)
 
 void EnemyController::LateInit(int enemyTier)
 {
-
-	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(enemyTexture.c_str()));
+	this->tier = enemyTier;
+	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("BlueSlime"));
 
 	originalSpeed = GetData().movementSpeed;
 	movementSpeed = originalSpeed;
@@ -69,15 +71,15 @@ void EnemyController::Update(double dt)
 
 	if (moveNode)
 	{
-		Vector3 target;
-		target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
+		//target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
 
-		owner->transform->Position() += (target - owner->transform->GetPosition()).Normalized() * movementSpeed * (float)dt;
+		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
 		if (owner->transform->GetPosition().DistSquared(target) < 1 * 1)
 		{
 			owner->transform->Position() = target;
 			moveNode = moveNode->child;
+			UpdateDirection();
 			++steps;
 		}
 	}
@@ -87,10 +89,22 @@ void EnemyController::Update(double dt)
 	}
 }
 
+void EnemyController::UpdateDirection()
+{
+	if (moveNode)
+	{
+		target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
+		directionN = (target - owner->transform->GetPosition()).Normalized();
+	}
+}
+
 void EnemyController::SetNode(Node* startNode)
 {
 	if (startNode != NULL)
+	{
 		this->moveNode = startNode->child;
+		UpdateDirection();
+	}
 }
 
 #include "../../EntityFactory.h"

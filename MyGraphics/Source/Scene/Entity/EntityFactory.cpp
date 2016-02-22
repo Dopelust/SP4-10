@@ -193,12 +193,13 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 #include "Component\Script\ProjectileController.h"
 
-Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type, const Vector2& velocity, float rotation)
+Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
 
 	entity->AddComponent<RigidBody>();
-	entity->AddComponent<Projectile>()->LateInit(type, velocity, rotation);
+	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth, TileHeight, 0);
+	entity->AddComponent<Projectile>()->LateInit(type);
 
 	Generate(scene->root, entity);
 	return entity;
@@ -223,6 +224,7 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
 	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
+	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth, TileHeight, 0);
 
 	Generate(scene->root, entity);
 	return entity;

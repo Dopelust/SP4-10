@@ -1,2 +1,2 @@
-// Stage, 	Name, 		Cost, 	Damage,	Range, 	Cooldown, 	Texture, 	Projectile, 	Description
-0,	 	WATER,		25, 	5,	64,	0.5, 		ArrowTower0, 	normalArrow, 	Splashes water
+// Stage, 	Name, 		Cost, 	Damage,	Range, 	Cooldown,	Pierce,	Speed,	Dist,	Texture, 	Projectile, 	Description
+0,	 	WATER,		25, 	5,	64,	0.5, 		0,	100,	3000,	ArrowTower0, 	normalArrow, 	Splashes water
