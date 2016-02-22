@@ -74,46 +74,23 @@ void StageManager::LoadStage(const char * stageFilePath)
 
 void StageManager::CreatePathFinders()
 {
-	for (int i = 0; i < spawnPoints.size(); ++i)
+	/*for (int i = 0; i < spawnPoints.size(); ++i)
 	{
 		Entity *entity = EntityFactory::GeneratePathFinder();
 		entity->GetComponent<PathFinder>()->UpdateMap(tileMap);
 		entity->GetComponent<PathFinder>()->SetStart(spawnPoints[i]);
 		pathFinders.push_back(entity);
-	}
+	}*/
 }
+
+#include "EnemyController.h"
 
 void StageManager::UpdatePathFinders()
 {
-	for (int i = 0; i < pathFinders.size(); ++i)
+	for (int i = 0; i < enemies.size(); ++i)
 	{
-		pathFinders[i]->GetComponent<PathFinder>()->UpdateMap(tileMap);
-	}
-
-	for (int i = 0; i < pathFinders.size(); ++i)
-	{
-		Vector2 shortestEnd;
-		int shortestPathLength = 999;
-
-		Entity* ent = pathFinders[i];
-
-		for (int j = 0; j < endPoints.size(); ++j)
-		{
-			ent->GetComponent<PathFinder>()->SetEnd(endPoints[j]);
-			if (ent->GetComponent<PathFinder>()->CalculatePath())
-			{
-				int length = ent->GetComponent<PathFinder>()->GetPathLength();
-
-				if (length < shortestPathLength)
-				{
-					shortestPathLength = length;
-					shortestEnd = endPoints[j];
-				}
-			}
-		}
-
-		ent->GetComponent<PathFinder>()->SetEnd(shortestEnd);
-		ent->GetComponent<PathFinder>()->CalculatePath();
+		enemies[i]->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
+		enemies[i]->GetComponent<EnemyController>()->UpdatePath();
 	}
 }
 
@@ -203,6 +180,7 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 void StageManager::AddObstruction(int i, int j)
 {
 	tileMap[i][j] = true;
+	UpdatePathFinders();
 }
 
 void StageManager::RemoveObstruction(int i, int j)
@@ -224,7 +202,9 @@ void StageManager::SpawnEnemies()
 	{
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[i]);
 		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), 1);
-		enemy->GetComponent<EnemyController>()->SetNode(pathFinders[i]->GetComponent<PathFinder>()->GetStart());
+		enemy->AddComponent<PathFinder>()->SetStart(spawnPoints[i]);
+		enemy->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
+		enemy->GetComponent<EnemyController>()->SetNode(enemy->GetComponent<PathFinder>()->GetStart(), i);
 
 		enemies.push_back(enemy);
 	}

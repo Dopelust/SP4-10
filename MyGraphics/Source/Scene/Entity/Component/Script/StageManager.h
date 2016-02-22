@@ -46,7 +46,7 @@ public:
 
 	vector<Vector2> spawnPoints;
 	vector<Vector2> endPoints;
-	vector<Entity*> pathFinders;
+	//vector<Entity*> pathFinders;
 	vector<Entity*> enemies;
 
 private:

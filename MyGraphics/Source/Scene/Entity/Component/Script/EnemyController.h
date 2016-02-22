@@ -3,8 +3,11 @@
 
 #include "../Component.h"
 
+#include "Vector2.h"
+
 class Node;
 class EnemyData;
+struct Vector2;
 class EnemyController :
 	public Component
 {
@@ -15,7 +18,8 @@ public:
 	void Init(Entity* ent);
 	void LateInit(int enemyTier);
 	void Update(double dt);
-	void SetNode(Node* startNode);
+	void SetNode(Node* startNode, int pathFinderNo);
+	void UpdatePath();
 	void Pop();
 	void Slow(float slowAmount, float duration);
 	void Stun(float duration);
@@ -31,6 +35,10 @@ public:
 	float statusDuration;
 
 	int tier;
+
+	int pathFinderNo;
+
+	Vector2 indexPos;
 
 private:
 	void UpdateDirection();

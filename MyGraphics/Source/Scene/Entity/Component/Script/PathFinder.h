@@ -24,7 +24,7 @@ public:
 	void Set(Vector2 start, Vector2 end);
 	void SetStart(Vector2 start);
 	void SetEnd(Vector2 end);
-	void UpdateMap(vector<vector<bool>> &tileMap);
+	void UpdateMap(vector<vector<bool>> &tileMap, const vector<Vector2> &endPoints);
 	bool CalculatePath();
 	int GetPathLength();
 	Node* GetStart();

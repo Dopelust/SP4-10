@@ -8,7 +8,7 @@
 using std::string;
 
 class ProjectileData;
-class TowerData;
+struct TowerData;
 class RigidBody;
 class TowerController;
 struct Vector2;

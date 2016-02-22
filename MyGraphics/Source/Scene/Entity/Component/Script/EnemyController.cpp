@@ -1,6 +1,5 @@
 #include "EnemyController.h"
 #include "../../../AStar/AStar.h"
-#include "Vector2.h"
 #include "../../EntityFactory.h"
 #include "../../../Enemy/EnemyData.h"
 #include "../../../Enemy/EnemyDatabase.h"
@@ -78,8 +77,9 @@ void EnemyController::Update(double dt)
 		if (owner->transform->GetPosition().DistSquared(target) < 1 * 1)
 		{
 			owner->transform->Position() = target;
+			indexPos.Set(moveNode->x, moveNode->y);
 			moveNode = moveNode->child;
-			UpdateDirection();
+			//UpdateDirection();
 			++steps;
 		}
 	}
@@ -91,20 +91,59 @@ void EnemyController::Update(double dt)
 
 void EnemyController::UpdateDirection()
 {
-	if (moveNode)
-	{
+	//if (moveNode)
+	//{
 		target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
 		directionN = (target - owner->transform->GetPosition()).Normalized();
-	}
+	//}
 }
 
-void EnemyController::SetNode(Node* startNode)
+void EnemyController::SetNode(Node* startNode, int pathFinderNo)
 {
 	if (startNode != NULL)
 	{
+		this->pathFinderNo = pathFinderNo;
 		this->moveNode = startNode->child;
+		indexPos.Set(moveNode->x, moveNode->y);
 		UpdateDirection();
 	}
+}
+
+const struct { int x, y; } succ[4] = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
+
+#include "PathFinder.h"
+
+void EnemyController::UpdatePath()
+{
+	Node* node = owner->GetComponent<PathFinder>()->GetStart();
+
+	Node* checkNode;
+	checkNode = node;
+
+	Node* shortest;
+	int shortestStep = 999;
+
+	while (checkNode)
+	{
+		if (checkNode->x == indexPos.x && checkNode->y == indexPos.y)
+		{
+			moveNode = checkNode->child;
+			return;
+		}
+
+		int steps = abs((checkNode->x - indexPos.x)) + abs((checkNode->y - indexPos.y));
+		if (steps < shortestStep)
+		{
+			shortestStep = steps;
+			shortest = checkNode;
+		}
+		else
+		{
+			checkNode = checkNode->child;
+		}
+	}
+
+	moveNode = shortest;
 }
 
 #include "../../EntityFactory.h"
