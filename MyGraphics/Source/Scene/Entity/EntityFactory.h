@@ -11,6 +11,7 @@ class Entity;
 class Assets;
 class Texture;
 class Model;
+class Sprite;
 
 class EntityFactory
 {
@@ -27,6 +28,7 @@ public:
 	static Entity* CreateSlider(const Vector2& position, const Vector2& size, const char* tag, float min, float value, float max, bool integer);
 	static Entity* CreateCheckbox(const Vector2& position, float size, float stroke, const char* text, bool* toggle);
 
+	static Entity* CreateSprite(const Vector2& position, const Vector2& size, Sprite* sprite, const Vector4& color, int layer = 0);
 	static Entity* CreateGraphic(const Vector2& position, const Vector2& size, Texture* texture, const Vector4& color, int layer = 0);
 	static Entity* CreateButton(const Vector2& position, const Vector2& size, Texture* texture, const Vector3& color);
 

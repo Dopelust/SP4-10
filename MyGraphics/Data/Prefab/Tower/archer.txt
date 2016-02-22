@@ -1,4 +1,6 @@
-// Stage, 	Name, 			Cost, 	Damage,	Range, 	Cooldown,	Pierce,	Speed,	Dist,	Texture, 	Projectile, 	Description
-0,		ARCHER,			10,	10,	128,	0.5,		0,	300,	3000,	Archer,		arrow, 		Shoots
-1, 		TRAINEE ARCHER,		20,	20,	128,	0.25,		0,	300,	3000,	Archer, 	arrow, 		Even
-2, 		MASTER ARCHER,		30,	30,	128,	0.1,		0,	300,	3000,	Archer,		arrow, 		Longer
+//Cost, 	Damage,	Range, 	Cooldown,	Pierce,	Speed,	Texture, 	Projectile, 	Description
+10,	10,	128,	0.7,		0,	300,	Archer,		arrow, 		Shoots
+25,	20,	144,	0.6,		0,	300,	Archer,		arrow, 		Even
+50,	30,	160,	0.5,		0,	300,	Archer,		arrow, 		Longer
+100,	50,	192,	0.4,		0,	300,	Archer,		arrow, 		Longer
+1000,	100,	256,	0.3,		0,	300,	Archer,		arrow, 		Longer

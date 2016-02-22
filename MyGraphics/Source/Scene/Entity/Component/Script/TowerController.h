@@ -11,6 +11,7 @@ using namespace::std;
 
 struct TowerData;
 class StageManager;
+class SpriteRenderer;
 class Entity;
 
 // Script that controls tower
@@ -74,11 +75,13 @@ public:
 	vector<Entity*> entityList;
 	StageManager* stageManager;
 
+	SpriteRenderer* rank;
+
 private:
 	bool SearchForTarget();
 	// Check whether current target left range or is still alive
 	bool CheckTarget();
-	void TargetRotation();
+	void TargetRotation(float dt);
 	void Fire();
 };
 

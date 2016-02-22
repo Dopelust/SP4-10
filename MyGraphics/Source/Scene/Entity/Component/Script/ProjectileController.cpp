@@ -8,10 +8,8 @@
 #include <iostream>
 
 Projectile::Projectile() :
-distTravelled(0),
 pierce(0),
-speed(0),
-maxDist(0)
+speed(0)
 {
 
 }
@@ -40,53 +38,54 @@ void Projectile::SetProperties(TowerData *towerData, Vector2 velocity, float rot
 
 	this->pierce = towerData->pierce;
 	this->speed = towerData->speed;
-	this->maxDist = towerData->distance;
 
 	rigid->ApplyForce(velocity.GetVector3() * speed);
 }
 
 void Projectile::Update(double dt)
 {
-	if (pierce < 0 || distTravelled > maxDist * maxDist)
+	if (pierce < 0)
 	{
 		EntityFactory::Destroy(this->owner);
-	}
-	else
-	{
-		distTravelled += rigid->velocity.LengthSquared();
 	}
 }
 
 #include "../../Collision.h"
 #include "EnemyController.h"
+#include "../../../../SoundEngine.h"
 
 void Projectile::OnCollisionEnter(const Collision& col)
 {
 	if (!col.entity)
 	{
+		Audio.Play2D("bubble", 0.1f);
 		EntityFactory::Destroy(owner);
 	}
 	else if (col.entity->GetName() == "Enemy")
 	{
+		if (col.entity->GetComponent<EnemyController>()->done)
+			return;
+
 		--pierce;
 
 		switch (GetEffect())
 		{
 		case ProjectileData::NORMAL:
 		{
-									   col.entity->GetComponent<EnemyController>()->Pop();
+			Audio.Play2D("bubble", 0.1f);
+			col.entity->GetComponent<EnemyController>()->Pop();
 		}
-			break;
+		break;
 		case ProjectileData::SLOW:
 		{
-									 //col.entity->GetComponent<Enemy>()->slowdebuff(duration, slow amt);
+			//col.entity->GetComponent<Enemy>()->slowdebuff(duration, slow amt);
 		}
-			break;
+		break;
 		case ProjectileData::STUN:
 		{
-									 col.entity->GetComponent<EnemyController>()->Stun(0.5f);
+			col.entity->GetComponent<EnemyController>()->Stun(0.5f);
 		}
-			break;
+		break;
 		}
 	}
 }
@@ -110,12 +109,6 @@ float Projectile::GetSpeed()
 {
 	//return GetData().speed;
 	return speed;
-}
-
-float Projectile::GetDistance()
-{
-	//return GetData().distance;
-	return maxDist;
 }
 
 int Projectile::GetPierce()

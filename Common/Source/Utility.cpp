@@ -10,6 +10,12 @@ void Rise(float& value, float by, float until)
 	value = value + by > until ? until : value + by;
 }
 
+void LerpAngle(float & angle, float target, float dt)
+{
+	angle += (target - angle) * dt;
+}
+
+
 void RemoveChar(std::string & line, char c)
 {
 	std::string newstring;

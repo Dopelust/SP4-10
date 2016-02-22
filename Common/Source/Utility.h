@@ -4,6 +4,8 @@
 void Fall(float& value, float by, float until);
 void Rise(float& value, float by, float until);
 
+void LerpAngle(float & angle, float target, float dt);
+
 #include <vector>
 #include <string>
 #include <sstream>

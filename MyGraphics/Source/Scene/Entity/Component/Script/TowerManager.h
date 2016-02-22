@@ -42,6 +42,7 @@ public:
 	void Unselect();
 	void Select(Entity* tower);
 	void UpgradeTower();
+	void SellTower();
 
 	void SetToPlace(const char* type);
 	void CancelPlacement();

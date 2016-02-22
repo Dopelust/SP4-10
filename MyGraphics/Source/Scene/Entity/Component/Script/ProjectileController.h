@@ -28,13 +28,10 @@ public:
 
 	int pierce;
 	float speed;
-	float maxDist;
-	float distTravelled;
 
 	ProjectileData& GetData();
 	int GetEffect();
 	float GetSpeed();
-	float GetDistance();
 	int GetPierce();
 
 private:

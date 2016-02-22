@@ -167,17 +167,17 @@ void TowerManager::HideIndicator()
 
 void TowerManager::ShowInfo(Entity * tower)
 {
-	TowerData* data = tower->GetComponent<TowerController>()->GetData();
+	TowerController* t = tower->GetComponent<TowerController>();
 
-	gui->ShowInfo(tower->GetComponent<TowerController>()->type.c_str(), data);
-	range->transform->SetSize((float)(data->range * 2), (float)(data->range * 2));
+	gui->ShowInfo(t->type.c_str(), t->upgrade);
+	range->transform->SetSize((float)(t->GetRange() * 2), (float)(t->GetRange() * 2));
 }
 
 void TowerManager::ShowInfo(string type)
 {
 	TowerData* data = &TowerDatabase::GetData(type.c_str())[0];
 
-	gui->ShowInfo(type.c_str(), data);
+	gui->ShowInfo(type.c_str(), 0);
 	range->transform->SetSize((float)(data->range * 2), (float)(data->range * 2));
 }
 
@@ -193,6 +193,7 @@ void TowerManager::Unselect()
 	{
 		selection->GetComponent<Graphic2D>()->SetColor(1, 1, 1, 1);
 		gui->DisableUpgrades();
+		gui->DisableSale();
 
 		HideIndicator();
 		HideInfo();
@@ -204,6 +205,8 @@ void TowerManager::Unselect()
 void TowerManager::Select(Entity * tower)
 {
 	this->selection = tower;
+
+	gui->EnableSale();
 
 	if (tower->GetComponent<TowerController>()->IsMaxUpgrade())
 		gui->DisableUpgrades();
@@ -227,6 +230,19 @@ void TowerManager::UpgradeTower()
 
 		if (tower->IsMaxUpgrade())
 			gui->DisableUpgrades();
+	}
+}
+
+void TowerManager::SellTower()
+{
+	if (selection)
+	{
+		Vector3& index = Scene::scene->grid->GetIndex(selection->transform->GetPosition());
+		stage->RemoveObstruction(index.x, index.y);
+
+		EntityFactory::Destroy(selection);
+
+		Unselect();
 	}
 }
 

@@ -130,6 +130,19 @@ Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, flo
 	return entity;
 }
 
+Entity * EntityFactory::CreateSprite(const Vector2 & position, const Vector2 & size, Sprite * sprite, const Vector4 & color, int layer)
+{
+	Entity* entity = new Entity("Sprite");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x, size.y);
+
+	entity->AddComponent<SpriteRenderer>()->SetSprite(sprite);
+	entity->GetComponent<SpriteRenderer>()->SetColor(color.x, color.y, color.z, color.w);
+	entity->GetComponent<SpriteRenderer>()->SetLayer(layer);
+
+	return entity;
+}
+
 Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector4 & color, int layer)
 {
 	Entity* entity = new Entity("Graphic");
@@ -183,9 +196,19 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 	{
 		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Archer"));
 		entity->transform->Size() *= 1.75f;
+
+		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	}
+	else if (type == "sniper")
+	{
+		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Sniper"));
+		entity->transform->Size() *= 2.5f;
+
+		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
 
-	entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	Entity* child = entity->AttachChild(CreateSprite(Vector2(TileWidth * 0.5f - 6, TileHeight * -0.5f + 8), Vector2(16, 16), Resource.GetSpritesheet("Rank")->GetSprite(0), Vector4(1, 1, 1, 1), 4));
+	entity->GetComponent<TowerController>()->rank = child->GetComponent<SpriteRenderer>();
 
 	Generate(scene->root, entity);
 	return entity;
@@ -197,7 +220,7 @@ Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Resource.GetTexture("Bubble"), Vector4(1, 1, 1, 1));
 
-	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.5f, TileHeight * 0.5f, 0);
+	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.4f, TileHeight * 0.4f, 0);
 	entity->AddComponent<RigidBody>();
 
 	entity->AddComponent<Projectile>()->LateInit(type);

@@ -45,6 +45,7 @@ SoundEngine & SoundEngine::Instance()
 void SoundEngine::Init()
 {
 	audio["click"] = "Assets//Sound//click.ogg";
+	audio["bubble"] = "Assets//Sound//bubble.mp3";
 }
 
 vec3df SoundEngine::GetVec3df(const Vector3 & vec)

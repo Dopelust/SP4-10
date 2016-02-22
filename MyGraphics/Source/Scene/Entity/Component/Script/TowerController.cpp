@@ -30,6 +30,9 @@ TowerController::~TowerController()
 
 }
 
+#include "../SpriteRenderer.h"
+#include "../../../../Spritesheet.h"
+
 void TowerController::Init(Entity* ent)
 {
 	this->owner = ent;
@@ -78,7 +81,7 @@ void TowerController::Update(double dt)
 				firingTimer = 0;
 				Fire();
 			}
-			TargetRotation();
+			TargetRotation(dt);
 		}
 		break;
 	}
@@ -87,6 +90,8 @@ void TowerController::Update(double dt)
 bool TowerController::Upgrade()
 {
 	upgrade++;
+	rank->SetSprite(Resource.GetSpritesheet("Rank")->GetSprite(upgrade));
+
 	return true;
 }
 
@@ -142,7 +147,7 @@ bool TowerController::SearchForTarget()
 
 	int range = GetData()->range;
 
-	if (fireMode == FireMode::FIRST)
+	if (fireMode == FireMode::LAST)
 	{
 		Entity* first = NULL;
 		int highestStep = 0;
@@ -160,11 +165,11 @@ bool TowerController::SearchForTarget()
 		}
 		target = first;
 	}
-	else if (fireMode == FireMode::LAST)
+	else if (fireMode == FireMode::FIRST)
 	{
 		Entity* last = NULL;
 		int lowestStep = 999;
-		for (int i = entityList.size(); i > 0; --i)
+		for (int i = entityList.size() - 1; i > 0; --i)
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
@@ -220,8 +225,9 @@ bool TowerController::CheckTarget()
 
 #include "MyMath.h"
 #include "../../Entity.h"
+#include "Utility.h"
 
-void TowerController::TargetRotation()
+void TowerController::TargetRotation(float dt)
 {
 	direction = (target->transform->GetPosition() - this->owner->transform->GetPosition()).GetVector2();
 

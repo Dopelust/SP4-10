@@ -182,6 +182,17 @@ void Grid::ResolveCollisions(Entity* ent)
 	if (rigid)
 	{
 		rigid->ResolveCollisions();
+
+		BoxCollider* box = ent->GetComponent<BoxCollider>();
+
+		if (box)
+		{
+			Vector3& max = box->GetMaxCoord();
+			Vector3& min = box->GetMinCoord();
+
+			if (min.x < 0 || min.y < 0 || max.x > GridWidth || max.y > GridHeight)
+				ent->OnCollisionEnter(Collision());
+		}
 	}
 
 	for (auto &child : ent->GetChildren())

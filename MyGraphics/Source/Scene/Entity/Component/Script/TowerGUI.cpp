@@ -4,28 +4,62 @@
 #include "../../Entity.h"
 #include "../TextRenderer2D.h"
 
+#include "../../../Tower/TowerDatabase.h"
 #include "../../../Tower/TowerData.h"
+
+#include "../SpriteRenderer.h"
 
 #include "Utility.h"
 
-void TowerGUI::ShowInfo(const char* type, TowerData* tower)
+#include "../../../../Spritesheet.h"
+#include "../../../../Assets.h"
+
+#include "../GUI/Button.h"
+#include "TowerManager.h"
+
+
+void TowerGUI::ShowInfo(const char* type, int rank)
 {
-	if (tower)
+	if (string(type) != "")
 	{
+		TowerData* tower = &TowerDatabase::GetData(type)[rank];
+
 		name->SetText(type);
 		damage->SetText(ToString(tower->damage).c_str());
 		range->SetText(ToString(tower->range).c_str());
+
+		this->rank->SetActive(true);
+		this->rank->SetSprite(Resource.GetSpritesheet("Rank")->GetSprite(rank));
+
+		if (rank == TowerDatabase::GetMaxUpgrade(type))
+			cost->SetText("");
+		else
+		{
+			tower = &TowerDatabase::GetData(type)[rank + 1];
+			cost->SetText(ToString('$', tower->cost).c_str());
+		}
+
+		int price = 0;
+
+		for (int i = 0; i <= rank; ++i)
+		{
+			tower = &TowerDatabase::GetData(type)[i];
+			price += tower->cost * 0.5f;
+		}
+
+		sellprice->SetText(ToString('$', price).c_str());
 	}
 	else
 	{
 		name->SetText("");
 		damage->SetText("");
 		range->SetText("");
+		cost->SetText("");
+		sellprice->SetText("");
+
+		this->rank->SetActive(false);
 	}
 }
-
-#include "../GUI/Button.h"
-#include "TowerManager.h"
 
 void TowerGUI::Init(Entity * ent)
 {
@@ -45,6 +79,19 @@ void TowerGUI::Update(double dt)
 
 	if (upgrade->IsState())
 		manager->UpgradeTower();
+
+	else if (sell->IsState())
+		manager->SellTower();
+}
+
+void TowerGUI::EnableSale()
+{
+	sell->Enable();
+}
+
+void TowerGUI::DisableSale()
+{
+	sell->Disable();
 }
 
 void TowerGUI::EnableUpgrades()
