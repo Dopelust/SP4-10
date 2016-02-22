@@ -173,7 +173,7 @@ Entity * EntityFactory::CreateTextGUI(const Vector2 & position, const char * tex
 
 Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
+	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 3);
 	Vector3 index = scene->grid->GetIndex(entity->transform->GetPosition());
 
 	entity->AddComponent<TowerController>()->index = Vector2(index.x, index.y);
@@ -195,10 +195,11 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
+	Entity* entity = CreateGraphic(position, Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Resource.GetTexture("Bubble"), Vector4(1, 1, 1, 1));
 
+	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.5f, TileHeight * 0.5f, 0);
 	entity->AddComponent<RigidBody>();
-	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth, TileHeight, 0);
+
 	entity->AddComponent<Projectile>()->LateInit(type);
 
 	Generate(scene->root, entity);
@@ -222,9 +223,13 @@ Entity* EntityFactory::GeneratePathFinder()
 
 Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1));
+	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
+	entity->Rename("Enemy");
+
+	entity->AddComponent<BoxCollider>()->size.Set(TileWidth * 0.725f, TileHeight * 0.725f);
 	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
-	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth, TileHeight, 0);
+
+	entity->AttachChild(CreateGraphic(Vector2(0, -0.5f), Vector2(TileWidth * 0.9f, TileHeight * 0.725f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 
 	Generate(scene->root, entity);
 	return entity;

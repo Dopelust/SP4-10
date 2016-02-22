@@ -8,7 +8,7 @@ using namespace std;
 StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
-freeTime(5),
+freeTime(0),
 waveTimer(0)
 {
 }

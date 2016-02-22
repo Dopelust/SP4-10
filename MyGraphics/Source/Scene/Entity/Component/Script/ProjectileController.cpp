@@ -62,25 +62,28 @@ void Projectile::Update(double dt)
 
 void Projectile::OnCollisionEnter(const Collision& col)
 {
-	--pierce;
+	if (col.entity->GetName() == "Enemy")
+	{
+		--pierce;
 
-	switch (GetEffect())
-	{
-	case ProjectileData::NORMAL:
-	{
-		//col.entity->GetComponent<Enemy>()->pop
-	}
-	break;
-	case ProjectileData::SLOW:
-	{
-		//col.entity->GetComponent<Enemy>()->slowdebuff(duration, slow amt);
-	}
-	break;
-	case ProjectileData::STUN:
-	{
-		col.entity->GetComponent<EnemyController>()->Stun(0.5f);
-	}
-	break;
+		switch (GetEffect())
+		{
+		case ProjectileData::NORMAL:
+		{
+									   col.entity->GetComponent<EnemyController>()->Pop();
+		}
+			break;
+		case ProjectileData::SLOW:
+		{
+									 //col.entity->GetComponent<Enemy>()->slowdebuff(duration, slow amt);
+		}
+			break;
+		case ProjectileData::STUN:
+		{
+									 col.entity->GetComponent<EnemyController>()->Stun(0.5f);
+		}
+			break;
+		}
 	}
 }
 

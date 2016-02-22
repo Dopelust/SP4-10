@@ -118,6 +118,8 @@ void EnemyController::Pop()
 			EntityFactory::GenerateEnemy(this->owner->transform->GetPosition().GetVector2(), --tier);
 		}
 	}
+	
+	done = true;
 }
 
 void EnemyController::Slow(float slowAmount, float duration)

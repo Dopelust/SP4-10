@@ -72,6 +72,7 @@ void Assets::Init()
 	mesh["sphere"] = MeshBuilder::GenerateSphere(Vector3(1, 1, 1), 20, 20, 1);
 
 	//Texture
+	texture["Bubble"] = new Texture("Assets//bubble.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Occlusion"] = new Texture("Assets//occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Archer"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Circle"] = new Texture("Assets//circle.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);

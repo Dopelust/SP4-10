@@ -63,6 +63,19 @@ struct CollisionEntry
 
 void RigidBody::ResolveCollisions()
 {
+	for (auto& cell : box->GetCells())
+	{
+		for (auto& entity : cell->GetEntities())
+		{
+			if (entity == owner)
+				continue;
+
+			if (CollisionQuery::Test(box, entity->GetComponent<BoxCollider>()))
+			{
+				owner->OnCollisionEnter(Collision(Collision::UNDEFINED, entity));
+			}
+		}
+	}
 }
 
 Vector3 RigidBody::GetLastMaxCoord()

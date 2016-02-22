@@ -22,7 +22,9 @@ TowerManager::~TowerManager()
 void TowerManager::Init(Entity* entity)
 {
 	transform = entity->transform;
+
 	graphic = entity->GetComponent<Graphic2D>();
+	graphic->SetActive(false);
 }
 
 #include "../../EntityFactory.h"

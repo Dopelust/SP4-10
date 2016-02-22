@@ -65,13 +65,14 @@ bool Scene::CreateSpatialPartition(GridType type)
 void Scene::Update(double dt)
 {
 	EntityFactory::GenerateEntities();
-	EntityFactory::DestroyEntities();
 
 	Screen.SetProjectionResolution(GetResolutionX(root), GetResolutionY(root));
 	root->Update(dt);
 
 	Screen.SetProjectionResolution(GetResolutionX(canvas), GetResolutionY(canvas));
 	canvas->Update(dt);
+
+	EntityFactory::DestroyEntities();
 
 	if (grid)
 	{

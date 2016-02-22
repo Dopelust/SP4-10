@@ -73,19 +73,13 @@ void Grid::PopulateCells(Entity* ent)
 
 	if (box)
 	{
-		Vector3 min = box->GetMinCoord(); 
-		min.x /= GridWidth; min.x *= NumberOfCellsX;
-		min.y /= GridHeight; min.y *= NumberOfCellsY;
-	
-		Vector3 max = box->GetMaxCoord();
-		max.x /= GridWidth; max.x *= NumberOfCellsX;
-		max.y /= GridHeight; max.y *= NumberOfCellsY;
+		Vector3 min = GetIndex(box->GetMinCoord()) / NumberOfTilesX;
+		Vector3 max = GetIndex(box->GetMaxCoord()) / NumberOfTilesY;
 
 		box->cells.clear();
 
-		for (int i = min.x; i < max.x; ++i)
-			for (int j = min.y; j < max.y; ++j)
-				for (int k = min.z; k < max.z; ++k)
+		for (int i = min.x; i <= max.x; ++i)
+			for (int j = min.y; j <= max.y; ++j)
 				{
 					Cell* c = GetCell(i, j);
 
@@ -168,7 +162,6 @@ void Grid::Update()
 	for (int i = 0; i < NumberOfCellsX; ++i)
 	for (int j = 0; j < NumberOfCellsY; ++j)
 				cell[i][j]->Reset();
-			
 
 	PopulateCells(owner->root);
 }
@@ -184,6 +177,13 @@ void Grid::Render()
 
 void Grid::ResolveCollisions(Entity* ent)
 {
+	RigidBody* rigid = ent->GetComponent<RigidBody>();
+
+	if (rigid)
+	{
+		rigid->ResolveCollisions();
+	}
+
 	for (auto &child : ent->GetChildren())
 	{
 		ResolveCollisions(child);
