@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace::std;
 
-Cell::Cell()
+Cell::Cell(int x, int y) : x(x), y(y)
 {
 }
 
@@ -51,4 +51,15 @@ void Cell::Draw(int i, int j)
 Tile& Cell::GetTile(int i, int j)
 {
 	return tile[i][j];
+}
+
+#include "Vector3.h"
+
+Vector3 Cell::GetTileMinCoord(int i, int j)
+{
+	return Vector3(x * CellWidth + i * TileWidth, y * CellHeight + j * TileHeight); 
+}
+Vector3 Cell::GetTileMaxCoord(int i, int j)
+{
+	return GetTileMinCoord(i + 1, j + 1);
 }

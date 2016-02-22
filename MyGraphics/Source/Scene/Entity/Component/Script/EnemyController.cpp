@@ -72,7 +72,7 @@ void EnemyController::Update(double dt)
 	if (moveNode)
 	{
 		//target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
-
+		UpdateDirection();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
 		if (owner->transform->GetPosition().DistSquared(target) < 1 * 1)

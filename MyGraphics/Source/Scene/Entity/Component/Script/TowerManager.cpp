@@ -23,6 +23,8 @@ void TowerManager::Init(Entity* entity)
 {
 	transform = entity->transform;
 
+	box = entity->GetComponent<BoxCollider>();
+
 	graphic = entity->GetComponent<Graphic2D>();
 	graphic->SetActive(false);
 }
@@ -55,12 +57,30 @@ bool TowerManager::IsPlacing()
 	return !type.empty();
 }
 
+#include "../Physics/BoxCollider.h"
+#include "../../../../Cell.h"
+#include "../../../../CollisionQuery.h"
+
 bool TowerManager::CanPlace(Tile* tile)
 {
 	if (tile)
 	{
 		if (!tile->index && !GetTower(selector->transform->GetPosition()))
+		{
+			for (auto& cell : box->GetCells())
+			{
+				for (auto& entity : cell->GetEntities())
+				{
+					if (entity->GetName() == "Enemy")
+					{
+						if (CollisionQuery::Test(box, entity->GetComponent<BoxCollider>()))
+							return false;
+					}
+				}
+			}
+
 			return true;
+		}
 	}
 
 	return false;
@@ -100,7 +120,9 @@ void TowerManager::Update(double dt)
 				graphic->SetColor(0, 1, 0, 0.5f); //Change Indicator To Green
 
 				if (Input.IsMousePress(0)) //If Left Click
+				{
 					PlaceTower(); //Place Tower
+				}
 			}
 			else //If Invalid Spot
 			{

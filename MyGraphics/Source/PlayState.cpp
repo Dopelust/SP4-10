@@ -31,6 +31,7 @@ PlayState::~PlayState()
 #include "Scene\Projectile\ProjectileDatabase.h"
 #include "Scene\Enemy\EnemyDatabase.h"
 
+#include "Scene\Entity\Component\Physics\BoxCollider.h"
 #include "Scene\Entity\Component\Script\TileSelector.h"
 #include "Scene\Entity\Component\Script\TowerManager.h"
 #include "Scene\Entity\Component\Script\TowerGUI.h"
@@ -53,6 +54,7 @@ void PlayState::Init()
 	menu = entity->GetComponent<Button>();
 
 	Entity* editor = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.2f)));
+	editor->AddComponent<BoxCollider>()->size.Set(TileWidth, TileHeight);
 	editor->AddComponent<TowerManager>()->range = editor->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(), Resource.GetTexture("Range"), Vector4(1, 1, 1, 0.33f)));
 	editor->AddComponent<TowerGUI>();
 

@@ -53,7 +53,7 @@ Grid::Grid(Scene* owner) : owner(owner)
 {
 	for (int i = 0; i < NumberOfCellsX; ++i)
 	for (int j = 0; j < NumberOfCellsY; ++j)
-		cell[i][j] = new Cell();
+		cell[i][j] = new Cell(i, j);
 }
 
 Grid::~Grid()

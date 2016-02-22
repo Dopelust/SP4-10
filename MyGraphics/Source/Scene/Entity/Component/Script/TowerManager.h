@@ -15,6 +15,7 @@ class TileSelector;
 class Graphic2D;
 class TowerGUI;
 struct TowerData;
+class BoxCollider;
 
 class TowerManager : public Component
 {
@@ -56,6 +57,7 @@ private:
 	string type;
 
 	Transform* transform;
+	BoxCollider* box;
 	Graphic2D* graphic;
 
 	Entity* selection;

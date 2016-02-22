@@ -62,7 +62,11 @@ void Projectile::Update(double dt)
 
 void Projectile::OnCollisionEnter(const Collision& col)
 {
-	if (col.entity->GetName() == "Enemy")
+	if (!col.entity)
+	{
+		EntityFactory::Destroy(owner);
+	}
+	else if (col.entity->GetName() == "Enemy")
 	{
 		--pierce;
 

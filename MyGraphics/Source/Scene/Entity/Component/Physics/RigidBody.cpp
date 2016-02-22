@@ -75,6 +75,18 @@ void RigidBody::ResolveCollisions()
 				owner->OnCollisionEnter(Collision(Collision::UNDEFINED, entity));
 			}
 		}
+
+		for (int i = 0; i < NumberOfTilesX; ++i)
+		for (int j = 0; j < NumberOfTilesY; ++j)
+		{
+			switch (cell->GetTile(i, j).index)
+			{
+			case 2:
+				if (CollisionQuery::Test(box, cell->GetTileMinCoord(i, j), cell->GetTileMaxCoord(i, j)))
+					owner->OnCollisionEnter(Collision(Collision::UNDEFINED, NULL));
+				break;
+			}
+		}
 	}
 }
 
