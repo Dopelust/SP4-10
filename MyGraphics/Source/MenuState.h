@@ -19,6 +19,7 @@ public:
 
 	Button* play;
 	Button* editor;
+	Button* option;
 	Button* exit;
 
 private:

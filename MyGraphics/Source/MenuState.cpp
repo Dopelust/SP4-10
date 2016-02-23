@@ -45,10 +45,13 @@ void MenuState::Init()
 
 	entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 300), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "OPTIONS", 128));
+	option = entity->GetComponent<Button>();
 
 	entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 200), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "QUIT", 128));
 	exit = entity->GetComponent<Button>();
+
+	entity = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f), Vector2(Screen.width, Screen.height), Resource.GetTexture("NightChanges"), Vector4(1, 1, 1, 1.0f)));
 
 	Resume();
 }
@@ -71,6 +74,7 @@ void MenuState::Update(float dt)
 
 #include "TestState.h"
 #include "PlayState.h"
+#include "OptionState.h"
 
 void MenuState::HandleEvents()
 {
@@ -79,6 +83,9 @@ void MenuState::HandleEvents()
 
 	if (editor->IsState())
 		Engine.ChangeState(&TestState::Instance());
+
+	if (option->IsState())
+		Engine.ChangeState(&OptionState::Instance());
 
 	if (exit->IsState())
 		Engine.Terminate();

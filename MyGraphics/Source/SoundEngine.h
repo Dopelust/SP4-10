@@ -18,7 +18,7 @@ public:
 	static SoundEngine& Instance();
 
 	void Init();
-	void Play2D(const char* name, float volume = 1);
+	ISound* Play2D(const char* name, float volume = 1);
 	void Play3D(const char* name, const Vector3& position, float volume = 1);
 
 private:

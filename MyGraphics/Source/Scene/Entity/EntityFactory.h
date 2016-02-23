@@ -22,6 +22,7 @@ public:
 	static Entity* GeneratePlayer();
 
 	static Entity* GenerateButton(const Vector2& position, const Vector2& size, Texture* texture, const Vector3& color);
+	static Entity* GenerateSlider(const Vector2& position, const Vector2& size, const char* tag, Texture* texture, float min, float value, float max,bool integer);
 	static Entity* GenerateInputField(const Vector2& position, const Vector3& color, int limit, float textSize);
 	static Entity* GenerateTextGUI(const Vector2& position, const char* text, float size);
 
@@ -38,7 +39,6 @@ public:
 	static Entity* GenerateProjectile(const Vector2& position, string type);
 	static Entity* GeneratePathFinder();
 	static Entity* GenerateEnemy(const Vector2& position, int enemyTier);
-	static Entity* GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation);
 
 	static Entity* Generate(Entity* root, Entity* entity);
 	static void Destroy(Entity* entity);

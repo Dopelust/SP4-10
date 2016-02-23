@@ -3,7 +3,7 @@
 
 #define camera Camera::current
 
-void SoundEngine::Play2D(const char * name, float volume)
+ISound* SoundEngine::Play2D(const char * name, float volume)
 {
 	ISound * sound = engine->play2D(audio[name].c_str(), false, true);
 	if (sound)
@@ -24,6 +24,7 @@ void SoundEngine::Play3D(const char * name, const Vector3& position, float volum
 		sound->setIsPaused(false);
 	}
 }
+
 
 SoundEngine::SoundEngine() : engine(NULL)
 {
@@ -46,6 +47,7 @@ void SoundEngine::Init()
 {
 	audio["click"] = "Assets//Sound//click.ogg";
 	audio["bubble"] = "Assets//Sound//bubble.mp3";
+	audio["Juan"] = "Assets//Sound//NightChanges.mp3";
 }
 
 vec3df SoundEngine::GetVec3df(const Vector3 & vec)
