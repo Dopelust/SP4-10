@@ -1,2 +1,2 @@
-//Cost, 	Damage,	Range, 	Cooldown,	Pierce,	Speed,	Texture, 	Projectile, 	Description
-25, 	5,	64,	0.5, 		0,	100,	ArrowTower0, 	normalArrow, 	Splashes water
+//Cost, E Damage,	E Duration,	Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture, 	Projectile, 	Description
+25, 	0,		0,		64,	0.5,		1, 	0,	100,	ArrowTower0, 	normalArrow, 	Splashes water

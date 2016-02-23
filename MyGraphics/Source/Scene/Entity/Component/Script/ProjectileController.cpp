@@ -86,7 +86,7 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		break;
 		case ProjectileData::SLOW:
 		{
-			//col.entity->GetComponent<Enemy>()->slowdebuff(duration, slow amt);
+			col.entity->GetComponent<EnemyController>()->Slow(towerData->eDamage, towerData->eDuration);
 		}
 		break;
 		case ProjectileData::STUN:

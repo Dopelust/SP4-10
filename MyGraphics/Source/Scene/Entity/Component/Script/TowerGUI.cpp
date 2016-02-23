@@ -25,7 +25,7 @@ void TowerGUI::ShowInfo(const char* type, int rank)
 		TowerData* tower = &TowerDatabase::GetData(type)[rank];
 
 		name->SetText(type);
-		damage->SetText(ToString(tower->damage).c_str());
+		damage->SetText(ToString(tower->pierce).c_str());
 		range->SetText(ToString(tower->range).c_str());
 
 		this->rank->SetActive(true);

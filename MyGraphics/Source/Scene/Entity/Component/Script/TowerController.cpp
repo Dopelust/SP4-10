@@ -75,7 +75,7 @@ void TowerController::Update(double dt)
 				break;
 			}
 
-			TargetRotation(dt);
+			TargetRotation((float)dt);
 
 			if (firingTimer > GetCooldown())
 			{
@@ -113,7 +113,7 @@ int TowerController::GetCost()
 
 int TowerController::GetDamage()
 {
-	return GetData()->damage;
+	return GetData()->pierce;
 }
 
 float TowerController::GetCooldown()

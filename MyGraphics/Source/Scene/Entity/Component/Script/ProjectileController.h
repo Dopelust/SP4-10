@@ -43,6 +43,8 @@ private:
 	RigidBody* rigid;
 
 	string type;
+
+	TowerData* towerData;
 };
 
 #endif

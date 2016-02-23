@@ -63,6 +63,7 @@ void EnemyController::Update(double dt)
 			{
 				stunned = false;
 			}
+			statusTimer = 0;
 		}
 	}
 
