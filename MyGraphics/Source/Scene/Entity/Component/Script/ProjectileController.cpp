@@ -61,13 +61,21 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		Audio.Play2D("bubble", 0.1f);
 		EntityFactory::Destroy(owner);
 	}
-	else if (col.entity->GetName() == "Enemy")
+	else if (col.entity->GetName() == "Enemy" && pierce >= 0)
 	{
-		if (col.entity->GetComponent<EnemyController>()->done)
+		EnemyController *ec = col.entity->GetComponent<EnemyController>();
+		if (ec->done)
 			return;
+		
+		for (int i = 0; i < pierced.size(); ++i)
+		{
+			if (pierced[i] == ec->parentID)
+				return;
+		}
 
+		pierced.push_back(col.entity->GetID());
 		--pierce;
-
+		//cout << col.entity->GetComponent<EnemyController>()->GetData().name << endl;
 		switch (GetEffect())
 		{
 		case ProjectileData::NORMAL:

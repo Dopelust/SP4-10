@@ -13,7 +13,7 @@
 
 TowerController::TowerController() :
 state(TowerState::SEARCHING),
-fireMode(FireMode::FIRST),
+fireMode(FireMode::CLOSEST),
 owner(NULL),
 target(NULL),
 upgrade(0),
@@ -56,7 +56,7 @@ void TowerController::Update(double dt)
 		case TowerState::SEARCHING:
 		{
 			searchTimer += (float)dt;
-			if (searchTimer > 0.1f && CheckTarget())
+			if (searchTimer > 0.1f)
 			{
 				searchTimer = 0;
 				if (SearchForTarget())
@@ -68,20 +68,21 @@ void TowerController::Update(double dt)
 		break;
 		case TowerState::FIRE:
 		{
-			// If target goes out of range or dies
+			// Create projectile, set rotation
 			if (CheckTarget())
 			{
 				state = TowerState::SEARCHING;
 				break;
 			}
-			// Create projectile, set rotation
-			else if (firingTimer > GetCooldown())
-			{
 
+			TargetRotation(dt);
+
+			if (firingTimer > GetCooldown())
+			{
 				firingTimer = 0;
 				Fire();
+				state = TowerState::SEARCHING;
 			}
-			TargetRotation(dt);
 		}
 		break;
 	}
@@ -147,7 +148,27 @@ bool TowerController::SearchForTarget()
 
 	int range = GetData()->range;
 
-	if (fireMode == FireMode::LAST)
+	if (fireMode == FireMode::CLOSEST)
+	{
+		Entity* closest = NULL;
+		float closestDistSq;
+		closestDistSq = 99999999.f;
+
+		for (int i = 0; i < entityList.size(); ++i)
+		{
+			float distSq = (entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared();
+			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
+			{
+				if (distSq < closestDistSq)
+				{
+					closestDistSq = distSq;
+					closest = entityList[i];
+				}
+			}
+		}
+		target = closest;
+	}
+	else if (fireMode == FireMode::FIRST)
 	{
 		Entity* first = NULL;
 		int highestStep = 0;
@@ -165,7 +186,7 @@ bool TowerController::SearchForTarget()
 		}
 		target = first;
 	}
-	else if (fireMode == FireMode::FIRST)
+	else if (fireMode == FireMode::LAST)
 	{
 		Entity* last = NULL;
 		int lowestStep = 999;

@@ -29,6 +29,7 @@ public:
 
 	enum FireMode
 	{
+		CLOSEST,
 		FIRST,
 		LAST,
 		STRONGEST,

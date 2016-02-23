@@ -1,9 +1,12 @@
 #include "Entity.h"
 #include "Component/Transform.h"
 
-Entity::Entity(string name) : parent(NULL), name(name), id(-1), active(true)
+int Entity::id_count = 0;
+
+Entity::Entity(string name) : parent(NULL), name(name), id(id_count), active(true)
 {
 	transform = AddComponent<Transform>();
+	++id_count;
 }
 
 Entity::~Entity()

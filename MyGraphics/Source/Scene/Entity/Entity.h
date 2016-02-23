@@ -82,6 +82,8 @@ private:
 
 	vector<Entity*> children;
 	vector<Component*> component;
+
+	static int id_count;
 };
 
 #endif

@@ -8,6 +8,7 @@ EnemyController::EnemyController() :
 done(false),
 slowed(false),
 stunned(false),
+pop(false),
 moveNode(NULL),
 steps(0),
 statusTimer(0),
@@ -37,7 +38,7 @@ void EnemyController::Init(Entity* ent)
 void EnemyController::LateInit(int enemyTier)
 {
 	this->tier = enemyTier;
-	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("BlueSlime"));
+	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData().name.c_str()));
 
 	originalSpeed = GetData().movementSpeed;
 	movementSpeed = originalSpeed;
@@ -117,7 +118,9 @@ void EnemyController::UpdatePath()
 {
 	Node* node = owner->GetComponent<PathFinder>()->GetStart();
 
-	Node* checkNode;
+	moveNode = node->child;
+
+	/*Node* checkNode;
 	checkNode = node;
 
 	Node* shortest;
@@ -143,7 +146,7 @@ void EnemyController::UpdatePath()
 		}
 	}
 
-	moveNode = shortest;
+	moveNode = shortest;*/
 }
 
 #include "../../EntityFactory.h"
@@ -152,10 +155,7 @@ void EnemyController::Pop()
 {
 	if (tier > 1)
 	{
-		for (int i = 0; i < GetData().split; ++i)
-		{
-			EntityFactory::GenerateEnemy(this->owner->transform->GetPosition().GetVector2(), --tier);
-		}
+		pop = true;
 	}
 	
 	done = true;

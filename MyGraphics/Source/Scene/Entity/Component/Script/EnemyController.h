@@ -8,6 +8,7 @@
 class Node;
 class EnemyData;
 struct Vector2;
+
 class EnemyController :
 	public Component
 {
@@ -25,20 +26,21 @@ public:
 	void Stun(float duration);
 
 	EnemyData& GetData();
-
-	float originalSpeed, movementSpeed;
-	Node* startNode;
-	int steps;
 	
+	int tier;
+	float originalSpeed, movementSpeed;
+
 	bool done, slowed, stunned;
 	float statusTimer;
 	float statusDuration;
 
-	int tier;
-
+	int steps;
 	int pathFinderNo;
-
 	Vector2 indexPos;
+
+	bool pop;
+
+	int parentID;
 
 private:
 	void UpdateDirection();

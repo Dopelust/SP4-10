@@ -4,8 +4,10 @@
 #include "../Component.h"
 
 #include <string>
+#include <vector>
 
 using std::string;
+using std::vector;
 
 class ProjectileData;
 struct TowerData;
@@ -33,6 +35,8 @@ public:
 	int GetEffect();
 	float GetSpeed();
 	int GetPierce();
+
+	vector<int> pierced;
 
 private:
 	Entity* owner;

@@ -236,6 +236,7 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Tile.h" />
     <ClInclude Include="Source\vertex.h" />
+    <ClInclude Include="StageData.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

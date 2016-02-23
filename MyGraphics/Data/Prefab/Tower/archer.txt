@@ -1,5 +1,5 @@
-//Cost, 	Damage,	Range, 	Cooldown,	Pierce,	Speed,	Texture, 	Projectile, 	Description
-10,	10,	128,	0.7,		0,	300,	Archer,		arrow, 		Shoots
+//Cost, Damage,	Range, 	Cooldown,	Pierce,	Speed,	Texture, 	Projectile, 	Description
+10,	10,	128,	0.7,		1,	300,	Archer,		arrow, 		Shoots
 25,	20,	144,	0.6,		0,	300,	Archer,		arrow, 		Even
 50,	30,	160,	0.5,		0,	300,	Archer,		arrow, 		Longer
 100,	50,	192,	0.4,		0,	300,	Archer,		arrow, 		Longer
