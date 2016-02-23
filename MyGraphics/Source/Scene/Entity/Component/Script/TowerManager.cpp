@@ -89,16 +89,21 @@ bool TowerManager::CanPlace(Tile* tile)
 bool TowerManager::PlaceTower()
 {
 	Vector3& position = selector->transform->GetPosition();
-	towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), type);
-
 	Vector3& index = Scene::scene->grid->GetIndex(position);
-	stage->AddObstruction((int)index.x, (int)index.y);
 
-	type = "";
-	HideInfo();
-	HideIndicator();
+	if (stage->AddObstruction((int)index.x, (int)index.y))
+	{
+		towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), type);
 
-	return true;
+		type = "";
+		HideInfo();
+		HideIndicator();
+
+		return true;
+	}
+
+	return false;
+	
 }
 
 void TowerManager::Update(double dt)
@@ -241,6 +246,7 @@ void TowerManager::SellTower()
 		stage->RemoveObstruction(index.x, index.y);
 
 		EntityFactory::Destroy(selection);
+		towerMap[selection->transform->GetPosition()] = NULL;
 
 		Unselect();
 	}

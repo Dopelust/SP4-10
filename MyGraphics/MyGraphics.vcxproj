@@ -98,6 +98,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\StandardParticle.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditor.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditorGUI.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileSelector.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\StandardParticle.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditor.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditorGUI.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileSelector.h" />

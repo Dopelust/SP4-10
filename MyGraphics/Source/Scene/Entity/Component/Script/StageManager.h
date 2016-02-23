@@ -14,6 +14,8 @@ using std::queue;
 
 struct Vector2;
 
+class PathFinder;
+
 // Stage Manager
 // Spawns enemy and manages progression
 class Grid;
@@ -41,7 +43,7 @@ public:
 	void LoadStage(string stageName);
 	void Update(double dt);
 
-	void AddObstruction(int i, int j);
+	bool AddObstruction(int i, int j);
 	void RemoveObstruction(int i, int j);
 	bool CheckObstruction(int i, int j);
 	void SpawnEnemies(double dt);
@@ -64,6 +66,7 @@ private:
 
 	StageData& GetData();
 
+	PathFinder* pathfind;
 	Entity *owner;
 
 	string currentStage;

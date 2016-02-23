@@ -24,9 +24,14 @@ StageManager::~StageManager()
 
 }
 
+#include "../../Entity.h"
+#include "../../Component/Script/PathFinder.h"
+#include "../../EntityFactory.h"
+
 void StageManager::Init(Entity* ent)
 {
 	this->owner = ent;
+	pathfind = ent->GetComponent<PathFinder>();
 }
 
 #include "../../EntityFactory.h"
@@ -63,8 +68,6 @@ StageData& StageManager::GetData()
 	return StageDatabase::GetData(currentStage);
 }
 
-#include "../../Entity.h"
-#include "../../Component/Script/PathFinder.h"
 
 void StageManager::CreatePathFinders()
 {
@@ -194,10 +197,23 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 	}
 }
 
-void StageManager::AddObstruction(int i, int j)
+bool StageManager::AddObstruction(int i, int j)
 {
 	tileMap[i][j] = true;
+
+	for (auto& end : endPoints)
+	{
+		pathfind->SetStart(end);
+
+		if (!pathfind->UpdateMap(tileMap, spawnPoints))
+		{
+			tileMap[i][j] = false;
+			return false;
+		}
+	}
+	
 	UpdatePathFinders();
+	return true;
 }
 
 void StageManager::RemoveObstruction(int i, int j)
@@ -243,7 +259,6 @@ void StageManager::SpawnEnemies(double dt)
 		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), spawnQueue.front().tier[spawnNo]);
 		enemy->AddComponent<PathFinder>()->SetStart(spawnPoints[spawnPt]);
 		enemy->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
-		//enemy->GetComponent<EnemyController>()->SetNode(enemy->GetComponent<PathFinder>()->GetStart(), i);
 		enemy->GetComponent<EnemyController>()->UpdatePath();
 
 		enemies.push_back(enemy);

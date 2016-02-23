@@ -25,6 +25,9 @@ Scene::Scene(const char* filepath) : root(new Entity("Root")), canvas(new Entity
 
 Scene::~Scene()
 {
+	EntityFactory::GenerateEntities();
+	EntityFactory::DestroyEntities();
+
 	Camera::current = NULL;
 
 	if (root)

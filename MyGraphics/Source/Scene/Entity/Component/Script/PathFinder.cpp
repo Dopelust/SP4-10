@@ -41,30 +41,29 @@ void PathFinder::SetEnd(Vector2 end)
 	this->end = end;
 }
 
-void PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const vector<Vector2> &endPoints)
+#include <map>
+
+bool PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const vector<Vector2> &endPoints)
 {
 	aStar->Update(tileMap);
 
-	Vector2 shortestEnd;
-	int shortestPathLength = 999;
+	static map<float, Vector2> hMap;
+	hMap.clear();
 
-	for (int j = 0; j < endPoints.size(); ++j)
+	for (auto& pt : endPoints)
 	{
-		SetEnd(endPoints[j]);
-		if (CalculatePath())
-		{
-			int length = GetPathLength();
-
-			if (length < shortestPathLength)
-			{
-				shortestPathLength = length;
-				shortestEnd = endPoints[j];
-			}
-		}
+		hMap[aStar->Compute_h(start, pt)] = pt;
 	}
 
-	SetEnd(shortestEnd);
-	CalculatePath();
+	for (auto& h : hMap)
+	{
+		SetEnd(h.second);
+
+		if (CalculatePath())
+			return true;
+	}
+
+	return false;
 }
 
 bool PathFinder::CalculatePath()
@@ -86,5 +85,5 @@ int PathFinder::GetPathLength()
 
 Node* PathFinder::GetStart()
 {
-	return aStar->GetStartNode();
+	return aStar->start;
 }

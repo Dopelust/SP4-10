@@ -38,6 +38,7 @@ public:
 	static Entity* GenerateProjectile(const Vector2& position, string type);
 	static Entity* GeneratePathFinder();
 	static Entity* GenerateEnemy(const Vector2& position, int enemyTier);
+	static Entity* GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation);
 
 	static Entity* Generate(Entity* root, Entity* entity);
 	static void Destroy(Entity* entity);

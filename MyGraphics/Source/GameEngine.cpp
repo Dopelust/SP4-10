@@ -74,6 +74,9 @@ bool GameEngine::PopState()
 
 void GameEngine::Update(float dt)
 {
+	if (dt > 0.1f)
+		dt = 0.1f;
+
 	if (!states.empty())
 		states.back()->Update(dt);
 

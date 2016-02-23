@@ -39,6 +39,7 @@ PlayState::~PlayState()
 #include "Scene\Entity\Component\TextRenderer2D.h"
 #include "Scene\Entity\Component\Script\StageManager.h"
 #include "Scene\Entity\Component\SpriteRenderer.h"
+#include "Scene\Entity\Component\Script\PathFinder.h"
 
 #include "Grid.h"
 #include "Utility.h"
@@ -165,6 +166,7 @@ void PlayState::Init()
 	vector<int> a;
 	a.push_back(1);
 	a.push_back(2);
+	stageManager->AddComponent<PathFinder>();
 	stageManager->AddComponent<StageManager>()->LateInit(scene->grid, a);
 	stageManager->GetComponent<StageManager>()->LoadStage("level1");
 

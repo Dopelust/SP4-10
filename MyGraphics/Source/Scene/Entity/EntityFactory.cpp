@@ -35,6 +35,23 @@ Entity * EntityFactory::GenerateButton(const Vector2 & position, const Vector2 &
 	return Generate(scene->canvas, CreateButton(position, size, texture, color));
 }
 
+#include "Component\Script\StandardParticle.h"
+
+Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation)
+{
+	Entity* entity = new Entity("Particle");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x, size.y);
+
+	entity->AddComponent<SpriteRenderer>();
+	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
+	entity->GetComponent<SpriteAnimator>()->Play(animation, false);
+
+	entity->AddComponent<StandardParticle>();
+
+	return Generate(scene->root, entity);
+}
+
 #include "../../FontManager.h"
 #include "../../Font.h"
 

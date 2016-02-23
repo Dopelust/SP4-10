@@ -31,16 +31,29 @@ int AStar::GetPathLength()
 void AStar::Update(vector<vector<bool>>& tileMap)
 {
 	this->tileMap = tileMap;
-	NumRow = tileMap[0].size();
-	NumCol = tileMap.size();
+
+	if (NumRow && NumCol)
+	{
+		ResetNodeMap();
+	}
+	else
+	{
+		NumRow = tileMap[0].size();
+		NumCol = tileMap.size();
+
+		for (int i = 0; i < NumCol; ++i)
+		{
+			nodeMap.push_back(vector<Node>());
+
+			for (int j = 0; j < NumRow; ++j)
+			{
+				nodeMap[i].push_back(Node(i, j));
+			}
+		}
+	}
 }
 
-Node* AStar::GetStartNode()
-{
-	return current;
-}
-
-AStar::AStar() : goal(NULL)
+AStar::AStar() : goal(NULL), NumRow(0), NumCol(0)
 {
 }
 
@@ -49,31 +62,54 @@ AStar::~AStar()
 
 }
 
-AStar::AStar(const vector<vector<bool>>& tileMap) : goal(NULL)
+AStar::AStar(const vector<vector<bool>>& tileMap) : goal(NULL), NumRow(0), NumCol(0)
 {
 	this->tileMap = tileMap;
 
 	NumRow = tileMap[0].size();
 	NumCol = tileMap.size();
-}
 
-void AStar::Traverse()
-{
-	if (current->child)
-		current = current->child;
+	for (int i = 0; i < NumCol; ++i)
+	{
+		nodeMap.push_back(vector<Node>());
+
+		for (int j = 0; j < NumRow; ++j)
+		{
+			nodeMap[i].push_back(Node(i, j));
+		}
+	}
 }
 
 // Get Best ( Minimum f ) Node From Open List
 Node* AStar::GetBest()
 {
-	int best = 0;										// Initialise Best (Minimum f) Index=0 For Start Of Comparison
-	for (int i = 1; i < (int)openList.size(); i++) {
-		if (openList[i]->f < openList[best]->f) {		// Comparing ..
-			best = i;									// Get Index With Lower 'f' Value
-		}
-	}
+	Node* best = NULL;
 
-	return openList[best];								// return the best node
+	for (int i = 0; i < NumCol; ++i)
+		for (int j = 0; j < NumRow; ++j)
+		{
+			Node* node = GetNode(i, j);
+
+			if (node->type == Node::NODE_OPEN)
+			{
+				if (best && node->f < best->f)
+				{
+					best = node;
+				}
+				else
+				{
+					best = node;
+				}
+			}
+
+		}
+
+	return best;
+}
+
+Node* AStar::GetNode(int x, int y)
+{
+	return &nodeMap[x][y];
 }
 
 // Get Neighborhood Nodes ( By Index ) Of Current Node
@@ -83,12 +119,9 @@ Node* AStar::GetSuccessor(Node *current, int i)
 	int x = current->x + succ[i].x;						// Get x,y Position By Index
 	int y = current->y + succ[i].y;
 
-	if (y >= 0 && y < NumRow && x >= 0 && x < NumCol &&
-		tileMap[x][y] == false)		// If Grid Element Contains Empty Space
+	if (y >= 0 && y < NumRow && x >= 0 && x < NumCol && tileMap[x][y] == false)		// If Grid Element Contains Empty Space
 	{
-		n = new Node;									// Create A Node Object
-		n->x = x;										// Initialise To x-y Value Of Successor
-		n->y = y;
+		n = GetNode(x, y);									// Create A Node Object
 	}
 	
 	return n;											// Return Successor Node
@@ -97,152 +130,84 @@ Node* AStar::GetSuccessor(Node *current, int i)
 // Calculate Start To Current Node 'n' Cost
 // Formula Below Reflects Scalability According To Cost Behavior
 // ALPHA = Scaling Factor 
-float AStar::Compute_g(Node* n) {
-	float tempG;
-	if (n->parent != NULL) tempG = n->parent->g;
-	else tempG = n->g;
-	return (float)(1.0 + ALPHA * (tempG - 1.0));
+float AStar::Compute_g(Node* n)
+{
+	float dx = abs(start->x - n->x);
+	float dy = abs(start->y - n->y);
+
+	return 1 * (dx + dy);
 }
 
 // Calculate Cost From Start 'n' to Goal Node Using 'Manhattan' Distance Formula
 float AStar::Compute_h(Node* n)
 {
-	return  (float)(MIN_COST*(abs((float)n->x - (float)goal->x) + abs((float)n->y - (float)goal->y)));
+	float dx = abs(n->x - goal->x);
+	float dy = abs(n->y - goal->y);
+
+	return  1 * (dx + dy);
 }
 
-// Check Whether Node 'n' Is In List
-bool AStar::InList(vector <Node*> list, Node *n)
+float AStar::Compute_g(const Vector2& n, const Vector2& start)
 {
-	for (int i = 0; i<(int)list.size(); i++)
-	{
-		if ((list[i]->x == n->x) && (list[i]->y == n->y))
-		{
-			return  true;			// If Found In List
-		}
-	}
-	return false;					// If Not In List
+	float dx = abs(start.x - n.x);
+	float dy = abs(start.y - n.y);
+
+	return 1 * (dx + dy);
+}
+
+// Calculate Cost From Start 'n' to Goal Node Using 'Manhattan' Distance Formula
+float AStar::Compute_h(const Vector2& n, const Vector2& goal)
+{
+	float dx = abs(n.x - goal.x);
+	float dy = abs(n.y - goal.y);
+
+	return  1 * (dx + dy);
+}
+
+
+// Check Whether Node 'n' Is In List
+bool AStar::InOpen(Node *n)
+{
+	return n->type == Node::NODE_OPEN;
+}
+
+bool AStar::InClose(Node *n)
+{
+	return n->type == Node::NODE_CLOSE;
 }
 
 // Get From Open List Item As Specified In 'succ' Successor
 Node* AStar::getFromOpenList(Node* succ)
 {
-	Node *n;
-	for (int i = 0; i<(int)openList.size(); i++)	// Loop Through List		
-	{
-		if ((openList[i]->x == succ->x) && (openList[i]->y == succ->y))	// Have A Match ...
-		{
-			n = openList[i];													// Pick The Node
-			break;
-		}
-	}
-	return n;
+	return GetNode(succ->x, succ->y);
 }
 // Get From Close List Item As Sspecified In 'succ' Successor
 Node* AStar::getFromCloseList(Node* succ)
 {
-	Node *n;
-	for (int i = 0; i<(int)closeList.size(); i++)  // Loop Through List
-	{
-		if ((closeList[i]->x == succ->x) && (closeList[i]->y == succ->y)) // Have A Match ...
-		{
-			n = closeList[i];											   // Pick The Node
-			break;
-		}
-	}
-	return n;
-}
-#include <string>
-using namespace std;
-void AStar::ShowPath(Node *walker)
-{
-	vector<int> xpos;
-	vector<int> ypos;
-	cout << "\nBEST PATH SOLUTION";
-
-	vector<vector<string>> print;
-	for (int i = 0; i < NumRow; ++i)
-	{
-		print.push_back(vector<string>());
-
-		for (int j = 0; j < NumCol; ++j)
-		{
-			print[i].push_back(" ");
-		}
-	}
-
-	// Get Node On Best Path Linked To Goal 
-	while (walker != NULL)		// If Start Point IS Not NULL
-	{
-		print[walker->y][walker->x] = '*';	// Grid Map Node Is Marked As Best Path Node
-
-
-		xpos.push_back(walker->x);
-		ypos.push_back(walker->y);
-
-		walker = walker->parent;		// Go To Next Link To The Path
-
-	}
-
-	cout << "\n";
-	for (int y = 0; y< print.size(); y++)			// Loop Through 2D Array To Show Map & Path
-	{
-		for (int x = 0; x< print[y].size(); x++)
-		{
-			cout << print[y][x];
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-
-	for (int i = 0; i < xpos.size(); ++i)
-	{
-		cout << "x: " << xpos[i] << " y: " << ypos[i] << endl;
-	}
+	return GetNode(succ->x, succ->y);
 }
 
 #include "../../GridInfo.h"
 
-bool AStar::GetPathBeside(Vector2 s, Vector2 g)
+void AStar::ResetNodeMap()
 {
-	Vector2 goal[4];
-/*
-	goal[0].Set(g.x, g.y + grid->GetTileHeight());
-	goal[1].Set(g.x, g.y - grid->GetTileHeight());
-	goal[2].Set(g.x + grid->GetTileWidth(), g.y);
-	goal[3].Set(g.x - grid->GetTileWidth(), g.y);*/
-
-	float nearest = 9999 * 9999;
-	int index = 0;
-
-	for (int i = 0; i < 4; ++i)
+	for (auto& list : nodeMap)
 	{
-		if (goal[i].DistSquared(s) < nearest)
-		{
-			nearest = goal[i].DistSquared(s);
-			index = i;
-		}
+		for (auto& node : list)
+			node.Reset();
 	}
-
-	return GetPath(s, goal[index]);
 }
 
 // Search For Best Path ( Minimum Cost )
 bool AStar::GetPath(Vector2 s, Vector2 g)
 {
-	while (goal != NULL)		// If Start Point IS Not NULL
-	{
-		Node* temp = goal;
-		goal = goal->parent;
-		delete temp;
-	}
-	openList.clear();
-	closeList.clear();
+	ResetNodeMap();
+	open = close = 0;
+
 	current = NULL;
 
-	Node* start = new Node;									// Create Node Objects & Allocate Memory
-	goal = new Node;
-	start->x = s.x; start->y = s.y;
-	goal->x = g.x; goal->y = g.y;		// Set Start and Goal x-y Values
+	start = GetNode(s.x, s.y);
+	goal = GetNode(g.x, g.y);
 
 	start->h = Compute_h(start);
 	start->f = start->g + start->h;
@@ -250,19 +215,14 @@ bool AStar::GetPath(Vector2 s, Vector2 g)
 	Node * temp = NULL;
 
 	AddOpenList(start);									// Add Start Node To Open List
-	while ((int)openList.size() != 0)					// Checking If Open List Is Empty
+	while (open)					// Checking If Open List Is Empty
 	{
 		Node *n = GetBest();							// Get Best Node With Minimum 'f' Value
-		//cout << "Getting best node (minimum f) ... ";
-		//printInfo(n->x, n->y, n->f, n->g, n->h);						// List The Node Info
-		//cout << "Matching  (" << n->x << "," << n->y << ") with  goal ";
-		//cout << "(" << goal->x << "," << goal->y << ")" << endl;
-		//cin.get();									// UNCOMMENT TO SEE INTERMEDIATE RESULTS		
+		
 		if ((n->x == goal->x) && (n->y == goal->y))			// If Current Node 'n' Matches Goal Node in x,y Values
 		{
-			delete goal;
 			goal = current = n;
-
+			
 			while (n->parent != NULL)
 			{
 				n->parent->child = n;
@@ -277,19 +237,19 @@ bool AStar::GetPath(Vector2 s, Vector2 g)
 		{
 			RemoveOpenList(n);							// Remove Node From Open List Since It Has Been Examined
 			AddCloseList(n);							// Add To Examined (Close) List
-			Node *successor;							// Define Successor Node
+
 			// Define Temporary Node
-			for (int i = 0; i < 4; i++) {				// Loop Through 4 Neighborhood Nodes By Their Index
-				successor = GetSuccessor(n, i);			// Get Successor Node By Index
-				if (successor != NULL)						// If A Valid Space For A Successor Node
+			for (int i = 0; i < 4; i++) 
+			{			
+				Node* successor = GetSuccessor(n, i);			// Get Successor Node By Index
+
+				if (successor)						// If A Valid Space For A Successor Node
 				{
-					successor->parent = n;						// Link Back To Parent/Current Node
 					successor->g = Compute_g(successor);		// Calculate 'g' Cost Value
 					successor->h = Compute_h(successor);		// Calculate 'h' Cost Value
 					successor->f = successor->g + successor->h;   // Calculate 'f' Cost Value
-					//cout << "Getting successor ....";
-					//printInfo(successor->x, successor->y, successor->f, successor->g, successor->h);	// List Successor x,y,f Values
-					if (InList(openList, successor))						// If Proposed Succesor Exists In Open List..
+				
+					if (InOpen(successor))						// If Proposed Succesor Exists In Open List..
 					{
 						temp = getFromOpenList(successor);				// Get The Node Concerned
 						if (temp->f > successor->f)						// Check If Successor's 'f' Value Is Lower
@@ -298,8 +258,7 @@ bool AStar::GetPath(Vector2 s, Vector2 g)
 							AddOpenList(successor);						// Add Successor To Open List Instead
 						}
 					}
-					else
-					if (InList(closeList, successor))						// If Proposed Succesor Exists In Close List..
+					else if (InClose(successor))						// If Proposed Succesor Exists In Close List..
 					{
 						temp = getFromCloseList(successor);				// Get The Node Concerned
 						if (temp->f > successor->f)						// Check If Successor's 'f' Value Is Lower
@@ -311,54 +270,51 @@ bool AStar::GetPath(Vector2 s, Vector2 g)
 					else												// if Not In Either Open Or Close List ie : New ...
 					{
 						AddOpenList(successor);						// Add Successor To Open List
+						successor->parent = n;						// Link Back To Parent/Current Node
 					}
 				}
 			}
 		}
 	}
-	cout << "A path finder could not find a path" << endl;
 
-	return false;					// Return False(Not Found)
+	return false;
 
 }
 
 // Add To Open List, Show Its Content
 void AStar::AddOpenList(Node *n)
 {
-	openList.push_back(n);
+	++open;
+	n->type = Node::NODE_OPEN;
 }
 // Add To Close List, Show Its Content
 void AStar::AddCloseList(Node *n)
 {
-	closeList.push_back(n);
+	++close;
+	n->type = Node::NODE_CLOSE;
 }
 
 // Remove Node From Open List After It Is Examined For Minimum 'f' Value
 void AStar::RemoveOpenList(Node *n)
 {
-	for (int i = 0; i<(int)openList.size(); i++)	// Go Through Open List Items
-	{
-		if ((openList[i]->x == n->x) && (openList[i]->y == n->y)) // If Found The Item 
-		{							// List Node(To Erase) x,y,f Values
-			openList.erase(openList.begin() + i, openList.begin() + i + 1);	// Erase Item From List	
-			break;
-		}
-	}
+	--open;
+	n->type = Node::NODE_UNDEFINED;
 }
 
 // Remove Node From Close List After It Is Examined For Minimum 'f' Value
 void AStar::RemoveCloseList(Node *n)
 {
-	for (int i = 0; i<(int)closeList.size(); i++)	// Go Through Close List Items
-	{
-		if ((closeList[i]->x == n->x) && (closeList[i]->y == n->y)) // If Found The Item 
-		{							// List Node(To Erase) x,y,f Values
-			closeList.erase(closeList.begin() + i, closeList.begin() + i + 1);	// Erase Item From List	
-			break;
-		}
-	}
+	--close;
+	n->type = Node::NODE_UNDEFINED;
 }
 
-Node::Node() :parent(NULL), child(NULL), f(0.0), g(0.0), h(0.0)
+Node::Node(int x, int y) :parent(NULL), child(NULL), f(0.0), g(0.0), h(0.0), x(x), y(y), type(NODE_UNDEFINED)
 {
+}
+
+void Node::Reset()
+{
+	parent = child = NULL;
+	f = g = h = 0;
+	type = NODE_UNDEFINED;
 }

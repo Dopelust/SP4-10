@@ -82,6 +82,56 @@ void Assets::Init()
 	texture["Blue"] = new Texture("Assets//blueslime1.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Red"] = new Texture("Assets//redslime.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
+	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+
+	sprite["Puff"] = new Spritesheet();
+
+	for (int i = 0; i < 10; ++i)
+	{
+		Sprite* s = sprite["Puff"]->AddSprite();
+		Vector4 uv = Texture::GetUV(i, 10);
+		uv.y = 0;
+		uv.w = 1;
+
+		s->SetUV(uv);
+		s->SetTexture(texture["Puff"]);
+	}
+
+	animation["Puff"] = new Animation();
+	animator["Puff"] = new Animator();
+
+	for (int i = 0; i < 10; ++i)
+		animation["Puff"]->AddFrame(sprite["Puff"]->GetSprite(i));
+
+	animation["Puff"]->SetFramerate(0.02f);
+
+	animator["Puff"]->AddAnimation("Puff", animation["Puff"]);
+
+	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+
+	sprite["Puff"] = new Spritesheet();
+
+	for (int i = 0; i < 10; ++i)
+	{
+		Sprite* s = sprite["Puff"]->AddSprite();
+		Vector4 uv = Texture::GetUV(i, 10);
+		uv.y = 0;
+		uv.w = 1;
+
+		s->SetUV(uv);
+		s->SetTexture(texture["Puff"]);
+	}
+
+	animation["Puff"] = new Animation();
+	animator["Puff"] = new Animator();
+
+	for (int i = 0; i < 10; ++i)
+		animation["Puff"]->AddFrame(sprite["Puff"]->GetSprite(i));
+
+	animation["Puff"]->SetFramerate(0.02f);
+
+	animator["Puff"]->AddAnimation("Puff", animation["Puff"]);
+
 	texture["Rank"] = new Texture("Assets//rank.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
 	sprite["Rank"] = new Spritesheet();

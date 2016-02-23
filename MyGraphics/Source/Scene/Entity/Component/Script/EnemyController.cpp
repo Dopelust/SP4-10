@@ -76,7 +76,7 @@ void EnemyController::Update(double dt)
 		UpdateDirection();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
-		if (owner->transform->GetPosition().DistSquared(target) < 1 * 1)
+		if (owner->transform->GetPosition().DistSquared(target) < 2 * 2)
 		{
 			owner->transform->Position() = target;
 			indexPos.Set(moveNode->x, moveNode->y);
@@ -162,6 +162,8 @@ void EnemyController::Pop()
 	}
 	
 	done = true;
+
+	EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2(), "Puff", "Puff");
 }
 
 void EnemyController::Slow(float slowAmount, float duration)
