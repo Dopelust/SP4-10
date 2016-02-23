@@ -316,6 +316,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Stage\StageDatabase.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -549,7 +552,10 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="StageData.hpp">
+    <ClInclude Include="Source\Scene\Stage\StageDatabase.h">
+      <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Stage\StageData.h">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClInclude>
   </ItemGroup>

@@ -107,6 +107,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\WorldZoomScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\SpriteAnimator.cpp" />
     <ClCompile Include="Source\Scene\Projectile\ProjectileDatabase.cpp" />
+    <ClCompile Include="Source\Scene\Stage\StageDatabase.cpp" />
     <ClCompile Include="Source\Scene\Tower\TowerDatabase.cpp" />
     <ClCompile Include="Source\TestState.cpp" />
     <ClCompile Include="Source\Animation.cpp" />
@@ -184,6 +185,8 @@
     <ClInclude Include="Source\Scene\Entity\Component\SpriteAnimator.h" />
     <ClInclude Include="Source\Scene\Projectile\ProjectileData.h" />
     <ClInclude Include="Source\Scene\Projectile\ProjectileDatabase.h" />
+    <ClInclude Include="Source\Scene\Stage\StageData.h" />
+    <ClInclude Include="Source\Scene\Stage\StageDatabase.h" />
     <ClInclude Include="Source\Scene\Tower\TowerData.h" />
     <ClInclude Include="Source\Scene\Tower\TowerDatabase.h" />
     <ClInclude Include="Source\TestState.h" />
@@ -236,7 +239,6 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Tile.h" />
     <ClInclude Include="Source\vertex.h" />
-    <ClInclude Include="StageData.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

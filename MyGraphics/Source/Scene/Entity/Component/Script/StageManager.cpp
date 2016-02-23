@@ -9,7 +9,13 @@ StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
 freeTime(0),
-waveTimer(0)
+waveTimer(0),
+spawnTimer(0),
+owner(NULL),
+currentWave(0),
+spawnNo(0),
+countNo(0),
+waveDone(false)
 {
 }
 
@@ -25,10 +31,8 @@ void StageManager::Init(Entity* ent)
 
 #include "../../EntityFactory.h"
 
-void StageManager::LateInit(string stageName, Grid* grid, vector<int>& obstructionIndex)
+void StageManager::LateInit(Grid* grid, vector<int>& obstructionIndex)
 {
-	this->stageName = stageName;
-
 	spawnPoints = grid->GetTilesWithIndex(3);
 	endPoints = grid->GetTilesWithIndex(4);
 
@@ -46,27 +50,17 @@ void StageManager::LateInit(string stageName, Grid* grid, vector<int>& obstructi
 using namespace std;
 #include "Utility.h"
 
-void StageManager::LoadStage(const char * stageFilePath)
+#include "../../../Stage/StageDatabase.h"
+
+void StageManager::LoadStage(string stageName)
 {
-	// To Do: Load enemy spawn pattern, free time, player base health
-	/*ifstream stageDataFile(ToString("Data//Prefab//Tower//", stageFilePath, ".txt").c_str());
+	currentStage = stageName;
+	maxWave = GetData().stageData.size();
+}
 
-	string line;
-
-	if (stageDataFile.is_open())
-	{
-		while (!stageDataFile.eof())
-		{
-			getline(stageDataFile, line, ' ');
-
-			if (!(line.size() > 2 && line[0] == line[1] == '/'))
-			{
-				getline(stageDataFile, name, '\n');
-			}
-		}
-
-		towerDataFile.close();
-	}*/
+StageData& StageManager::GetData()
+{
+	return StageDatabase::GetData(currentStage);
 }
 
 #include "../../Entity.h"
@@ -116,8 +110,8 @@ void StageManager::UpdateFreeTime(double dt)
 	if (freeTimer > freeTime)
 	{
 		state = WAVE;
+		InitWave();
 		UpdatePathFinders();
-		SpawnEnemies();
 		freeTimer = 0;
 	}
 }
@@ -128,17 +122,17 @@ void StageManager::UpdateFreeTime(double dt)
 
 void StageManager::UpdateWave(double dt)
 {	
-	waveTimer += (float)dt;
+	SpawnEnemies(dt);
 
-	if (waveTimer > 1.f)
-	{
-		SpawnEnemies();
-		waveTimer = 0;
-	}
-
-	if (enemies.empty())
+	if (enemies.empty() && waveDone)
 	{
 		state = FREETIME;
+		++currentWave;
+		if (currentWave >= maxWave)
+		{
+			currentWave = 0;
+		}
+		waveDone = false;
 		return;
 	}
 	
@@ -217,21 +211,53 @@ bool StageManager::CheckObstruction(int i, int j)
 	return tileMap[i][j];
 }
 
+void StageManager::InitWave()
+{
+	for (int i = 0; i < GetData().stageData[currentWave].count.size(); ++i)
+	{
+		for (int j = 0; j < GetData().stageData[currentWave].count[i]; ++j)
+		{
+			spawnQueue.push(GetData().stageData[currentWave]);
+		}
+	}
+
+	countNo = 0;
+	spawnNo = 0;
+	spawnTimer = 0;
+}
+
 #include "../../../AStar/AStar.h"
 
-void StageManager::SpawnEnemies()
+void StageManager::SpawnEnemies(double dt)
 {
-	// To Do: Monster spawning from text file
-	for (int i = 0; i < spawnPoints.size(); ++i)
+	spawnTimer += (float)dt;
+
+	if (spawnQueue.empty())
 	{
-		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[i]);
-		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), 2);
-		enemy->AddComponent<PathFinder>()->SetStart(spawnPoints[i]);
+		waveDone = true;
+	}
+	else if (spawnTimer > spawnQueue.front().delay[spawnNo])
+	{
+		int spawnPt = rand() % spawnPoints.size();
+		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
+		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), spawnQueue.front().tier[spawnNo]);
+		enemy->AddComponent<PathFinder>()->SetStart(spawnPoints[spawnPt]);
 		enemy->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
 		//enemy->GetComponent<EnemyController>()->SetNode(enemy->GetComponent<PathFinder>()->GetStart(), i);
 		enemy->GetComponent<EnemyController>()->UpdatePath();
 
 		enemies.push_back(enemy);
+
+		++countNo;
+
+		if (countNo >= spawnQueue.front().count[spawnNo])
+		{
+			countNo = 0;
+			++spawnNo;
+		}
+
+		spawnQueue.pop();
+		spawnTimer = 0;
 	}
 }
 
@@ -249,5 +275,5 @@ void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int ti
 
 string StageManager::GetStageName()
 {
-	return stageName;
+	return currentStage;
 }

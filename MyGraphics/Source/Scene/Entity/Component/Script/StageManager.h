@@ -2,12 +2,15 @@
 #define GAME_MANAGER_H
 
 #include "../Component.h"
+#include "../../../Stage/StageData.h"
 
 #include <string>
 #include <vector>
+#include <queue>
 
 using std::string;
 using std::vector;
+using std::queue;
 
 struct Vector2;
 
@@ -16,6 +19,7 @@ struct Vector2;
 class Grid;
 class GridInfo;
 class Entity;
+class StageData;
 
 enum StageState
 {
@@ -32,15 +36,15 @@ public:
 	~StageManager();
 
 	void Init(Entity* ent);
-	void LateInit(string stageName, Grid* grid, vector<int>& obstructionIndex);
+	void LateInit(Grid* grid, vector<int>& obstructionIndex);
 	// Load Stage Data
-	void LoadStage(const char * stageFilePath);
+	void LoadStage(string stageName);
 	void Update(double dt);
 
 	void AddObstruction(int i, int j);
 	void RemoveObstruction(int i, int j);
 	bool CheckObstruction(int i, int j);
-	void SpawnEnemies();
+	void SpawnEnemies(double dt);
 	void AddEnemy(const Vector2 &position, const Vector2 index, int tier, int step, int parentID);
 
 	string GetStageName();
@@ -56,15 +60,27 @@ private:
 	void CreatePathFinders();
 	void UpdateFreeTime(double dt);
 	void UpdateWave(double dt);
+	void InitWave();
+
+	StageData& GetData();
 
 	Entity *owner;
-	string stageName;
 
-	int noWaves;
+	string currentStage;
+
+	int maxWave;
+	int currentWave;
+	bool waveDone;
+
 	StageState state;
 	const float freeTime;
 	float freeTimer;
 	float waveTimer;
+	float spawnTimer;
+
+	queue<WaveData> spawnQueue;
+	int countNo;
+	int spawnNo;
 
 	vector<vector<bool>> tileMap;
 };

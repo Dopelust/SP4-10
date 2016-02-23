@@ -30,6 +30,7 @@ PlayState::~PlayState()
 #include "Scene\Tower\TowerDatabase.h"
 #include "Scene\Projectile\ProjectileDatabase.h"
 #include "Scene\Enemy\EnemyDatabase.h"
+#include "Scene\Stage\StageDatabase.h"
 
 #include "Scene\Entity\Component\Physics\BoxCollider.h"
 #include "Scene\Entity\Component\Script\TileSelector.h"
@@ -154,19 +155,21 @@ void PlayState::Init()
 	editor->GetComponent<TowerManager>()->gui = editor->GetComponent<TowerGUI>();
 	editor->GetComponent<TowerGUI>()->DisableUpgrades();
 
+	ProjectileDatabase::Init("arrow");
+	EnemyDatabase::Init("jelly");
+	StageDatabase::Init("level1");
+
 	Entity* stageManager;
 	stageManager = new Entity();
 	stageManager->Rename("Stage Manager");
 	vector<int> a;
 	a.push_back(1);
 	a.push_back(2);
-	stageManager->AddComponent<StageManager>()->LateInit("test", scene->grid, a);
+	stageManager->AddComponent<StageManager>()->LateInit(scene->grid, a);
+	stageManager->GetComponent<StageManager>()->LoadStage("level1");
 
 	scene->root->AttachChild(stageManager);
 	editor->GetComponent<TowerManager>()->stage = stageManager->GetComponent<StageManager>();
-
-	ProjectileDatabase::Init("arrow");
-	EnemyDatabase::Init("jelly");
 
 	Resume();
 }

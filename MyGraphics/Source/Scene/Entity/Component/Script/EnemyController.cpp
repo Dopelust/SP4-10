@@ -120,6 +120,8 @@ void EnemyController::UpdatePath()
 
 	moveNode = node->child;
 
+	//indexPos.Set(moveNode->x, moveNode->y);
+
 	/*Node* checkNode;
 	checkNode = node;
 
