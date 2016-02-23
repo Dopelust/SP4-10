@@ -10,6 +10,7 @@ ISound* SoundEngine::Play2D(const char * name, float volume)
 	{
 		sound->setVolume(volume);
 		sound->setIsPaused(false);
+		return sound;
 	}
 }
 
