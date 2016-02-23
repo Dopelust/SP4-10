@@ -2,17 +2,12 @@
 
 #include "../../../AStar/AStar.h"
 
-PathFinder::PathFinder() :
-aStar(NULL),
-start(NULL)
+PathFinder::PathFinder() : index(0)
 {
-	aStar = new AStar();
 }
 
 PathFinder::~PathFinder()
 {
-	delete aStar;
-	aStar = NULL;
 }
 
 void PathFinder::Init(Entity* ent)
@@ -25,65 +20,90 @@ void PathFinder::Update(double dt)
 
 }
 
-void PathFinder::Set(Vector2 start, Vector2 end)
-{
-	this->start = start;
-	this->end = end;
-}
-
-void PathFinder::SetStart(Vector2 start)
-{
-	this->start = start;
-}
-
-void PathFinder::SetEnd(Vector2 end)
-{
-	this->end = end;
-}
+//void PathFinder::Set(Vector2 start, Vector2 end)
+//{
+//	this->start = start;
+//	this->end = end;
+//}
+//
+//void PathFinder::SetStart(Vector2 start)
+//{
+//	this->start = start;
+//}
+//
+//void PathFinder::SetEnd(Vector2 end)
+//{
+//	this->end = end;
+//}
 
 #include <map>
 
-bool PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const vector<Vector2> &endPoints)
+bool PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const Vector2& start, const vector<Vector2> &endPoints)
 {
-	aStar->Update(tileMap);
+	AStar::Update(tileMap);
 
 	static map<float, Vector2> hMap;
 	hMap.clear();
 
 	for (auto& pt : endPoints)
 	{
-		hMap[aStar->Compute_h(start, pt)] = pt;
+		hMap[pt.DistSquared(start)] = pt;
 	}
 
 	for (auto& h : hMap)
 	{
-		SetEnd(h.second);
-
-		if (CalculatePath())
+		if (CalculatePath(start, h.second))
 			return true;
 	}
 
 	return false;
 }
 
-bool PathFinder::CalculatePath()
+bool PathFinder::CalculatePath(const Vector2& start, const Vector2& end)
 {
-	if (aStar->GetPath(start, end))
+	path = AStar::GetPath(start, end);
+
+	if (path.GetPathLength())
 	{
+		index = path.GetPathLength() - 1;
 		return true;
 	}
-	else
+	
+	return false;
+}
+
+Vector2 PathFinder::GetTarget()
+{
+	return path.GetPath(index);
+}
+
+bool PathFinder::Traverse()
+{
+	if (index > 0)
 	{
-		return false;
+		--index;
+		return true;
 	}
+
+	return false;
 }
 
-int PathFinder::GetPathLength()
+bool PathFinder::IsEndOfPath()
 {
-	return aStar->GetPathLength();
+	return index == 0;
 }
 
-Node* PathFinder::GetStart()
+bool PathFinder::HasPath()
 {
-	return aStar->start;
+	return path.GetPathLength();
 }
+
+//int PathFinder::GetPathLength()
+//{
+//	return aStar->GetPathLength();
+//}
+//
+//Node* PathFinder::GetStart()
+//{
+//	return aStar->start;
+//}

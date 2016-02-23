@@ -88,12 +88,12 @@ Entity * EntityFactory::CreateSlider(const Vector2 & position, const Vector2 & s
 {
 	Entity* entity = CreateGraphic(position, size + Vector2(4, 4), NULL, Vector3(0, 0, 0));
 
-	Entity* guide = entity->AttachChild(CreateButton(Vector2(), Vector2(size.x, 20), NULL, Vector3(0, 0, 0)));
+	Entity* guide = entity->AttachChild(CreateButton(Vector2(), Vector2(size.x, size.y), NULL, Vector3(0, 0, 0)));
 	guide->GetComponent<Graphic2D>()->SetActive(false);
 
 	Entity* fill = entity->AttachChild(CreateGraphic(Vector2(), size, NULL, Vector3(0.75f, 0, 0)));
 
-	Entity* slider = entity->AttachChild(CreateButton(Vector2(), Vector2(8, 20), NULL, Vector3(0, 0, 0)));
+	Entity* slider = entity->AttachChild(CreateButton(Vector2(), Vector2(8, size.y), NULL, Vector3(0, 0, 0)));
 	slider->Rename("Slider");
 	slider->AddComponent<Slider>()->guide = guide->GetComponent<Button>();
 	slider->GetComponent<Slider>()->fill = fill->transform;
@@ -112,7 +112,7 @@ Entity * EntityFactory::CreateSlider(const Vector2 & position, const Vector2 & s
 	slider->GetComponent<Slider>()->SetMax(max);
 	slider->GetComponent<Slider>()->SetValue(value);
 
-	slider = slider->AttachChild(CreateGraphic(Vector2(), Vector2(4, 16), NULL, Vector3(0.9f, 0.9f, 0.9f)));
+	slider = slider->AttachChild(CreateGraphic(Vector2(), Vector2(4, size.y), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 
 	return entity;
 }
@@ -257,10 +257,27 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
 	entity->AddComponent<BoxCollider>()->size.Set(TileWidth * 0.725f, TileHeight * 0.725f);
 	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
 
-	entity->AttachChild(CreateGraphic(Vector2(0, -0.5f), Vector2(TileWidth * 0.9f, TileHeight * 0.725f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	entity->AttachChild(CreateGraphic(Vector2(0, 0), Vector2(TileWidth * 0.9f, TileHeight * 0.7f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 
 	Generate(scene->root, entity);
 	return entity;
+}
+
+#include "Component\Script\StandardParticle.h"
+
+Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation)
+{
+	Entity* entity = new Entity("Particle");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x, size.y);
+	
+	entity->AddComponent<SpriteRenderer>();
+	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
+	entity->GetComponent<SpriteAnimator>()->Play(animation, false);
+	
+	entity->AddComponent<StandardParticle>();
+		
+	return Generate(scene->root, entity);
 }
 
 Entity * EntityFactory::Generate(Entity * root, Entity * entity)

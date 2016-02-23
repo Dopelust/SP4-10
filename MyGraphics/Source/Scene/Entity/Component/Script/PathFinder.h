@@ -4,15 +4,12 @@
 #include "../Component.h"
 
 #include <vector>
-
 using std::vector;
 
 #include "Vector2.h"
+#include "../../../AStar/Path.h"
 
-class AStar;
-class Node;
-class PathFinder :
-	public Component
+class PathFinder : public Component
 {
 public:
 	PathFinder();
@@ -21,20 +18,17 @@ public:
 	void Init(Entity* ent);
 	void Update(double dt);
 
-	void Set(Vector2 start, Vector2 end);
-	void SetStart(Vector2 start);
-	void SetEnd(Vector2 end);
-	bool UpdateMap(vector<vector<bool>> &tileMap, const vector<Vector2> &endPoints);
-	bool CalculatePath();
-	int GetPathLength();
-	Node* GetStart();
+	bool UpdateMap(vector<vector<bool>> &tileMap, const Vector2& start, const vector<Vector2> &endPoints);
+	bool CalculatePath(const Vector2& start, const Vector2& end);
+
+	Vector2 GetTarget();
+	bool Traverse();
+	bool IsEndOfPath();
+	bool HasPath();
 
 private:
-	AStar* aStar;
-
-	// Indexes on grid
-	Vector2 start;
-	Vector2 end;
+	Path path;
+	int index;
 };
 
 #endif

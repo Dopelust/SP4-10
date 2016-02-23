@@ -177,9 +177,9 @@ bool TowerController::SearchForTarget()
 			float distSq = (entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared();
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				if (entityList[i]->GetComponent<EnemyController>()->steps > highestStep)
+				//if (entityList[i]->GetComponent<EnemyController>()->steps > highestStep)
 				{
-					highestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					//highestStep = entityList[i]->GetComponent<EnemyController>()->steps;
 					first = entityList[i];
 				}
 			}
@@ -194,9 +194,9 @@ bool TowerController::SearchForTarget()
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				if (entityList[i]->GetComponent<EnemyController>()->steps < lowestStep)
+				//if (entityList[i]->GetComponent<EnemyController>()->steps < lowestStep)
 				{
-					lowestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					//lowestStep = entityList[i]->GetComponent<EnemyController>()->steps;
 					last = entityList[i];
 				}
 			}

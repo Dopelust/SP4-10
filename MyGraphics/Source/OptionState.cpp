@@ -37,7 +37,9 @@ void OptionState::Init()
 {
 	glClearColor(0.2, 0.2, 0.2, 1);
 	
-	datsound = Audio.Play2D("Juan");
+	if (!Audio.IsPlaying("Juan"))
+		datsound = Audio.Play2D("Juan");
+
 	//Audio.Play2D("Juan",volume);
 
 	scene = new Scene(NULL);
@@ -53,9 +55,8 @@ void OptionState::Init()
 		Vector4(1, 1, 1, 1.0f)
 		));
 
-	Entity* SmoothSlide = EntityFactory::GenerateSlider(Vector2(scene->GetResolutionX(scene->canvas) * 0.5, scene->GetResolutionY(scene->canvas)*0.5f), Vector2(400, 50), "Volume Slider", NULL, 0, 0.5, 1, false);
+	Entity* SmoothSlide = EntityFactory::GenerateSlider(Vector2(scene->GetResolutionX(scene->canvas) * 0.5, scene->GetResolutionY(scene->canvas)*0.5f), Vector2(400, 50), "Volume Slider", NULL, 0, 100, 100, true);
 	slider = SmoothSlide->GetChild("Slider")->GetComponent<Slider>();
-	slider->valueType = Slider::SLIDER_FLOAT;
 	volume = slider->GetValue();
 
 	Resume();
@@ -75,7 +76,8 @@ void OptionState::Exit()
 void OptionState::Update(float dt)
 {
 	if (slider->ValueChanged())
-		datsound->setVolume(slider->GetValue());
+		datsound->setVolume(slider->GetValue() * 0.01f);
+
 	scene->Update(dt);
 }
 

@@ -3,6 +3,11 @@
 
 #define camera Camera::current
 
+bool SoundEngine::IsPlaying(const char * name)
+{
+	return engine->isCurrentlyPlaying(audio[name].c_str());
+}
+
 ISound* SoundEngine::Play2D(const char * name, float volume)
 {
 	ISound * sound = engine->play2D(audio[name].c_str(), false, true);

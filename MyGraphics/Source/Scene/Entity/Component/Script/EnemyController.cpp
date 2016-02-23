@@ -11,8 +11,7 @@ done(false),
 slowed(false),
 stunned(false),
 pop(false),
-moveNode(NULL),
-steps(0),
+path(NULL),
 statusTimer(0),
 statusDuration(0),
 tier(0),
@@ -49,9 +48,13 @@ void EnemyController::LateInit(int enemyTier)
 #include "../../../../Grid.h"
 #include "../../../Scene.h"
 #include "StageManager.h"
+#include "PathFinder.h"
 
 void EnemyController::Update(double dt)
 {
+	if (!path)
+		path = owner->GetComponent<PathFinder>();
+
 	if (stunned || slowed)
 	{
 		statusTimer += (float)dt;
@@ -73,93 +76,44 @@ void EnemyController::Update(double dt)
 	if (stunned)
 		return;
 
-	if (moveNode)
+	if (path->HasPath())
 	{
-		UpdateDirection();
+		Vector3& target = Scene::scene->grid->GetPosition(path->GetTarget());
+
+		directionN = (target - owner->transform->GetPosition()).Normalized();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
 		if (owner->transform->GetPosition().DistSquared(target) < 2 * 2)
 		{
-			owner->transform->Position() = target;
-			indexPos.Set(moveNode->x, moveNode->y);
-			moveNode = moveNode->child;
-			++steps;
-
-			for (auto& end : stage->endPoints)
+			if (path->IsEndOfPath())
+				done = true;
+			else
 			{
+				owner->transform->Position() = target;
+				path->Traverse();
+
+				/*for (auto& end : stage->endPoints)
+				{
 				if (owner->transform->GetPosition() == Scene::scene->grid->GetPosition(end))
 				{
-					moveNode = NULL;
-					break;
+				moveNode = NULL;
+				break;
 				}
+				}*/
 			}
 		}
 	}
 	else
 	{
-		done = true;
-	}
-}
-
-void EnemyController::UpdateDirection()
-{
-	//if (moveNode)
-	//{
-		target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
-		directionN = (target - owner->transform->GetPosition()).Normalized();
-	//}
-}
-
-void EnemyController::SetNode(Node* startNode, int pathFinderNo)
-{
-	if (startNode != NULL)
-	{
-		this->pathFinderNo = pathFinderNo;
-		this->moveNode = startNode->child;
-		indexPos.Set(moveNode->x, moveNode->y);
-		UpdateDirection();
-	}
-}
-
-const struct { int x, y; } succ[4] = { { 0, -1 }, { 0, 1 }, { 1, 0 }, { -1, 0 } };
-
-#include "PathFinder.h"
-
-void EnemyController::UpdatePath()
-{
-	Node* node = owner->GetComponent<PathFinder>()->GetStart();
-
-	moveNode = node->child;
-
-	//indexPos.Set(moveNode->x, moveNode->y);
-
-	/*Node* checkNode;
-	checkNode = node;
-
-	Node* shortest;
-	int shortestStep = 999;
-
-	while (checkNode)
-	{
-		if (checkNode->x == indexPos.x && checkNode->y == indexPos.y)
+		for (auto& end : stage->endPoints)
 		{
-			moveNode = checkNode->child;
-			return;
-		}
-
-		int steps = abs((checkNode->x - indexPos.x)) + abs((checkNode->y - indexPos.y));
-		if (steps < shortestStep)
-		{
-			shortestStep = steps;
-			shortest = checkNode;
-		}
-		else
-		{
-			checkNode = checkNode->child;
+			if (GetIndex() == end)
+			{
+				done = true;
+				break;
+			}
 		}
 	}
-
-	moveNode = shortest;*/
 }
 
 #include "../../EntityFactory.h"
@@ -192,4 +146,9 @@ void EnemyController::Stun(float duration)
 EnemyData& EnemyController::GetData()
 {
 	return EnemyDatabase::GetData(tier);
+}
+
+Vector2 EnemyController::GetIndex()
+{
+	return Scene::scene->grid->GetIndex(owner->transform->GetPosition()).GetVector2();
 }

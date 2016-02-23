@@ -47,7 +47,7 @@ public:
 	void RemoveObstruction(int i, int j);
 	bool CheckObstruction(int i, int j);
 	void SpawnEnemies(double dt);
-	void AddEnemy(const Vector2 &position, const Vector2 index, int tier, int step, int parentID);
+	void AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID);
 
 	string GetStageName();
 

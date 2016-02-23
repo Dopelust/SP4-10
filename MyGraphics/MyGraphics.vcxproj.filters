@@ -319,6 +319,16 @@
     <ClCompile Include="Source\Scene\Stage\StageDatabase.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\StandardParticle.cpp" />
+    <ClCompile Include="Source\OptionState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\AStar\Path.cpp">
+      <Filter>AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\AStar\ASnode.cpp">
+      <Filter>AStar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -557,6 +567,16 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Stage\StageData.h">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\StandardParticle.h" />
+    <ClInclude Include="Source\OptionState.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\AStar\Path.h">
+      <Filter>AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\AStar\ASnode.h">
+      <Filter>AStar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

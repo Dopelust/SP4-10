@@ -52,7 +52,7 @@ void PlayState::Init()
 
 	scene = new Scene(NULL);
 	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
-	scene->grid->Load("Data//Levels//test.csv");
+	scene->grid->Load("Data//Levels//level1.csv");
 
 	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(100, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Return", 128));

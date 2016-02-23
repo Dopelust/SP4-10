@@ -89,8 +89,11 @@
   <ItemGroup>
     <ClCompile Include="Source\GBuffer.cpp" />
     <ClCompile Include="Source\MenuState.cpp" />
+    <ClCompile Include="Source\OptionState.cpp" />
     <ClCompile Include="Source\PlayState.cpp" />
+    <ClCompile Include="Source\Scene\AStar\ASnode.cpp" />
     <ClCompile Include="Source\Scene\AStar\AStar.cpp" />
+    <ClCompile Include="Source\Scene\AStar\Path.cpp" />
     <ClCompile Include="Source\Scene\Enemy\EnemyDatabase.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
@@ -165,8 +168,11 @@
     <ClInclude Include="Source\GBuffer.h" />
     <ClInclude Include="Source\MenuState.h" />
     <ClInclude Include="Source\MeshLayer.h" />
+    <ClInclude Include="Source\OptionState.h" />
     <ClInclude Include="Source\PlayState.h" />
+    <ClInclude Include="Source\Scene\AStar\ASnode.h" />
     <ClInclude Include="Source\Scene\AStar\AStar.h" />
+    <ClInclude Include="Source\Scene\AStar\Path.h" />
     <ClInclude Include="Source\Scene\Enemy\EnemyData.h" />
     <ClInclude Include="Source\Scene\Enemy\EnemyDatabase.h" />
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h" />

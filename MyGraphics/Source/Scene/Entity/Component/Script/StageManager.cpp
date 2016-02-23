@@ -86,9 +86,7 @@ void StageManager::UpdatePathFinders()
 {
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		enemies[i]->GetComponent<PathFinder>()->SetStart(enemies[i]->GetComponent<EnemyController>()->indexPos);
-		enemies[i]->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
-		enemies[i]->GetComponent<EnemyController>()->UpdatePath();
+		enemies[i]->GetComponent<PathFinder>()->UpdateMap(tileMap, enemies[i]->GetComponent<EnemyController>()->GetIndex(), endPoints);
 	}
 }
 
@@ -149,7 +147,7 @@ void StageManager::UpdateWave(double dt)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
 				{
-					AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->indexPos, (ec->GetData().tier) - 1, ec->steps, enemies[i]->GetID());
+					AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->GetIndex(), (ec->GetData().tier) - 1, enemies[i]->GetID());
 				}
 			}
 
@@ -203,9 +201,7 @@ bool StageManager::AddObstruction(int i, int j)
 
 	for (auto& end : endPoints)
 	{
-		pathfind->SetStart(end);
-
-		if (!pathfind->UpdateMap(tileMap, spawnPoints))
+		if (!pathfind->UpdateMap(tileMap, end, spawnPoints))
 		{
 			tileMap[i][j] = false;
 			return false;
@@ -257,9 +253,8 @@ void StageManager::SpawnEnemies(double dt)
 		int spawnPt = rand() % spawnPoints.size();
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
 		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), spawnQueue.front().tier[spawnNo]);
-		enemy->AddComponent<PathFinder>()->SetStart(spawnPoints[spawnPt]);
-		enemy->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
-		enemy->GetComponent<EnemyController>()->UpdatePath();
+
+		enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, spawnPoints[spawnPt], endPoints);
 
 		enemies.push_back(enemy);
 
@@ -276,13 +271,10 @@ void StageManager::SpawnEnemies(double dt)
 	}
 }
 
-void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int tier, int step, int parentID)
+void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID)
 {
 	Entity* enemy = EntityFactory::GenerateEnemy(position, tier);
-	enemy->AddComponent<PathFinder>()->SetStart(index);
-	enemy->GetComponent<PathFinder>()->UpdateMap(tileMap, endPoints);
-	enemy->GetComponent<EnemyController>()->UpdatePath();
-	enemy->GetComponent<EnemyController>()->steps = step;
+	enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, index, endPoints);
 	enemy->GetComponent<EnemyController>()->parentID = parentID;
 
 	enemies.push_back(enemy);

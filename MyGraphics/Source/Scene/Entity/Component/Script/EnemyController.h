@@ -5,7 +5,7 @@
 
 #include "Vector2.h"
 
-class Node;
+class PathFinder;
 class EnemyData;
 class StageManager;
 struct Vector2;
@@ -22,8 +22,6 @@ public:
 	void Init(Entity* ent);
 	void LateInit(int enemyTier);
 	void Update(double dt);
-	void SetNode(Node* startNode, int pathFinderNo);
-	void UpdatePath();
 	void Pop();
 	void Slow(float slowAmount, float duration);
 	void Stun(float duration);
@@ -37,19 +35,15 @@ public:
 	float statusTimer;
 	float statusDuration;
 
-	int steps;
-	int pathFinderNo;
-	Vector2 indexPos;
+	Vector2 GetIndex();
 
 	bool pop;
 
 	int parentID;
 
 private:
-	void UpdateDirection();
-
 	Entity* owner;
-	Node* moveNode;
+	PathFinder* path;
 
 	Vector3 target;
 	Vector3 directionN;
