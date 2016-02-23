@@ -4,6 +4,8 @@
 #include "../../../Enemy/EnemyData.h"
 #include "../../../Enemy/EnemyDatabase.h"
 
+StageManager* EnemyController::stage = NULL;
+
 EnemyController::EnemyController() :
 done(false),
 slowed(false),
@@ -46,6 +48,7 @@ void EnemyController::LateInit(int enemyTier)
 
 #include "../../../../Grid.h"
 #include "../../../Scene.h"
+#include "StageManager.h"
 
 void EnemyController::Update(double dt)
 {
@@ -72,7 +75,6 @@ void EnemyController::Update(double dt)
 
 	if (moveNode)
 	{
-		//target = Scene::scene->grid->GetPosition(Vector2(moveNode->x, moveNode->y));
 		UpdateDirection();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
@@ -81,8 +83,16 @@ void EnemyController::Update(double dt)
 			owner->transform->Position() = target;
 			indexPos.Set(moveNode->x, moveNode->y);
 			moveNode = moveNode->child;
-			//UpdateDirection();
 			++steps;
+
+			for (auto& end : stage->endPoints)
+			{
+				if (owner->transform->GetPosition() == Scene::scene->grid->GetPosition(end))
+				{
+					moveNode = NULL;
+					break;
+				}
+			}
 		}
 	}
 	else

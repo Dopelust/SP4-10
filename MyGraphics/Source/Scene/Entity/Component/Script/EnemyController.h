@@ -7,12 +7,15 @@
 
 class Node;
 class EnemyData;
+class StageManager;
 struct Vector2;
 
 class EnemyController :
 	public Component
 {
 public:
+	static StageManager* stage;
+
 	EnemyController();
 	~EnemyController();
 

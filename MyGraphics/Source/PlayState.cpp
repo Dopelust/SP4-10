@@ -40,6 +40,7 @@ PlayState::~PlayState()
 #include "Scene\Entity\Component\Script\StageManager.h"
 #include "Scene\Entity\Component\SpriteRenderer.h"
 #include "Scene\Entity\Component\Script\PathFinder.h"
+#include "Scene\Entity\Component\Script\EnemyController.h"
 
 #include "Grid.h"
 #include "Utility.h"
@@ -169,6 +170,8 @@ void PlayState::Init()
 	stageManager->AddComponent<PathFinder>();
 	stageManager->AddComponent<StageManager>()->LateInit(scene->grid, a);
 	stageManager->GetComponent<StageManager>()->LoadStage("level1");
+
+	EnemyController::stage = stageManager->GetComponent<StageManager>();
 
 	scene->root->AttachChild(stageManager);
 	editor->GetComponent<TowerManager>()->stage = stageManager->GetComponent<StageManager>();
