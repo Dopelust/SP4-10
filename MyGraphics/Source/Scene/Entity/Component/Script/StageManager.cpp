@@ -60,7 +60,7 @@ void StageManager::LoadStage(string stageName)
 	currentStage = stageName;
 	maxWave = GetData().stageData.size();
 
-	InitWave();
+	//InitAllWave();
 }
 
 StageData& StageManager::GetData()
@@ -113,6 +113,7 @@ void StageManager::UpdateFreeTime(double dt)
 		state = WAVE;
 		UpdatePathFinders();
 		freeTimer = 0;
+		InitWave();
 	}
 }
 
@@ -219,7 +220,7 @@ bool StageManager::CheckObstruction(int i, int j)
 	return tileMap[i][j];
 }
 
-void StageManager::InitWave()
+void StageManager::InitAllWave()
 {
 	for (int k = 0; k < GetData().stageData.size(); ++k)
 	{
@@ -236,6 +237,22 @@ void StageManager::InitWave()
 	}
 
 	spawnTimer = 0;
+}
+
+void StageManager::InitWave()
+{
+	StageWave wave;
+	wave.waveData = GetData().stageData[currentWave];
+	for (int i = 0; i < GetData().stageData[currentWave].count.size(); ++i)
+	{
+		for (int j = 0; j < GetData().stageData[currentWave].count[i]; ++j)
+		{
+			wave.spawnQueue.push(j);
+		}
+	}
+	waveQueue.push(wave);
+
+	++currentWave;
 }
 
 #include "../../../AStar/AStar.h"

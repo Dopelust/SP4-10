@@ -41,7 +41,10 @@ struct StageWave
 
 	~StageWave()
 	{
-
+		while (!spawnQueue.empty())
+		{
+			spawnQueue.pop();
+		}
 	}
 
 	queue<int> spawnQueue;
@@ -81,6 +84,7 @@ private:
 	void CreatePathFinders();
 	void UpdateFreeTime(double dt);
 	void UpdateWave(double dt);
+	void InitAllWave();
 	void InitWave();
 	void SpawnEnemies(double dt);
 
