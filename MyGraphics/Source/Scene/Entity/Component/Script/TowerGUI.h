@@ -23,8 +23,12 @@ public:
 	Button* sell;
 
 	TextRenderer2D* name;
+
 	TextRenderer2D* damage;
 	TextRenderer2D* range;
+	TextRenderer2D* force;
+	TextRenderer2D* speed;
+	TextRenderer2D* projectiles;
 
 	void Init(Entity* ent);
 	void Update(double dt);

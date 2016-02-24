@@ -83,7 +83,7 @@ void GameEngine::Update(float dt)
 	if (elapsedTime > nextUpdate)
 	{
 		fps = 1.0f / dt;
-		nextUpdate+=0.5f;
+		nextUpdate+=0.1f;
 	}
 
 	elapsedTime += dt;

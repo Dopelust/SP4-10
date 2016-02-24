@@ -10,6 +10,8 @@ public:
 	Graphic2D();
 	~Graphic2D();
 
+	void SetAlignCenter(bool alignCenter);
+
 	void SetLayer(int layer);
 	void SetTexture(Texture* texture);
 
@@ -25,6 +27,7 @@ protected:
 	Vector4 uv;
 	Vector4 color;
 	int layer;
+	bool alignCenter;
 
 	void Draw(const Mtx44& parent);
 };

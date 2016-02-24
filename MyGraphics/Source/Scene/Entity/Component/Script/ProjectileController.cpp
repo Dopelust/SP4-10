@@ -145,7 +145,7 @@ void Projectile::GenerateParticle()
 
 		particle->AddComponent<ScaleScript>()->rate = 32;
 
-		particle->AddComponent<FadeScript>()->rate = -4;
+		particle->AddComponent<FadeScript>()->rate = -3;
 		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<Graphic2D>()->GetColor().w;
 
 	}

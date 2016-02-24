@@ -336,6 +336,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\HoverText.cpp">
+      <Filter>Scene\Entity\Component\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -590,6 +593,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\ScaleScript.h">
       <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\HoverText.h">
+      <Filter>Scene\Entity\Component\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

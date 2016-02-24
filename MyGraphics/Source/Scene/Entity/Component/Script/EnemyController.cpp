@@ -84,31 +84,19 @@ void EnemyController::Update(double dt)
 		directionN = (target - owner->transform->GetPosition()).Normalized();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
-		if (owner->transform->GetPosition().DistSquared(target) < 2 * 2)
+		if (owner->transform->GetPosition().DistSquared(target) < 4 * 4)
 		{
 			if (path->IsEndOfPath())
 				done = true;
 			else
-			{
-				owner->transform->Position() = target;
 				path->Traverse();
-
-				/*for (auto& end : stage->endPoints)
-				{
-				if (owner->transform->GetPosition() == Scene::scene->grid->GetPosition(end))
-				{
-				moveNode = NULL;
-				break;
-				}
-				}*/
-			}
 		}
 	}
 	else
 	{
 		for (auto& end : stage->EndPoints())
 		{
-			if (GetIndex() == end)
+			if (GetIndex().DistSquared(end) < 4 * 4)
 			{
 				done = true;
 				break;

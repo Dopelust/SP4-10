@@ -27,6 +27,9 @@ void TowerGUI::ShowInfo(const char* type, int rank)
 		name->SetText(type);
 		damage->SetText(ToString(tower->pierce + 1).c_str());
 		range->SetText(ToString(tower->range).c_str());
+		force->SetText(ToString(tower->speed).c_str());
+		speed->SetText(ToString(1.0f / tower->cooldown).c_str());
+		projectiles->SetText(ToString(tower->shot).c_str());
 
 		this->rank->SetActive(true);
 		this->rank->SetSprite(Resource.GetSpritesheet("Rank")->GetSprite(rank));
@@ -54,6 +57,9 @@ void TowerGUI::ShowInfo(const char* type, int rank)
 		name->SetText("");
 		damage->SetText("");
 		range->SetText("");
+		force->SetText("");
+		speed->SetText("");
+		projectiles->SetText("");
 		cost->SetText("");
 		sellprice->SetText("");
 

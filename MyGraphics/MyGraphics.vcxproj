@@ -98,6 +98,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\HoverText.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PathFinder.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Source\Scene\Entity\Component\Resolution.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\HoverText.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PathFinder.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h" />

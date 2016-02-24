@@ -189,6 +189,11 @@ Entity * EntityFactory::CreateTextGUI(const Vector2 & position, const char * tex
 #include "../Entity/Component/Script/TowerController.h"
 #include "Vector3.h"
 
+Entity * EntityFactory::GenerateGraphic(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector4 & color, int layer)
+{
+	return Generate(scene->canvas, CreateGraphic(position, size, texture, color, layer));
+}
+
 Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 {
 	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 3);
