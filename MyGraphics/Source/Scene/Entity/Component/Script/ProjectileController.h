@@ -28,6 +28,9 @@ public:
 	void OnCollisionEnter(const Collision& col);
 	void SetName(const char* name);
 
+	void PlaySound();
+	void GenerateParticle();
+
 private:
 	Entity* owner;
 	RigidBody* rigid;

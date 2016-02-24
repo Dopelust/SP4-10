@@ -18,6 +18,15 @@ class Entity;
 class TowerController : public Component
 {
 public:
+	enum TowerAI
+	{
+		SEARCH_AND_DESTROY,
+		STATIC,
+		FIXED_ROTATION,
+	};
+
+	TowerAI ai;
+
 	enum TowerState
 	{
 		SEARCHING,
@@ -60,6 +69,7 @@ public:
 	int upgrade;
 
 	TowerData* GetData();
+	int GetAI();
 	int GetCost();
 	int GetDamage();
 	float GetCooldown();

@@ -53,6 +53,7 @@ void SoundEngine::Init()
 {
 	audio["click"] = "Assets//Sound//click.ogg";
 	audio["bubble"] = "Assets//Sound//bubble.mp3";
+	audio["splash"] = "Assets//Sound//splash.mp3";
 	audio["Juan"] = "Assets//Sound//NightChanges.mp3";
 }
 

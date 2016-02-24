@@ -18,11 +18,11 @@ public:
 	int getLevel() const;
 	int getPriority() const;
 
-	void updatePriority(const int & xDest, const int & yDest);
+	void updatePriority(int xDest, int yDest);
 
 	// give better priority to going strait instead of diagonally
-	void nextLevel(const int & i); // i: direction
+	void nextLevel(int i); // i: direction
 
 	// Estimation function for the remaining distance to the goal.
-	const int & estimate(const int & xDest, const int & yDest) const;
+	int estimate(int xDest, int yDest);
 };

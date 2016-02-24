@@ -15,11 +15,11 @@ public:
 	void SetLayer(int layer);
 
 	void SetSprite(Sprite* sprite);
-	void SetColor(float r, float g, float b, float a = 1);
+	Vector4 color;
 
 protected:
 	Sprite* sprite;
-	Vector4 color;
+
 	int layer;
 	bool alignCenter;
 

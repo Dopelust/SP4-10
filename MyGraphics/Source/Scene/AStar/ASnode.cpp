@@ -25,12 +25,12 @@ int ASnode::getPriority() const
 	return priority;
 }
 
-void ASnode::updatePriority(const int & xDest, const int & yDest)
+void ASnode::updatePriority(int xDest, int yDest)
 {
 	priority = level + estimate(xDest, yDest) * 10; //A*
 }
 
-void ASnode::nextLevel(const int & i)
+void ASnode::nextLevel(int i)
 {
 //	level += (dir == 8 ? (i % 2 == 0 ? 10 : 14) : 10);
 	level += 10;
@@ -38,7 +38,7 @@ void ASnode::nextLevel(const int & i)
 
 #include "MyMath.h"
 
-const int & ASnode::estimate(const int & xDest, const int & yDest) const
+int ASnode::estimate(int xDest, int yDest)
 {
 	int xd = abs(xDest - xPos);
 	int yd = abs(yDest - yPos);

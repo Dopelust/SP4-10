@@ -29,7 +29,7 @@ struct TowerData
 
 	}
 
-	inline void Set(int cost, int range, float cooldown, int shot, int pierce, float speed, string textureName, string projectileName, int projectileType, float projectileValue, float effectDuration, int projectileStyle, string description)
+	inline void Set(int cost, int range, float cooldown, int shot, int pierce, float speed, string textureName, int ai, string projectileName, int projectileType, float projectileValue, float effectDuration, int projectileStyle, string description)
 	{
 		this->cost = cost;
 		this->range = range;
@@ -44,6 +44,7 @@ struct TowerData
 		this->effectDuration = effectDuration;
 		this->projectileStyle = projectileStyle;
 		this->description = description;
+		this->ai = ai;
 	}
 
 	int cost;
@@ -58,6 +59,7 @@ struct TowerData
 	float projectileValue;
 	float effectDuration;
 	int projectileStyle;
+	int ai;
 	string description;
 };
 

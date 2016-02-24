@@ -68,7 +68,7 @@ void PlayState::Init()
 
 	{
 		entity = scene->canvas->AddChild("Hotbar");
-		entity->transform->SetPosition(1200, 656);
+		entity->transform->SetPosition(1100, 656);
 
 		TowerDatabase::Init("archer");
 		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
@@ -77,11 +77,12 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("archer")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("archer", child->GetComponent<Button>());
 
-		TowerDatabase::Init("water");
+		TowerDatabase::Init("fountain");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -72), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Water", 128));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("water")[0].cost).c_str(), 200));
-		editor->GetComponent<TowerGUI>()->AddButton("water", child->GetComponent<Button>());
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), Resource.GetTexture("Fountain"), Vector4(1, 1, 1, 1)));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Fountain", 128));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("fountain")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("fountain", child->GetComponent<Button>());
 
 		TowerDatabase::Init("sniper");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -144), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
@@ -89,6 +90,13 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Sniper", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("sniper")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("sniper", child->GetComponent<Button>());
+
+		TowerDatabase::Init("dispenser");
+		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(96, 96), Resource.GetTexture("Dispenser"), Vector4(1, 1, 1, 1)));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Dispenser", 128));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("dispenser")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("dispenser", child->GetComponent<Button>());
 	}
 
 	{

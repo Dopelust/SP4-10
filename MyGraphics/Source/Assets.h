@@ -43,4 +43,9 @@ private:
 	map<string, Spritesheet*> sprite;
 	map<string, Animation*> animation;
 	map<string, Animator*> animator;
+
+	Animation* CreateAnimationStrip(const char* name, int framecount, float framerate);
+
+	void GenerateSprites(const char* name, int count, int rows);
+	void GenerateSpriteStrip(const char* name, int count);
 };

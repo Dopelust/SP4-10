@@ -97,9 +97,11 @@
     <ClCompile Include="Source\Scene\Enemy\EnemyDatabase.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PathFinder.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\ScaleScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StandardParticle.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditor.cpp" />
@@ -178,9 +180,11 @@
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Resolution.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PathFinder.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\ScaleScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StandardParticle.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditor.h" />

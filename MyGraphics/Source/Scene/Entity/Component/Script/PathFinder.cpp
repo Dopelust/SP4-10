@@ -42,19 +42,31 @@ bool PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const Vector2& start, 
 {
 	AStar::Update(tileMap);
 
-	static map<float, Vector2> hMap;
-	hMap.clear();
+	static map<float, Path> pathMap;
+	pathMap.clear();
 
 	for (auto& pt : endPoints)
 	{
-		hMap[pt.DistSquared(start)] = pt;
+		Path& p = AStar::GetPath(start, pt);
+
+		if (p.GetPathLength())
+			pathMap[p.GetPathLength()] = p;
 	}
 
-	for (auto& h : hMap)
-	{
-		if (CalculatePath(start, h.second))
-			return true;
-	}
+	if (pathMap.empty())
+		return false;
+
+	path = pathMap.begin()->second;
+	index = path.GetPathLength() - 1;
+	return true;
+}
+
+bool PathFinder::UpdateMap(vector<vector<bool>>& tileMap, const Vector2 & start, const Vector2 & end)
+{
+	AStar::Update(tileMap);
+
+	if (CalculatePath(start, end))
+		return true;
 
 	return false;
 }

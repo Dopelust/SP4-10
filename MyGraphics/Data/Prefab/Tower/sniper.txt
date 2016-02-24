@@ -8,7 +8,7 @@
 // 1, MULTIPLE FORWARD
 // 2, MULTIPLE AROUND
 // 3, BOOMERANG
-//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	Projectile, 	Type,	Val,	Dura,	Style,	Description
-100, 	512,	1.5, 		1,	0,	1000,	Sniper,		arrow, 		3,	2,	0,	0,	Long Ranged Destroys multiple tiers
-200, 	640,	1, 		1,	0,	1000,	Sniper,		arrow, 		3,	4,	0,	0,	Splashes water
-300, 	768,	0.5, 		1,	0,	1000,	Sniper,		arrow, 		3,	6,	0,	0,	Splashes water
+//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	AI,	Projectile, 	Type,	Val,	Dura,	Style,	Description
+100, 	512,	2, 		1,	99,	1000,	Sniper,		0,	Bubble,		3,	2,	0,	0,	Long Ranged Destroys multiple tiers
+200, 	640,	1.5, 		1,	99,	1000,	Sniper,		0,	Bubble,		3,	4,	0,	0,	Splashes water
+300, 	768,	1, 		1,	99,	1000,	Sniper,		0,	Bubble,		3,	6,	0,	0,	Splashes water

@@ -8,7 +8,7 @@ using namespace std;
 StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
-freeTime(5.f),
+freeTime(0),
 waveTimer(0),
 spawnTimer(0),
 owner(NULL),
@@ -198,10 +198,14 @@ bool StageManager::AddObstruction(int i, int j)
 
 	for (auto& end : endPoints)
 	{
-		if (!pathfind->UpdateMap(tileMap, end, spawnPoints))
+		for (auto& start : spawnPoints)
 		{
-			tileMap[i][j] = false;
-			return false;
+			if (!pathfind->UpdateMap(tileMap, end, start))
+			{
+				tileMap[i][j] = false;
+
+				return false;
+			}
 		}
 	}
 	

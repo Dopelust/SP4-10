@@ -104,6 +104,9 @@
     <Filter Include="Scene\Entity\Component\Script\Play\Stage">
       <UniqueIdentifier>{78c3b3a0-fed9-4134-b2e2-4ce1f54bdba4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Play\Particle">
+      <UniqueIdentifier>{cf5fe0eb-a12b-44bc-854b-ce2b8a43d9a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Grid.cpp">
@@ -325,6 +328,13 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\AStar\ASnode.cpp">
       <Filter>AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Projectile\ProjectileDatabase.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\ScaleScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -574,6 +584,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\AStar\ASnode.h">
       <Filter>AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h">
+      <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\ScaleScript.h">
+      <Filter>Scene\Entity\Component\Script\Play\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

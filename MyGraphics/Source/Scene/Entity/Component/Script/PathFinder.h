@@ -19,6 +19,8 @@ public:
 	void Update(double dt);
 
 	bool UpdateMap(vector<vector<bool>> &tileMap, const Vector2& start, const vector<Vector2> &endPoints);
+	bool UpdateMap(vector<vector<bool>> &tileMap, const Vector2& start, const Vector2& end);
+
 	bool CalculatePath(const Vector2& start, const Vector2& end);
 
 	Vector2 GetTarget();

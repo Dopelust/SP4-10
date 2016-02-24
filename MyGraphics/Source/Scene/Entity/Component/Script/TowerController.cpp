@@ -13,6 +13,7 @@
 
 TowerController::TowerController() :
 state(TowerState::SEARCHING),
+ai(SEARCH_AND_DESTROY),
 fireMode(FireMode::CLOSEST),
 owner(NULL),
 target(NULL),
@@ -49,42 +50,78 @@ void TowerController::Init(string type)
 
 void TowerController::Update(double dt)
 {
+	ai = (TowerAI)GetAI();
+
 	firingTimer += (float)dt;
+
+	switch (ai)
+	{
+	case SEARCH_AND_DESTROY:
+	{
+
+	} break;
+	case STATIC:
+	{
+		direction.Set(0, 1);
+		rotation = 0;
+
+		this->owner->transform->Rotation().z += 32 * dt;
+
+	} break;
+	case FIXED_ROTATION:
+	{
+		rotation += 64 * dt;
+		direction.Rotate(rotation);
+
+		this->owner->transform->SetRotation(0, 0, rotation);
+	} break;
+	}
 
 	switch (state)
 	{
-		case TowerState::SEARCHING:
+	case TowerState::SEARCHING:
+	{
+		searchTimer += (float)dt;
+		if (searchTimer > 0.1f)
 		{
-			searchTimer += (float)dt;
-			if (searchTimer > 0.1f)
+			searchTimer = 0;
+			if (SearchForTarget())
 			{
-				searchTimer = 0;
-				if (SearchForTarget())
-				{
-					state = TowerState::FIRE;
-				}
+				state = TowerState::FIRE;
 			}
 		}
-		break;
-		case TowerState::FIRE:
+	}
+	break;
+	case TowerState::FIRE:
+	{
+		if (CheckTarget())
 		{
-			// Create projectile, set rotation
-			if (CheckTarget())
-			{
-				state = TowerState::SEARCHING;
-				break;
-			}
+			state = TowerState::SEARCHING;
+			break;
+		}
 
+		switch (ai)
+		{
+		case SEARCH_AND_DESTROY:
+		{
 			TargetRotation((float)dt);
-
-			if (firingTimer > GetCooldown())
-			{
-				firingTimer = 0;
-				Fire();
-				state = TowerState::SEARCHING;
-			}
+		} break;
+		case STATIC:
+		{
+		} break;
+		case FIXED_ROTATION:
+		{
+		} break;
 		}
-		break;
+
+		if (firingTimer > GetCooldown())
+		{
+			firingTimer = 0;
+			Fire();
+			state = TowerState::SEARCHING;
+		}
+	}
+	break;
 	}
 }
 
@@ -104,6 +141,11 @@ bool TowerController::IsMaxUpgrade()
 TowerData* TowerController::GetData()
 {
 	return &TowerDatabase::GetData(type.c_str())[upgrade];
+}
+
+int TowerController::GetAI()
+{
+	return GetData()->ai;
 }
 
 int TowerController::GetCost()
@@ -269,7 +311,7 @@ void TowerController::Fire()
 	case 0:
 		{
 			  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
-			  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Normalized(), rotation);
+			  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Normalized(), rotation + 90);
 		}	
 		break;
 		// MULTIPLE PROJECTILES
@@ -277,12 +319,14 @@ void TowerController::Fire()
 		{
 			  int shots = GetData()->shot + 1;
 			  float angle = 180 / shots;
+
 			  for (int i = 0; i < shots; ++i)
 			  {
 				  if (i == 0)
 					  continue;
+
 				  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
-				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), rotation);
+				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), (angle * i) + rotation);
 			  }
 		}
 		break;
@@ -298,7 +342,7 @@ void TowerController::Fire()
 			  for (int i = 0; i < shots; ++i)
 			  {
 				  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
-				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), rotation);
+				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), (angle * i) + rotation);
 			  }
 		}
 		break;

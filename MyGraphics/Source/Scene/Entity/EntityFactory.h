@@ -35,11 +35,12 @@ public:
 
 	static Entity* CreateTextGUI(const Vector2& position, const char* text, float size, bool alignCenter = true);
 
+	static Entity* GenerateGraphic(const Vector2& position, const Vector2& size, Texture* texture, const Vector4& color, int layer = 0);
 	static Entity* GenerateTower(const Vector2& position, string type);
 	static Entity* GenerateProjectile(const Vector2& position, string type);
 	static Entity* GeneratePathFinder();
 	static Entity* GenerateEnemy(const Vector2& position, int enemyTier);
-	static Entity* GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation);
+	static Entity* GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha = 1);
 
 	static Entity* Generate(Entity* root, Entity* entity);
 	static void Destroy(Entity* entity);

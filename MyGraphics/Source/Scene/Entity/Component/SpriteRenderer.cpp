@@ -25,11 +25,6 @@ void SpriteRenderer::SetSprite(Sprite * sprite)
 	this->sprite = sprite;
 }
 
-void SpriteRenderer::SetColor(float r, float g, float b, float a)
-{
-	color.Set(r, g, b, a);
-}
-
 void SpriteRenderer::Update(double dt)
 {
 }

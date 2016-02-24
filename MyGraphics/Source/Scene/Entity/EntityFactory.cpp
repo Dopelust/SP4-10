@@ -142,7 +142,7 @@ Entity * EntityFactory::CreateSprite(const Vector2 & position, const Vector2 & s
 	entity->transform->SetSize(size.x, size.y);
 
 	entity->AddComponent<SpriteRenderer>()->SetSprite(sprite);
-	entity->GetComponent<SpriteRenderer>()->SetColor(color.x, color.y, color.z, color.w);
+	entity->GetComponent<SpriteRenderer>()->color = color;
 	entity->GetComponent<SpriteRenderer>()->SetLayer(layer);
 
 	return entity;
@@ -211,6 +211,20 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
+	else if (type == "fountain")
+	{
+		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Fountain"));
+		entity->transform->Size() *= 1.1f;
+
+		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.1f, TileHeight * 1.1f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	}
+	else if (type == "dispenser")
+	{
+		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Dispenser"));
+		entity->transform->Size() *= 1.75f;
+
+		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	}
 
 	Entity* child = entity->AttachChild(CreateSprite(Vector2(TileWidth * 0.5f - 6, TileHeight * -0.5f + 8), Vector2(16, 16), Resource.GetSpritesheet("Rank")->GetSprite(0), Vector4(1, 1, 1, 1), 4));
 	entity->GetComponent<TowerController>()->rank = child->GetComponent<SpriteRenderer>();
@@ -223,11 +237,20 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Resource.GetTexture("Bubble"), Vector4(1, 1, 1, 1));
+	Entity* entity = CreateGraphic(position, Vector2(), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1));
 
-	entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.4f, TileHeight * 0.4f, 0);
+	if (type == "Bubble")
+	{
+		entity->transform->SetSize(TileWidth * 0.5f, TileHeight * 0.5f);
+		entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.4f, TileHeight * 0.4f, 0);
+	}
+	else
+	{
+		entity->transform->SetSize(TileWidth * 0.9f, TileHeight * 0.9f);
+		entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.2f, TileHeight * 0.2f, 0);
+	}
+
 	entity->AddComponent<RigidBody>();
-
 	entity->AddComponent<Projectile>()->LateInit(type);
 
 	Generate(scene->root, entity);
@@ -265,13 +288,14 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
 
 #include "Component\Script\StandardParticle.h"
 
-Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation)
+Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha)
 {
 	Entity* entity = new Entity("Particle");
 	entity->transform->SetPosition(position.x, position.y);
 	entity->transform->SetSize(size.x, size.y);
 	
-	entity->AddComponent<SpriteRenderer>();
+	entity->AddComponent<SpriteRenderer>()->color.w = alpha;
+
 	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
 	entity->GetComponent<SpriteAnimator>()->Play(animation, false);
 	

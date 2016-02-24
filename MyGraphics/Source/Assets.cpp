@@ -72,7 +72,11 @@ void Assets::Init()
 	mesh["sphere"] = MeshBuilder::GenerateSphere(Vector3(1, 1, 1), 20, 20, 1);
 
 	//Texture
+	texture["Burst"] = new Texture("Assets//burst.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Dispenser"] = new Texture("Assets//watergun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Fountain"] = new Texture("Assets//fountain.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Sniper"] = new Texture("Assets//sniper.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Water"] = new Texture("Assets//water.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Bubble"] = new Texture("Assets//bubble.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Occlusion"] = new Texture("Assets//occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Archer"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
@@ -83,56 +87,62 @@ void Assets::Init()
 	texture["Red"] = new Texture("Assets//redslime.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	
 	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	
 	sprite["Puff"] = new Spritesheet();
-
-	for (int i = 0; i < 10; ++i)
-	{
-		Sprite* s = sprite["Puff"]->AddSprite();
-		Vector4 uv = Texture::GetUV(i, 10);
-		uv.y = 0;
-		uv.w = 1;
-
-		s->SetUV(uv);
-		s->SetTexture(texture["Puff"]);
-	}
-
 	animation["Puff"] = new Animation();
 	animator["Puff"] = new Animator();
+	GenerateSpriteStrip("Puff", 10);
+	animator["Puff"]->AddAnimation("Puff", CreateAnimationStrip("Puff", 10, 0.02f));
 
-	for (int i = 0; i < 10; ++i)
-		animation["Puff"]->AddFrame(sprite["Puff"]->GetSprite(i));
-
-	animation["Puff"]->SetFramerate(0.02f);
-
-	animator["Puff"]->AddAnimation("Puff", animation["Puff"]);
+	texture["Splash"] = new Texture("Assets//splash.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Splash"] = new Spritesheet();
+	animation["Splash"] = new Animation();
+	animator["Splash"] = new Animator();
+	GenerateSpriteStrip("Splash", 5);
+	animator["Splash"]->AddAnimation("Splash", CreateAnimationStrip("Splash", 5, 0.05f));
 
 	texture["NightChanges"] = new Texture("Assets//Menu.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+
 	texture["Rank"] = new Texture("Assets//rank.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-
 	sprite["Rank"] = new Spritesheet();
+	GenerateSpriteStrip("Rank", 5);
 
-	for (int i = 0; i < 5; ++i)
+	texture["Tileset"] = new Texture("Assets//tileset.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Tileset"] = new Spritesheet();
+	GenerateSprites("Tileset", 5, 3);
+}
+
+Animation * Assets::CreateAnimationStrip(const char* name, int framecount, float framerate)
+{
+	for (int i = 0; i < framecount; ++i)
+		animation[name]->AddFrame(sprite[name]->GetSprite(i));
+
+	animation[name]->SetFramerate(framerate);
+	return animation[name];
+}
+
+void Assets::GenerateSprites(const char * name, int count, int rows)
+{
+	for (int i = 0; i < count; ++i)
 	{
-		Sprite* s = sprite["Rank"]->AddSprite();
-		Vector4 uv = Texture::GetUV(i, 5);
+		Sprite* s = sprite[name]->AddSprite();
+		Vector4 uv = Texture::GetUV(i, rows);
+
+		s->SetUV(uv);
+		s->SetTexture(texture[name]);
+	}
+}
+
+void Assets::GenerateSpriteStrip(const char * name, int count)
+{
+	for (int i = 0; i < count; ++i)
+	{
+		Sprite* s = sprite[name]->AddSprite();
+		Vector4 uv = Texture::GetUV(i, count);
+
 		uv.y = 0;
 		uv.w = 1;
 
 		s->SetUV(uv);
-		s->SetTexture(texture["Rank"]);
-	}
-
-	texture["Tileset"] = new Texture("Assets//tileset.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-
-	sprite["Tileset"] = new Spritesheet();
-
-	for (int i = 0; i < 5; ++i)
-	{
-		Sprite* s = sprite["Tileset"]->AddSprite();
-		Vector4 uv = Texture::GetUV(i, 3);
-
-		s->SetUV(uv);
-		s->SetTexture(texture["Tileset"]);
+		s->SetTexture(texture[name]);
 	}
 }
