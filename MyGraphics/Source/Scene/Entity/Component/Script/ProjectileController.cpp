@@ -8,8 +8,7 @@
 #include <iostream>
 
 Projectile::Projectile() :
-pierce(0),
-speed(0)
+pierceCount(0)
 {
 
 }
@@ -26,25 +25,31 @@ void Projectile::Init(Entity* ent)
 }
 
 #include "Vector2.h"
+#include "../Graphic2D.h"
+#include "../../../../Assets.h"
 
-void Projectile::LateInit(string type)
+void Projectile::LateInit(string name)
 {
-	this->type = type;
+	this->name = name;
+
+	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(name.c_str()));
 }
+
 
 void Projectile::SetProperties(TowerData *towerData, Vector2 velocity, float rotation)
 {
+	this->towerData = towerData;
+
+	pierceCount = towerData->pierce;
+
+	rigid->ApplyForce(velocity.GetVector3() * towerData->speed);
+
 	owner->transform->SetRotation(0, 0, rotation);
-
-	this->pierce = towerData->pierce;
-	this->speed = towerData->speed;
-
-	rigid->ApplyForce(velocity.GetVector3() * speed);
 }
 
 void Projectile::Update(double dt)
 {
-	if (pierce < 0)
+	if (pierceCount < 0)
 	{
 		EntityFactory::Destroy(this->owner);
 	}
@@ -61,7 +66,7 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		Audio.Play2D("bubble", 0.1f);
 		EntityFactory::Destroy(owner);
 	}
-	else if (col.entity->GetName() == "Enemy" && pierce >= 0)
+	else if (col.entity->GetName() == "Enemy" && pierceCount >= 0)
 	{
 		EnemyController *ec = col.entity->GetComponent<EnemyController>();
 		if (ec->done)
@@ -74,53 +79,60 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		}
 
 		pierced.push_back(col.entity->GetID());
-		--pierce;
+		--pierceCount;
 		//cout << col.entity->GetComponent<EnemyController>()->GetData().name << endl;
-		switch (GetEffect())
+		switch (towerData->projectileEffect)
 		{
-		case ProjectileData::NORMAL:
+		case 0:
 		{
 			Audio.Play2D("bubble", 0.1f);
 			col.entity->GetComponent<EnemyController>()->Pop();
 		}
 		break;
-		case ProjectileData::SLOW:
+		case 1:
 		{
-			col.entity->GetComponent<EnemyController>()->Slow(towerData->eDamage, towerData->eDuration);
+			col.entity->GetComponent<EnemyController>()->Slow(towerData->projectileValue, towerData->effectDuration);
 		}
 		break;
-		case ProjectileData::STUN:
+		case 2:
 		{
-			col.entity->GetComponent<EnemyController>()->Stun(0.5f);
+			col.entity->GetComponent<EnemyController>()->Stun(towerData->effectDuration);
+		}
+		break;
+		case 3:
+		{
+			Audio.Play2D("bubble", 0.1f);
+			col.entity->GetComponent<EnemyController>()->Pop((int)towerData->projectileValue);
 		}
 		break;
 		}
 	}
 }
 
-void Projectile::SetType(const char * type)
+void Projectile::SetName(const char * name)
 {
-	this->type = type;
+	this->name = name;
 }
 
-ProjectileData& Projectile::GetData()
-{
-	return ProjectileDatabase::GetData(type.c_str());
-}
+//ProjectileData& Projectile::GetData()
+//{
+//	return ProjectileDatabase::GetData(type.c_str());
+//}
 
-int Projectile::GetEffect()
-{
-	return GetData().effect;
-}
-
-float Projectile::GetSpeed()
-{
-	//return GetData().speed;
-	return speed;
-}
-
-int Projectile::GetPierce()
-{
-	//return GetData().pierce;
-	return pierce;
-}
+//int Projectile::GetEffect()
+//{
+//	//return GetData().effect;
+//	towerData->projectileEffect;
+//}
+//
+//float Projectile::GetSpeed()
+//{
+//	//return GetData().speed;
+//	return towerData->speed;
+//}
+//
+//int Projectile::GetPierce()
+//{
+//	//return GetData().pierce;
+//	return towerData->pierce;
+//}

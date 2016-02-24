@@ -157,7 +157,7 @@ void PlayState::Init()
 	editor->GetComponent<TowerManager>()->gui = editor->GetComponent<TowerGUI>();
 	editor->GetComponent<TowerGUI>()->DisableUpgrades();
 
-	ProjectileDatabase::Init("arrow");
+	//ProjectileDatabase::Init("arrow");
 	EnemyDatabase::Init("jelly");
 	StageDatabase::Init("level1");
 

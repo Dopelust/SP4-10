@@ -1,4 +1,14 @@
-//Cost, E Damage,	E Duration,	Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture, 	Projectile, 	Description
-100, 	0,		100,		512,	1.5, 		1,	0,	1000,	Sniper,		arrow, 		Splashes water
-200, 	0,		100,		640,	1, 		1,	0,	1000,	Sniper,		arrow, 		Splashes water
-300, 	0,		100,		768,	0.5, 		1,	0,	1000,	Sniper,		arrow, 		Splashes water
+// Projectile Type
+// 0, NORMAL ( Pops Enemy )
+// 1, SLOW ( Slows Enemy )
+// 2, STUN ( Stuns Enemy )
+// 3, MULTIPOP ( Pops Enemy Down Tiers )
+// Projectile Style
+// 0, STRAIGHT
+// 1, MULTIPLE FORWARD
+// 2, MULTIPLE AROUND
+// 3, BOOMERANG
+//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	Projectile, 	Type,	Val,	Dura,	Style,	Description
+100, 	512,	1.5, 		1,	0,	1000,	Sniper,		arrow, 		3,	2,	0,	0,	Long Ranged Destroys multiple tiers
+200, 	640,	1, 		1,	0,	1000,	Sniper,		arrow, 		3,	4,	0,	0,	Splashes water
+300, 	768,	0.5, 		1,	0,	1000,	Sniper,		arrow, 		3,	6,	0,	0,	Splashes water

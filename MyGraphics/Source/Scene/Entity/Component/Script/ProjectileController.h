@@ -26,25 +26,20 @@ public:
 	void SetProperties(TowerData *towerData, Vector2 velocity, float rotation);
 	void Update(double dt);
 	void OnCollisionEnter(const Collision& col);
-	void SetType(const char* type);
-
-	int pierce;
-	float speed;
-
-	ProjectileData& GetData();
-	int GetEffect();
-	float GetSpeed();
-	int GetPierce();
-
-	vector<int> pierced;
+	void SetName(const char* name);
 
 private:
 	Entity* owner;
 	RigidBody* rigid;
 
-	string type;
+	// Projectile texture
+	string name;
+	int pierceCount;
 
 	TowerData* towerData;
+
+	// store the id of entities that it pierced so that it will not pierce its children when popped
+	vector<int> pierced;
 };
 
 #endif

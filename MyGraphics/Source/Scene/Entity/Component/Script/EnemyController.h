@@ -22,22 +22,19 @@ public:
 	void Init(Entity* ent);
 	void LateInit(int enemyTier);
 	void Update(double dt);
-	void Pop();
+	void Pop(int popCount = 1);
 	void Slow(float slowAmount, float duration);
 	void Stun(float duration);
 
+	int GetTier();
+
 	EnemyData& GetData();
 	
-	int tier;
-	float originalSpeed, movementSpeed;
-
-	bool done, slowed, stunned;
-	float statusTimer;
-	float statusDuration;
+	bool done, pop;
+	int popCount;
 
 	Vector2 GetIndex();
-
-	bool pop;
+	int steps;
 
 	int parentID;
 
@@ -47,6 +44,13 @@ private:
 
 	Vector3 target;
 	Vector3 directionN;
+
+	int tier;
+	float originalSpeed, movementSpeed;
+
+	bool slowed, stunned;
+	float statusTimer;
+	float statusDuration;
 };
 
 #endif

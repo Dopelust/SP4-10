@@ -16,7 +16,8 @@ statusTimer(0),
 statusDuration(0),
 tier(0),
 originalSpeed(0),
-movementSpeed(0)
+movementSpeed(0),
+popCount(0)
 {
 }
 
@@ -105,7 +106,7 @@ void EnemyController::Update(double dt)
 	}
 	else
 	{
-		for (auto& end : stage->endPoints)
+		for (auto& end : stage->EndPoints())
 		{
 			if (GetIndex() == end)
 			{
@@ -118,11 +119,12 @@ void EnemyController::Update(double dt)
 
 #include "../../EntityFactory.h"
 
-void EnemyController::Pop()
+void EnemyController::Pop(int popCount)
 {
 	if (tier > 1)
 	{
 		pop = true;
+		this->popCount = popCount;
 	}
 	
 	done = true;
@@ -141,6 +143,11 @@ void EnemyController::Stun(float duration)
 {
 	stunned = true;
 	statusDuration = duration;
+}
+
+int EnemyController::GetTier()
+{
+	return tier;
 }
 
 EnemyData& EnemyController::GetData()

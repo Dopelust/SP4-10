@@ -1,6 +1,6 @@
-//Cost, E Damage,	E Duration,	Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture, 	Projectile, 	Description
-10,	0,		0,		128,	1,		1,	0,	300,	Archer,		arrow, 		Shoots
-25,	0,		0,		144,	0.9,		1,	1,	300,	Archer,		arrow, 		Even
-50,	0,		0,		160,	0.8,		1,	1,	300,	Archer,		arrow, 		Longer
-100,	0,		0,		192,	0.7,		2,	2,	300,	Archer,		arrow, 		Longer
-1000,	0,		0,		256,	0.6,		3,	3,	300,	Archer,		arrow, 		Longer
+//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	Projectile, 	Type,	Val,	Dura,	Style,	Description
+10,	128,	1,		1,	0,	300,	Archer,		arrow, 		0,	0,	0,	0,	Shoots
+25,	144,	0.9,		1,	1,	300,	Archer,		arrow, 		0,	0,	0,	0,	Even
+50,	160,	0.8,		1,	1,	300,	Archer,		arrow, 		0,	0,	0,	0,	Longer
+100,	192,	0.7,		2,	2,	300,	Archer,		arrow, 		0,	0,	0,	0,	Longer
+1000,	256,	0.6,		3,	3,	300,	Archer,		arrow, 		0,	0,	0,	0,	Longer

@@ -8,13 +8,11 @@ using namespace std;
 StageManager::StageManager() :
 freeTimer(0),
 state(FREETIME),
-freeTime(0),
+freeTime(5.f),
 waveTimer(0),
 spawnTimer(0),
 owner(NULL),
 currentWave(0),
-spawnNo(0),
-countNo(0),
 waveDone(false)
 {
 }
@@ -61,6 +59,8 @@ void StageManager::LoadStage(string stageName)
 {
 	currentStage = stageName;
 	maxWave = GetData().stageData.size();
+
+	InitWave();
 }
 
 StageData& StageManager::GetData()
@@ -111,7 +111,6 @@ void StageManager::UpdateFreeTime(double dt)
 	if (freeTimer > freeTime)
 	{
 		state = WAVE;
-		InitWave();
 		UpdatePathFinders();
 		freeTimer = 0;
 	}
@@ -128,12 +127,8 @@ void StageManager::UpdateWave(double dt)
 	if (enemies.empty() && waveDone)
 	{
 		state = FREETIME;
-		++currentWave;
-		if (currentWave >= maxWave)
-		{
-			currentWave = 0;
-		}
 		waveDone = false;
+		waveQueue.pop();
 		return;
 	}
 	
@@ -147,7 +142,8 @@ void StageManager::UpdateWave(double dt)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
 				{
-					AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->GetIndex(), (ec->GetData().tier) - 1, enemies[i]->GetID());
+					if (ec->GetTier() - ec->popCount > 0)
+						AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->GetIndex(), (ec->GetData().tier) - ec->popCount, enemies[i]->GetID());
 				}
 			}
 
@@ -225,16 +221,20 @@ bool StageManager::CheckObstruction(int i, int j)
 
 void StageManager::InitWave()
 {
-	for (int i = 0; i < GetData().stageData[currentWave].count.size(); ++i)
+	for (int k = 0; k < GetData().stageData.size(); ++k)
 	{
-		for (int j = 0; j < GetData().stageData[currentWave].count[i]; ++j)
+		StageWave wave;
+		wave.waveData = GetData().stageData[k];
+		for (int i = 0; i < GetData().stageData[k].count.size(); ++i)
 		{
-			spawnQueue.push(GetData().stageData[currentWave]);
+			for (int j = 0; j < GetData().stageData[k].count[i]; ++j)
+			{
+				wave.spawnQueue.push(j);
+			}
 		}
+		waveQueue.push(wave);
 	}
 
-	countNo = 0;
-	spawnNo = 0;
 	spawnTimer = 0;
 }
 
@@ -244,29 +244,32 @@ void StageManager::SpawnEnemies(double dt)
 {
 	spawnTimer += (float)dt;
 
-	if (spawnQueue.empty())
+	StageWave *currentWave;
+	currentWave = &waveQueue.front();
+
+	if (currentWave->spawnQueue.empty())
 	{
 		waveDone = true;
 	}
-	else if (spawnTimer > spawnQueue.front().delay[spawnNo])
+	else if (spawnTimer > currentWave->waveData.delay[currentWave->spawnNo])
 	{
 		int spawnPt = rand() % spawnPoints.size();
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
-		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), spawnQueue.front().tier[spawnNo]);
+		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), currentWave->waveData.tier[currentWave->spawnNo]);
 
 		enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, spawnPoints[spawnPt], endPoints);
 
 		enemies.push_back(enemy);
 
-		++countNo;
-
-		if (countNo >= spawnQueue.front().count[spawnNo])
+		++currentWave->countNo;
+	
+		if (currentWave->countNo >= currentWave->waveData.count[currentWave->spawnNo])
 		{
-			countNo = 0;
-			++spawnNo;
+			currentWave->countNo = 0;
+			++currentWave->spawnNo;
 		}
 
-		spawnQueue.pop();
+		currentWave->spawnQueue.pop();
 		spawnTimer = 0;
 	}
 }
@@ -283,4 +286,14 @@ void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int ti
 string StageManager::GetStageName()
 {
 	return currentStage;
+}
+
+vector<Entity*>& StageManager::Enemies()
+{
+	return enemies;
+}
+
+vector<Vector2>& StageManager::EndPoints()
+{
+	return endPoints;
 }

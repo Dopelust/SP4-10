@@ -17,21 +17,21 @@ struct TowerData
 	cooldown(-1),
 	pierce(-1),
 	speed(-1),
-	eDamage(-1),
-	eDuration(-1),
-	shot(1),
+	shot(-1),
 	textureName(""),
 	projectileName(""),
+	projectileEffect(0),
+	projectileValue(0),
+	effectDuration(0),
+	projectileStyle(0),
 	description("")
 	{
 
 	}
 
-	inline void Set(int cost, float eDamage, float eDuration, int range, float cooldown, int shot, int pierce, float speed, string textureName, string projectileName, string description)
+	inline void Set(int cost, int range, float cooldown, int shot, int pierce, float speed, string textureName, string projectileName, int projectileType, float projectileValue, float effectDuration, int projectileStyle, string description)
 	{
 		this->cost = cost;
-		this->eDamage = eDamage;
-		this->eDuration = eDuration;
 		this->range = range;
 		this->cooldown = cooldown;
 		this->pierce = pierce;
@@ -39,20 +39,26 @@ struct TowerData
 		this->speed = speed;
 		this->textureName = textureName;
 		this->projectileName = projectileName;
+		this->projectileEffect = projectileType;
+		this->projectileValue = projectileValue;
+		this->effectDuration = effectDuration;
+		this->projectileStyle = projectileStyle;
 		this->description = description;
 	}
 
-	int cost = -1;
-	int range = -1;
-	float eDamage = -1;
-	float eDuration = -1;
-	float cooldown = -1;
+	int cost;
+	int range;
+	float cooldown;
 	int pierce;
 	float speed;
 	int shot;
-	string textureName = ""; 
-	string projectileName = "";
-	string description = "";
+	string textureName;
+	string projectileName;
+	int projectileEffect;
+	float projectileValue;
+	float effectDuration;
+	int projectileStyle;
+	string description;
 };
 
 

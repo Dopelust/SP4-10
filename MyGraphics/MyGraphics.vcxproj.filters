@@ -283,9 +283,6 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Projectile\ProjectileDatabase.cpp">
-      <Filter>Scene\Entity\Component\Script\Play\Projectile</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp">
       <Filter>Scene\Entity\Component\GUI</Filter>
     </ClCompile>

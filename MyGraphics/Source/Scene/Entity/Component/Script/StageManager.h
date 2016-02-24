@@ -30,6 +30,28 @@ enum StageState
 	MAX_STATE,
 };
 
+struct StageWave
+{
+	StageWave() :
+	countNo(0),
+	spawnNo(0)
+	{
+
+	}
+
+	~StageWave()
+	{
+
+	}
+
+	queue<int> spawnQueue;
+	WaveData waveData;
+	// Count per batch
+	int countNo;
+	// Spawn batches
+	int spawnNo;
+};
+
 class StageManager :
 	public Component
 {
@@ -46,15 +68,12 @@ public:
 	bool AddObstruction(int i, int j);
 	void RemoveObstruction(int i, int j);
 	bool CheckObstruction(int i, int j);
-	void SpawnEnemies(double dt);
 	void AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID);
 
 	string GetStageName();
 
-	vector<Vector2> spawnPoints;
-	vector<Vector2> endPoints;
-	//vector<Entity*> pathFinders;
-	vector<Entity*> enemies;
+	vector<Entity*>& Enemies();
+	vector<Vector2>& EndPoints();
 
 private:
 	void CreateTileMap(vector<int>& obstructionIndex);
@@ -63,6 +82,7 @@ private:
 	void UpdateFreeTime(double dt);
 	void UpdateWave(double dt);
 	void InitWave();
+	void SpawnEnemies(double dt);
 
 	StageData& GetData();
 
@@ -70,6 +90,10 @@ private:
 	Entity *owner;
 
 	string currentStage;
+
+	vector<Vector2> spawnPoints;
+	vector<Vector2> endPoints;
+	vector<Entity*> enemies;
 
 	int maxWave;
 	int currentWave;
@@ -81,9 +105,7 @@ private:
 	float waveTimer;
 	float spawnTimer;
 
-	queue<WaveData> spawnQueue;
-	int countNo;
-	int spawnNo;
+	queue<StageWave> waveQueue;
 
 	vector<vector<bool>> tileMap;
 };

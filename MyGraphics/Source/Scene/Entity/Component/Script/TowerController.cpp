@@ -144,7 +144,7 @@ bool TowerController::Hover(Vector2& hoverIndex)
 bool TowerController::SearchForTarget()
 {
 	entityList.clear();
-	entityList = stageManager->enemies;
+	entityList = stageManager->Enemies();
 
 	int range = GetData()->range;
 
@@ -210,7 +210,7 @@ bool TowerController::SearchForTarget()
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				if (entityList[i]->GetComponent<EnemyController>()->tier > mostHealth->GetComponent<EnemyController>()->tier)
+				if (entityList[i]->GetComponent<EnemyController>()->GetTier() > mostHealth->GetComponent<EnemyController>()->GetTier())
 				{
 					mostHealth = entityList[i];
 				}
@@ -259,9 +259,48 @@ void TowerController::TargetRotation(float dt)
 
 #include "../../../Entity/EntityFactory.h"
 #include "ProjectileController.h"
+#include "MyMath.h"
 
 void TowerController::Fire()
 {
-	Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
-	proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Normalized(), rotation);
+	switch (GetData()->projectileStyle)
+	{
+		// STRAIGHT PROJECTILE
+	case 0:
+		{
+			  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
+			  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Normalized(), rotation);
+		}	
+		break;
+		// MULTIPLE PROJECTILES
+	case 1:
+		{
+			  int shots = GetData()->shot + 1;
+			  float angle = 180 / shots;
+			  for (int i = 0; i < shots; ++i)
+			  {
+				  if (i == 0)
+					  continue;
+				  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
+				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), rotation);
+			  }
+		}
+		break;
+	case 2:
+		{
+
+		}
+		break;
+	case 3:
+		{
+			  int shots = GetData()->shot;
+			  float angle = 360 / shots;
+			  for (int i = 0; i < shots; ++i)
+			  {
+				  Entity* proj = EntityFactory::GenerateProjectile(this->owner->transform->GetPosition().GetVector2(), GetProjectileType());
+				  proj->GetComponent<Projectile>()->SetProperties(GetData(), direction.Rotate((angle * i) + rotation), rotation);
+			  }
+		}
+		break;
+	}
 }
