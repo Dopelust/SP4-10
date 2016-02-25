@@ -40,6 +40,8 @@ public:
 	static Entity* GenerateProjectile(const Vector2& position, string type);
 	static Entity* GeneratePathFinder();
 	static Entity* GenerateEnemy(const Vector2& position, int enemyTier, const char * animator, const char * animation);
+
+	static Entity* CreateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha = 1);
 	static Entity* GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha = 1);
 
 	static Entity* Generate(Entity* root, Entity* entity);

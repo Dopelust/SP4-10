@@ -4,7 +4,7 @@
 #define TileHeight 48
 
 #define NumberOfTilesX 21
-#define NumberOfTilesY 15
+#define NumberOfTilesY 13
 
 #define CellWidth NumberOfTilesX * TileWidth
 #define CellHeight NumberOfTilesY * TileHeight

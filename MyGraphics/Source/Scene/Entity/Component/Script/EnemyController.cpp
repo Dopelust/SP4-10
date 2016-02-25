@@ -115,8 +115,14 @@ void EnemyController::Update(double dt)
 #include "../SpriteAnimator.h"
 #include "Utility.h"
 
+#include "ScaleScript.h"
+#include "FadeScript.h"
+#include "../SpriteRenderer.h"
+
 void EnemyController::Pop(int popCount)
 {
+	Entity* particle = NULL;
+
 	if (tier - popCount > 0)
 	{
 		if (GetData().split > 1)
@@ -130,15 +136,21 @@ void EnemyController::Pop(int popCount)
 		this->popCount = popCount;
 
 		owner->GetComponent<SpriteAnimator>()->Play(("Jellies" + ToString(tier)).c_str(), true);
+		particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff"));
 	}
 	else
 	{
 		done = true;
+		particle = EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff");
 	}
 
 	pop = true;
 
-	EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2(), "Puff", "Puff");
+	if (particle)
+	{
+		particle->AddComponent<FadeScript>()->rate = -3;
+		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<SpriteRenderer>()->color.w;
+	}
 }
 
 void EnemyController::Slow(float slowAmount, float duration)

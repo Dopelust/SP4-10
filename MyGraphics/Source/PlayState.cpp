@@ -38,6 +38,7 @@ PlayState::~PlayState()
 #include "Scene\Entity\Component\Script\TowerGUI.h"
 #include "Scene\Entity\Component\TextRenderer2D.h"
 #include "Scene\Entity\Component\Script\StageManager.h"
+#include "Scene\Entity\Component\Script\StageGUI.h"
 #include "Scene\Entity\Component\SpriteRenderer.h"
 #include "Scene\Entity\Component\Script\PathFinder.h"
 #include "Scene\Entity\Component\Script\EnemyController.h"
@@ -53,6 +54,7 @@ void PlayState::Init()
 	scene = new Scene(NULL);
 	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
 	scene->grid->Load("Data//Levels//level1.csv");
+	scene->camera.position.Set(0, -TileHeight, 0);
 
 	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(80, 30), NULL, Vector3(0.5f, 0.5f, 0.5f));
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Return", 128));
@@ -101,10 +103,10 @@ void PlayState::Init()
 
 	{
 		entity = scene->canvas->AddChild("Info");
-		entity->transform->SetPosition(1020, 400);
+		entity->transform->SetPosition(1030, 400);
 
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(60, 12), "", 256, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(60, 12), "", 200, false));
 			editor->GetComponent<TowerGUI>()->name = child->GetComponent<TextRenderer2D>();
 		}
 		{
@@ -195,6 +197,7 @@ void PlayState::Init()
 	a.push_back(2);
 	stageManager->AddComponent<PathFinder>();
 	stageManager->AddComponent<StageManager>()->LateInit(scene->grid, a);
+	stageManager->GetComponent<StageManager>()->gui = stageManager->AddComponent<StageGUI>();
 	stageManager->GetComponent<StageManager>()->LoadStage("level1");
 
 	EnemyController::stage = stageManager->GetComponent<StageManager>();

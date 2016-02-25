@@ -46,6 +46,16 @@ struct WaveData
 		count.clear();
 	}
 
+	float GetWaveTime()
+	{
+		float time = 0;
+
+		for (int i = 0; i < count.size(); ++i)
+			time += delay[i] * count[i];
+
+		return time;
+	}
+
 	vector<int> tier;
 	vector<float> delay;
 	vector<int> count;
@@ -68,6 +78,11 @@ public:
 	inline void AddWave(WaveData waveData)
 	{
 		stageData.push_back(waveData);
+	}
+
+	int GetNumStages()
+	{
+		return stageData.size();
 	}
 
 	int health;

@@ -299,20 +299,26 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 
 #include "Component\Script\StandardParticle.h"
 
-Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha)
+Entity * EntityFactory::CreateParticle(const Vector2 & position, const Vector2 & size, const char * animator, const char * animation, float alpha)
 {
 	Entity* entity = new Entity("Particle");
 	entity->transform->SetPosition(position.x, position.y);
 	entity->transform->SetSize(size.x, size.y);
-	
+
 	entity->AddComponent<SpriteRenderer>()->color.w = alpha;
+	entity->GetComponent<SpriteRenderer>()->SetLayer(2);
 
 	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
 	entity->GetComponent<SpriteAnimator>()->Play(animation, false);
-	
+
 	entity->AddComponent<StandardParticle>();
-		
-	return Generate(scene->root, entity);
+
+	return entity;
+}
+
+Entity* EntityFactory::GenerateParticle(const Vector2& position, const Vector2& size, const char* animator, const char* animation, float alpha)
+{
+	return Generate(scene->root, CreateParticle(position, size, animator, animation, alpha));
 }
 
 Entity * EntityFactory::Generate(Entity * root, Entity * entity)

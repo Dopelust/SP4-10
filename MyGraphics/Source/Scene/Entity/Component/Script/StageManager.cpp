@@ -6,9 +6,7 @@
 using namespace std;
 
 StageManager::StageManager() :
-freeTimer(0),
 state(FREETIME),
-freeTime(0),
 waveTimer(0),
 spawnTimer(0),
 owner(NULL),
@@ -83,23 +81,14 @@ void StageManager::Update(double dt)
 	switch (state)
 	{
 	case FREETIME:
-		UpdateFreeTime(dt);
+		
+		if (true)
+			StartWave();
+
 		break;
 	case WAVE:
 		UpdateWave(dt);
 		break;
-	}
-}
-
-void StageManager::UpdateFreeTime(double dt)
-{
-	freeTimer += (float)dt;
-	if (freeTimer > freeTime)
-	{
-		state = WAVE;
-		UpdatePathFinders();
-		freeTimer = 0;
-		InitWave();
 	}
 }
 
@@ -147,6 +136,8 @@ void StageManager::UpdateWave(double dt)
 			}
 		}
 	}
+
+	Fall(waveTimer, dt, 0);
 }
 
 #include "../../../Scene.h"
@@ -218,39 +209,32 @@ bool StageManager::CheckObstruction(int i, int j)
 	return tileMap[i][j];
 }
 
-void StageManager::InitAllWave()
+bool StageManager::InitWave()
 {
-	for (int k = 0; k < GetData().stageData.size(); ++k)
+	if (currentWave + 1 < GetData().GetNumStages())
 	{
 		StageWave wave;
-		wave.waveData = GetData().stageData[k];
-		for (int i = 0; i < GetData().stageData[k].count.size(); ++i)
+		wave.waveData = GetData().stageData[currentWave];
+
+		for (int i = 0; i < GetData().stageData[currentWave].count.size(); ++i)
 		{
-			for (int j = 0; j < GetData().stageData[k].count[i]; ++j)
+			for (int j = 0; j < GetData().stageData[currentWave].count[i]; ++j)
 			{
 				wave.spawnQueue.push(j);
 			}
 		}
 		waveQueue.push(wave);
+
+		++currentWave;
+
+		waveTimer = wave.waveData.GetWaveTime();
+		spawnTimer = 1000;
+
+		return true;
 	}
 
-	spawnTimer = 0;
-}
-
-void StageManager::InitWave()
-{
-	StageWave wave;
-	wave.waveData = GetData().stageData[currentWave];
-	for (int i = 0; i < GetData().stageData[currentWave].count.size(); ++i)
-	{
-		for (int j = 0; j < GetData().stageData[currentWave].count[i]; ++j)
-		{
-			wave.spawnQueue.push(j);
-		}
-	}
-	waveQueue.push(wave);
-
-	++currentWave;
+	//Win
+	return false;
 }
 
 #include "../../../AStar/AStar.h"
@@ -287,6 +271,12 @@ void StageManager::SpawnEnemies(double dt)
 		currentWave->spawnQueue.pop();
 		spawnTimer = 0;
 	}
+}
+
+void StageManager::StartWave()
+{
+	if (InitWave())
+		state = WAVE;
 }
 
 void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID)

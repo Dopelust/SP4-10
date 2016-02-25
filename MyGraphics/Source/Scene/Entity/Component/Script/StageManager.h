@@ -16,19 +16,11 @@ struct Vector2;
 
 class PathFinder;
 
-// Stage Manager
-// Spawns enemy and manages progression
+class StageGUI;
 class Grid;
 class GridInfo;
 class Entity;
 class StageData;
-
-enum StageState
-{
-	FREETIME,
-	WAVE,
-	MAX_STATE,
-};
 
 struct StageWave
 {
@@ -62,6 +54,8 @@ public:
 	StageManager();
 	~StageManager();
 
+	StageGUI* gui;
+
 	void Init(Entity* ent);
 	void LateInit(Grid* grid, vector<int>& obstructionIndex);
 	// Load Stage Data
@@ -79,13 +73,15 @@ public:
 	vector<Vector2>& EndPoints();
 
 private:
+	friend StageGUI;
+
 	void CreateTileMap(vector<int>& obstructionIndex);
 	void UpdatePathFinders();
-	void UpdateFreeTime(double dt);
 	void UpdateWave(double dt);
-	void InitAllWave();
-	void InitWave();
+	bool InitWave();
 	void SpawnEnemies(double dt);
+
+	void StartWave();
 
 	StageData& GetData();
 
@@ -102,9 +98,15 @@ private:
 	int currentWave;
 	bool waveDone;
 
+	enum StageState
+	{
+		FREETIME,
+		WAVE,
+		MAX_STATE,
+	};
+
 	StageState state;
-	const float freeTime;
-	float freeTimer;
+
 	float waveTimer;
 	float spawnTimer;
 

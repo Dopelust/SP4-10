@@ -85,9 +85,6 @@ void Assets::Init()
 	texture["Circle"] = new Texture("Assets//circle.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Range"] = new Texture("Assets//range_indicator.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
-	texture["Blue"] = new Texture("Assets//blueslime1.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	texture["Red"] = new Texture("Assets//redslime.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	
 	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Puff"] = new Spritesheet();
 	animator["Puff"] = new Animator();
@@ -104,7 +101,8 @@ void Assets::Init()
 	sprite["FlyingSlime"] = new Spritesheet();
 	animator["FlyingSlime"] = new Animator();
 	GenerateSpriteStrip("FlyingSlime", 3);
-	animator["FlyingSlime"]->AddAnimation("FlyingSlime", CreateAnimationStrip("FlyingSlime", "FlyingSlime", 3, 0.1f));
+	animator["FlyingSlime"]->AddAnimation("FlyingSlime", CreateAnimationStrip("FlyingSlime", "FlyingSlime", 3, 0.125f));
+	animation["FlyingSlime"]->AddFrame(sprite["FlyingSlime"]->GetSprite(1));
 
 	texture["Jellies"] = new Texture("Assets//JellySpriteSheet.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Jellies"] = new Spritesheet();

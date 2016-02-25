@@ -143,6 +143,7 @@ void Projectile::GenerateParticle()
 			EntityFactory::CreateGraphic(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2() * 1.2f, Resource.GetTexture("Burst"), Vector4(1, 1, 1)));
 
 		particle->GetComponent<Graphic2D>()->GetColor().w = 0.6f;
+		particle->GetComponent<Graphic2D>()->SetLayer(2);
 
 		particle->AddComponent<ScaleScript>()->rate = 32;
 

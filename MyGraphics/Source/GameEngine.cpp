@@ -90,13 +90,15 @@ void GameEngine::Update(float dt)
 }
 
 #include "FBO.h"
+#include "Screen.h"
+
 void GameEngine::Render()
 {
 	if (!states.empty())
 		states.back()->Render();
 
 	FBO::Unbind();
-	Graphics.font->ImmediateDraw("fps: " + ToString((int)fps), 0, 0, 64);
+	Graphics.font->ImmediateDraw(ToString((int)fps), Screen.GetProjectionWidth() - 32, 0, 48);
 }
 
 void GameEngine::Terminate()
