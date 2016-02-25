@@ -41,8 +41,6 @@ void StageManager::LateInit(Grid* grid, vector<int>& obstructionIndex)
 
 	CreateTileMap(obstructionIndex);
 
-	CreatePathFinders();
-
 	UpdatePathFinders();
 }
 
@@ -66,18 +64,6 @@ void StageManager::LoadStage(string stageName)
 StageData& StageManager::GetData()
 {
 	return StageDatabase::GetData(currentStage);
-}
-
-
-void StageManager::CreatePathFinders()
-{
-	/*for (int i = 0; i < spawnPoints.size(); ++i)
-	{
-		Entity *entity = EntityFactory::GeneratePathFinder();
-		entity->GetComponent<PathFinder>()->UpdateMap(tileMap);
-		entity->GetComponent<PathFinder>()->SetStart(spawnPoints[i]);
-		pathFinders.push_back(entity);
-	}*/
 }
 
 #include "EnemyController.h"
@@ -276,7 +262,7 @@ void StageManager::SpawnEnemies(double dt)
 	{
 		int spawnPt = rand() % spawnPoints.size();
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
-		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), currentWave->waveData.tier[currentWave->spawnNo]);
+		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), currentWave->waveData.tier[currentWave->spawnNo], "Jellies", ("Jellies" + ToString(currentWave->waveData.tier[currentWave->spawnNo])).c_str());
 
 		enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, spawnPoints[spawnPt], endPoints);
 
@@ -297,7 +283,7 @@ void StageManager::SpawnEnemies(double dt)
 
 void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID)
 {
-	Entity* enemy = EntityFactory::GenerateEnemy(position, tier);
+	Entity* enemy = EntityFactory::GenerateEnemy(position, tier, "Jellies", ("Jellies" + ToString(tier)).c_str());
 	enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, index, endPoints);
 	enemy->GetComponent<EnemyController>()->parentID = parentID;
 

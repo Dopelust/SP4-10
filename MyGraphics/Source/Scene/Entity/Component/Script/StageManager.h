@@ -81,7 +81,6 @@ public:
 private:
 	void CreateTileMap(vector<int>& obstructionIndex);
 	void UpdatePathFinders();
-	void CreatePathFinders();
 	void UpdateFreeTime(double dt);
 	void UpdateWave(double dt);
 	void InitAllWave();

@@ -70,12 +70,12 @@ void PlayState::Init()
 		entity = scene->canvas->AddChild("Hotbar");
 		entity->transform->SetPosition(1100, 640);
 
-		TowerDatabase::Init("archer");
+		TowerDatabase::Init("bubble blower");
 		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
-		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Archer"), Vector4(1,1,1,1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Archer", 128));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("archer")[0].cost).c_str(), 200));
-		editor->GetComponent<TowerGUI>()->AddButton("archer", child->GetComponent<Button>());
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Bubble Blower"), Vector4(1,1,1,1)));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Bubble Blower", 128));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("bubble blower")[0].cost).c_str(), 200));
+		editor->GetComponent<TowerGUI>()->AddButton("bubble blower", child->GetComponent<Button>());
 
 		TowerDatabase::Init("fountain");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -72), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));

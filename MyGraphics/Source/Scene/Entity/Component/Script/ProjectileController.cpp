@@ -75,16 +75,16 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		EnemyController *ec = col.entity->GetComponent<EnemyController>();
 		if (ec->done)
 			return;
-		
+
+		--pierceCount;
+		pierced.push_back(col.entity->GetID());
+
 		for (int i = 0; i < pierced.size(); ++i)
 		{
 			if (pierced[i] == ec->parentID)
 				return;
 		}
-
-		pierced.push_back(col.entity->GetID());
-		--pierceCount;
-		//cout << col.entity->GetComponent<EnemyController>()->GetData().name << endl;
+		
 		switch (towerData->projectileEffect)
 		{
 		case 0:

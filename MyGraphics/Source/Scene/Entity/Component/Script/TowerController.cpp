@@ -41,10 +41,13 @@ void TowerController::Init(Entity* ent)
 }
 
 #include "../../../Projectile/ProjectileDatabase.h"
+#include "../../../../Assets.h"
+#include "../Graphic2D.h"
 
 void TowerController::Init(string type)
 {
 	this->type = type;
+	this->owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData()->textureName.c_str()));
 	stageManager = Scene::scene->root->GetChild("Stage Manager")->GetComponent<StageManager>();
 }
 

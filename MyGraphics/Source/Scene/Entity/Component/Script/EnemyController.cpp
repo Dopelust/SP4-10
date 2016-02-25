@@ -40,7 +40,7 @@ void EnemyController::Init(Entity* ent)
 void EnemyController::LateInit(int enemyTier)
 {
 	this->tier = enemyTier;
-	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData().name.c_str()));
+	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData().name.c_str()));
 
 	originalSpeed = GetData().movementSpeed;
 	movementSpeed = originalSpeed;

@@ -202,9 +202,9 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 	entity->AddComponent<TowerController>()->index = Vector2(index.x, index.y);
 	entity->GetComponent<TowerController>()->Init(type);
 
-	if (type == "archer")
+	if (type == "bubble blower")
 	{
-		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Archer"));
+		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Bubble Blower"));
 		entity->transform->Size() *= 1.75f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
@@ -277,10 +277,16 @@ Entity* EntityFactory::GeneratePathFinder()
 
 #include "Component\Script\EnemyController.h"
 
-Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier)
+Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, const char* animator, const char* animation)
 {
-	Entity* entity = CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
-	entity->Rename("Enemy");
+	Entity* entity = new Entity("Enemy");//CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
+	//entity->Rename("Enemy");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(TileWidth, TileHeight);
+
+	entity->AddComponent<SpriteRenderer>();
+	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
+	entity->GetComponent<SpriteAnimator>()->Play(animation, true);
 
 	entity->AddComponent<BoxCollider>()->size.Set(TileWidth * 0.725f, TileHeight * 0.725f);
 	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
