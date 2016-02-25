@@ -44,8 +44,8 @@ private:
 	map<string, Animation*> animation;
 	map<string, Animator*> animator;
 
-	Animation* CreateAnimationStrip(const char* name, int framecount, float framerate);
+	Animation* CreateAnimationStrip(const char* name, int framecount, float framerate, int offset = 0);
 
-	void GenerateSprites(const char* name, int count, int rows);
+	void GenerateSprites(const char* name, int count, int rows, int offset = 0);
 	void GenerateSpriteStrip(const char* name, int count);
 };

@@ -111,18 +111,18 @@ void Assets::Init()
 	GenerateSprites("Tileset", 5, 3);
 }
 
-Animation * Assets::CreateAnimationStrip(const char* name, int framecount, float framerate)
+Animation * Assets::CreateAnimationStrip(const char* name, int framecount, float framerate, int offset)
 {
-	for (int i = 0; i < framecount; ++i)
+	for (int i = offset; i < offset + framecount; ++i)
 		animation[name]->AddFrame(sprite[name]->GetSprite(i));
 
 	animation[name]->SetFramerate(framerate);
 	return animation[name];
 }
 
-void Assets::GenerateSprites(const char * name, int count, int rows)
+void Assets::GenerateSprites(const char * name, int count, int rows, int offset)
 {
-	for (int i = 0; i < count; ++i)
+	for (int i = offset; i < offset + count; ++i)
 	{
 		Sprite* s = sprite[name]->AddSprite();
 		Vector4 uv = Texture::GetUV(i, rows);
