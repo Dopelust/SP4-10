@@ -90,14 +90,12 @@ void Assets::Init()
 	
 	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Puff"] = new Spritesheet();
-	animation["Puff"] = new Animation();
 	animator["Puff"] = new Animator();
 	GenerateSpriteStrip("Puff", 10);
 	animator["Puff"]->AddAnimation("Puff", CreateAnimationStrip("Puff", "Puff", 10, 0.02f));
 
 	texture["Splash"] = new Texture("Assets//splash.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Splash"] = new Spritesheet();
-	animation["Splash"] = new Animation();
 	animator["Splash"] = new Animator();
 	GenerateSpriteStrip("Splash", 5);
 	animator["Splash"]->AddAnimation("Splash", CreateAnimationStrip("Splash", "Splash", 5, 0.05f));
@@ -107,11 +105,12 @@ void Assets::Init()
 	animator["Jellies"] = new Animator();
 
 	for (int i = 0; i < 11; ++i)
-	{
-		animation["Jellies" + ToString(i)] = new Animation();
 		GenerateSprites("Jellies", 2, 11, 11 * i);
-		CreateAnimationStrip(("Jellies" + ToString(i)).c_str(), "Jellies", 2, 0.5f, 2 * i);
-		animator["Jellies"]->AddAnimation(("Jellies" + ToString(i)).c_str(), animation["Jellies" + ToString(i)]);
+	for (int i = 0; i < 11; ++i)
+	{
+		animation["Jellies" + ToString(i + 1)] = new Animation();
+		CreateAnimationStrip(("Jellies" + ToString(i + 1)).c_str(), "Jellies", 2, 0.2f, 2 * i);
+		animator["Jellies"]->AddAnimation(("Jellies" + ToString(i + 1)).c_str(), animation["Jellies" + ToString(i + 1)]);
 	}
 
 	texture["NightChanges"] = new Texture("Assets//Menu.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
@@ -127,6 +126,8 @@ void Assets::Init()
 
 Animation * Assets::CreateAnimationStrip(const char* name, const char* spriteSheet, int framecount, float framerate, int offset)
 {
+	animation[name] = new Animation();
+
 	for (int i = offset; i < offset + framecount; ++i)
 		animation[name]->AddFrame(sprite[spriteSheet]->GetSprite(i));
 

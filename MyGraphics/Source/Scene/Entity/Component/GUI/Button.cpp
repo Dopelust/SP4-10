@@ -152,6 +152,12 @@ void Button::UpdateState()
 	}
 }
 
+bool Button::IsEnabled()
+{
+	return enabled;
+}
+
+
 void Button::Enable()
 {
 	enabled = true;

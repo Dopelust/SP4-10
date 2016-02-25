@@ -16,14 +16,8 @@ public:
 	void AddAnimation(const char* name, Animation* anim);
 	Animation* GetAnimation(const char* name);
 
-	Sprite* GetFrame();
-	void Play(const char* name);
-	void Update(float dt);
-
 private:
 	map<string, Animation*> animation;
-	Animation* active;
-	float frameTimer;
 };
 
 #endif

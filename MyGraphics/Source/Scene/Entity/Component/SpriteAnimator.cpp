@@ -48,7 +48,8 @@ void SpriteAnimator::Update(double dt)
 		}
 	}
 
-	sprite->SetSprite(GetFrame());
+	if (GetFrame())
+		sprite->SetSprite(GetFrame());
 }
 
 void SpriteAnimator::Play(const char * name, bool loop)
@@ -58,7 +59,9 @@ void SpriteAnimator::Play(const char * name, bool loop)
 	ended = false;
 	this->loop = loop;
 
-	sprite->SetSprite(GetFrame());
+
+	if (GetFrame())
+		sprite->SetSprite(GetFrame());
 }
 
 Sprite * SpriteAnimator::GetFrame()

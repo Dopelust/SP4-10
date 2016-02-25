@@ -33,8 +33,9 @@ float Animation::GetAnimationTime()
 	return GetFrameCount() * GetFramerate();
 }
 
-#include <iostream>
+#include "MyMath.h"
+
 Sprite * Animation::GetFrame(float elapsedTime)
 {
-	return sprite[elapsedTime / GetFramerate()];
+	return sprite[Math::Min((int)(elapsedTime / GetFramerate()), GetFrameCount())];
 }

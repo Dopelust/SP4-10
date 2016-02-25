@@ -31,6 +31,7 @@ public:
 
 	Transform* transform;
 
+	bool IsEnabled();
 	void Enable();
 	void Disable();
 

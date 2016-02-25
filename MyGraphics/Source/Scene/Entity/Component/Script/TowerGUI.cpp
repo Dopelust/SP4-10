@@ -72,21 +72,27 @@ void TowerGUI::Init(Entity * ent)
 	manager = ent->GetComponent<TowerManager>();
 }
 
+#include "../../../../InputHandler.h"
+
 void TowerGUI::Update(double dt)
 {
+	GLenum key = GLFW_KEY_1;
+
 	for (auto& b : button)
 	{
-		if (b.second->IsState(Button::STATE_CLICK))
+		if (b.second->IsState(Button::STATE_CLICK) || Input.IsPress(key))
 		{
 			manager->SetToPlace(b.first.c_str());
 			break;
 		}
+
+		++key;
 	}
 
-	if (upgrade->IsState())
+	if (upgrade->IsEnabled() && (upgrade->IsState() || Input.IsPress(GLFW_KEY_U)))
 		manager->UpgradeTower();
 
-	else if (sell->IsState())
+	else if (sell->IsEnabled() && (sell->IsState() || Input.IsPress(GLFW_KEY_S)))
 		manager->SellTower();
 }
 
