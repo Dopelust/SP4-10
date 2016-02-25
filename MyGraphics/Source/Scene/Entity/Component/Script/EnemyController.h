@@ -27,10 +27,10 @@ public:
 	void Stun(float duration);
 
 	int GetTier();
-
+	int GetOwnerID();
 	EnemyData& GetData();
 	
-	bool done, pop;
+	bool done, pop, split;
 	int popCount;
 
 	Vector2 GetIndex();

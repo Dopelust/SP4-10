@@ -100,6 +100,12 @@ void Assets::Init()
 	GenerateSpriteStrip("Splash", 5);
 	animator["Splash"]->AddAnimation("Splash", CreateAnimationStrip("Splash", "Splash", 5, 0.05f));
 
+	texture["FlyingSlime"] = new Texture("Assets//FlyingSlime.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["FlyingSlime"] = new Spritesheet();
+	animator["FlyingSlime"] = new Animator();
+	GenerateSpriteStrip("FlyingSlime", 3);
+	animator["FlyingSlime"]->AddAnimation("FlyingSlime", CreateAnimationStrip("FlyingSlime", "FlyingSlime", 3, 0.1f));
+
 	texture["Jellies"] = new Texture("Assets//JellySpriteSheet.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Jellies"] = new Spritesheet();
 	animator["Jellies"] = new Animator();

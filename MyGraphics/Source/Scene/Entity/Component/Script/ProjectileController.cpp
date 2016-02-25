@@ -32,7 +32,7 @@ void Projectile::LateInit(string name)
 {
 	this->name = name;
 
-	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(name.c_str()));
+	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(name.c_str()));
 }
 
 
@@ -77,13 +77,14 @@ void Projectile::OnCollisionEnter(const Collision& col)
 			return;
 
 		--pierceCount;
-		pierced.push_back(col.entity->GetID());
 
 		for (int i = 0; i < pierced.size(); ++i)
 		{
-			if (pierced[i] == ec->parentID)
+			if (pierced[i] == ec->parentID || pierced[i] == ec->GetOwnerID())
 				return;
 		}
+
+		pierced.push_back(col.entity->GetID());
 		
 		switch (towerData->projectileEffect)
 		{

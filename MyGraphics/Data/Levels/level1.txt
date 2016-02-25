@@ -1,6 +1,7 @@
+Health,	150
 // Wave 1
 // Tier, Delay, Count
-11, 0.1, 5000
+2, 0.1, 5000
 
 // Wave 2
 1, 0.8, 3

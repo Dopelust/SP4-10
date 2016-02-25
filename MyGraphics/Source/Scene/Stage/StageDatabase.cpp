@@ -47,6 +47,12 @@ bool StageDatabase::Init(const char * fileData)
 		RemoveChar(line, '	'); //Remove whitespaces
 		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
 
+		if (data[0] == "Health")
+		{
+			stage.health = stoi(data[1]);
+			continue;
+		}
+
 		wave.Add(stoi(data[0]), stof(data[1]), stoi(data[2]));
 	}
 

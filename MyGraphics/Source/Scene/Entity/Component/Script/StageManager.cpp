@@ -123,9 +123,13 @@ void StageManager::UpdateWave(double dt)
 	{
 		EnemyController* ec = enemies[i]->GetComponent<EnemyController>();
 
-		if (ec->done)
+		if (ec->pop)
 		{
-			if (ec->pop)
+			// To Do : Add player money
+
+			ec->pop = false;
+
+			if (ec->split)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
 				{
@@ -134,9 +138,13 @@ void StageManager::UpdateWave(double dt)
 				}
 			}
 
-			EntityFactory::Destroy(enemies[i]);
-			enemies.erase(enemies.begin() + i);
-			--i;
+			if (ec->done)
+			{
+				EntityFactory::Destroy(enemies[i]);
+				enemies.erase(enemies.begin() + i);
+				--i;
+				continue;
+			}
 		}
 	}
 }

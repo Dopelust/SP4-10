@@ -11,6 +11,7 @@ done(false),
 slowed(false),
 stunned(false),
 pop(false),
+split(false),
 path(NULL),
 statusTimer(0),
 statusDuration(0),
@@ -87,7 +88,10 @@ void EnemyController::Update(double dt)
 		if (owner->transform->GetPosition().DistSquared(target) < 4 * 4)
 		{
 			if (path->IsEndOfPath())
+			{
+				pop = true;
 				done = true;
+			}
 			else
 				path->Traverse();
 		}
@@ -98,6 +102,7 @@ void EnemyController::Update(double dt)
 		{
 			if (GetIndex().DistSquared(end) < 4 * 4)
 			{
+				pop = true;
 				done = true;
 				break;
 			}
@@ -107,15 +112,31 @@ void EnemyController::Update(double dt)
 
 #include "../../EntityFactory.h"
 
+#include "../SpriteAnimator.h"
+#include "Utility.h"
+
 void EnemyController::Pop(int popCount)
 {
-	if (tier > 1)
+	if (tier - popCount > 0)
 	{
-		pop = true;
+		if (GetData().split > 1)
+		{
+			split = true;
+			done = true;
+		}
+
+		tier -= popCount;
+
 		this->popCount = popCount;
+
+		owner->GetComponent<SpriteAnimator>()->Play(("Jellies" + ToString(tier)).c_str(), true);
 	}
-	
-	done = true;
+	else
+	{
+		done = true;
+	}
+
+	pop = true;
 
 	EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2(), "Puff", "Puff");
 }
@@ -136,6 +157,11 @@ void EnemyController::Stun(float duration)
 int EnemyController::GetTier()
 {
 	return tier;
+}
+
+int EnemyController::GetOwnerID()
+{
+	return owner->GetID();
 }
 
 EnemyData& EnemyController::GetData()

@@ -54,7 +54,8 @@ struct WaveData
 class StageData
 {
 public:
-	StageData()
+	StageData() :
+		health(0)
 	{
 
 	}
@@ -69,6 +70,7 @@ public:
 		stageData.push_back(waveData);
 	}
 
+	int health;
 	vector<WaveData> stageData;
 };
 
