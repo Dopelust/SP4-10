@@ -14,6 +14,8 @@ public:
 
 	int index;
 	void Draw(int i, int j); 
+
+	static void DrawOcclusion(int i, int j, int orientation);
 };
 
 #endif

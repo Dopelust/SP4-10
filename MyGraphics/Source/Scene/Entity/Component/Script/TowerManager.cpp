@@ -11,6 +11,8 @@
 #include "../../Entity.h"
 #include "../Graphic2D.h"
 
+#include "../../../../SoundEngine.h"
+
 TowerManager::TowerManager() : selection(NULL)
 {
 }
@@ -94,6 +96,7 @@ bool TowerManager::PlaceTower()
 	if (stage->AddObstruction((int)index.x, (int)index.y))
 	{
 		towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), type);
+		Audio.Play2D(Audio.GetSoundPack("build"), 0.5f);
 
 		type = "";
 		HideInfo();
@@ -235,6 +238,8 @@ void TowerManager::UpgradeTower()
 
 		if (tower->IsMaxUpgrade())
 			gui->DisableUpgrades();
+
+		Audio.Play2D(Audio.GetSoundPack("build"), 0.5f);
 	}
 }
 
@@ -249,6 +254,8 @@ void TowerManager::SellTower()
 		towerMap[selection->transform->GetPosition()] = NULL;
 
 		Unselect();
+
+		Audio.Play2D(Audio.GetSoundPack("sell"), 0.5f);
 	}
 }
 

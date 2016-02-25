@@ -40,8 +40,6 @@ void OptionState::Init()
 	if (!Audio.IsPlaying("Juan"))
 		datsound = Audio.Play2D("Juan");
 
-	//Audio.Play2D("Juan",volume);
-
 	scene = new Scene(NULL);
 
 	Entity* entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 200), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
@@ -50,14 +48,20 @@ void OptionState::Init()
 
 	entity = scene->root->AttachChild(EntityFactory::CreateGraphic(
 		Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f),
-		Vector2(Screen.width, Screen.height),
+		Vector2(scene->GetResolutionX(scene->canvas), scene->GetResolutionY(scene->canvas)),
 		Resource.GetTexture("NightChanges"),
 		Vector4(1, 1, 1, 1.0f)
 		));
 
-	Entity* SmoothSlide = EntityFactory::GenerateSlider(Vector2(scene->GetResolutionX(scene->canvas) * 0.5, scene->GetResolutionY(scene->canvas)*0.5f), Vector2(400, 50), "Volume Slider", NULL, 0, 100, 100, true);
+	Entity* SmoothSlide = EntityFactory::GenerateSlider(Vector2(scene->GetResolutionX(scene->canvas) * 0.5, scene->GetResolutionY(scene->canvas)*0.45f), Vector2(400, 50), "SFX", NULL, 0, 100, 100, true);
 	slider = SmoothSlide->GetChild("Slider")->GetComponent<Slider>();
-	volume = slider->GetValue();
+
+	SmoothSlide->AttachChild(EntityFactory::CreateCheckbox(Vector2(-170, -50), 24, 4, "Mute", &sfx));
+
+	SmoothSlide = EntityFactory::GenerateSlider(Vector2(scene->GetResolutionX(scene->canvas) * 0.5, scene->GetResolutionY(scene->canvas)*0.6f), Vector2(400, 50), "BGM", NULL, 0, 100, 100, true);
+	slider = SmoothSlide->GetChild("Slider")->GetComponent<Slider>();
+
+	SmoothSlide->AttachChild(EntityFactory::CreateCheckbox(Vector2(-170, -50), 24, 4, "Mute", &bgm));
 
 	Resume();
 }
@@ -71,12 +75,16 @@ void OptionState::Exit()
 		delete scene;
 		scene = NULL;
 	}
+
+	Audio.StopPlaying(datsound);
 }
 
 void OptionState::Update(float dt)
 {
-	if (slider->ValueChanged())
-		datsound->setVolume(slider->GetValue() * 0.01f);
+	if (!bgm)
+		Audio.SetVolume(slider->GetValue() * 0.01f);
+	else
+		Audio.SetVolume(0);
 
 	scene->Update(dt);
 }

@@ -12,7 +12,12 @@ Toggle::~Toggle()
 
 bool Toggle::IsToggled()
 {
-	return *toggle;
+	if (toggle)
+	{
+		return *toggle;
+	}
+
+	return false;
 }
 
 void Toggle::SetToggle(bool* toggle)
@@ -27,6 +32,6 @@ void Toggle::Init(Entity * ent)
 
 void Toggle::Update(double dt)
 {
-	if (button->IsState())
+	if (toggle && button->IsState())
 		*toggle = !*toggle;
 }

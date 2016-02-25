@@ -18,6 +18,9 @@ public:
 
 	static OptionState& Instance();
 
+	bool bgm;
+	bool sfx;
+
 	Button* back;
 	Slider* slider;
 	ISound* datsound;

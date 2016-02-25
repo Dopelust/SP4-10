@@ -45,6 +45,27 @@ void Cell::Draw(int i, int j)
 	for (int y = 0; y < NumberOfTilesY; ++y)
 	{
 		tile[x][y].Draw(i + x, j + y);
+
+		if (tile[x][y].index != 2)
+		{
+			if (y + 1 < NumberOfTilesY && tile[x][y + 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 7);
+			if (y - 1 >= 0 && tile[x][y - 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 1);
+			if (x + 1 < NumberOfTilesX && tile[x + 1][y].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 3);
+			if (x - 1 >= 0 && tile[x - 1][y].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 5);
+
+			if (y + 1 < NumberOfTilesY && x + 1 < NumberOfTilesX && tile[x + 1][y + 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 6);
+			if (y + 1 < NumberOfTilesY && x - 1 >= 0 && tile[x - 1][y + 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 8);
+			if (y - 1 >= 0 && x + 1 < NumberOfTilesX && tile[x + 1][y - 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 0);
+			if (y - 1 >= 0 && x - 1 >= 0 && tile[x - 1][y - 1].index == 2)
+				Tile::DrawOcclusion(i + x, j + y, 2);
+		}
 	}
 }
 

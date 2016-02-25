@@ -14,7 +14,7 @@ PlayState& PlayState::Instance()
 	return state;
 }
 
-PlayState::PlayState()
+PlayState::PlayState() : bgm(NULL)
 {
 }
 
@@ -47,9 +47,14 @@ PlayState::~PlayState()
 #include "Utility.h"
 #include "Spritesheet.h"
 
+#include "SoundEngine.h"
+
 void PlayState::Init()
 {
 	glClearColor(0.2, 0.2, 0.2, 1);
+
+	if (!Audio.IsPlaying(Audio.GetSoundPack("bgm")))
+		bgm = Audio.Play2D(Audio.GetSoundPack("bgm"), 0.05f);
 
 	scene = new Scene(NULL);
 	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
@@ -219,6 +224,12 @@ void PlayState::Exit()
 	}
 
 	TowerDatabase::Exit();
+
+	if (bgm)
+	{
+		Audio.StopPlaying(bgm);
+		bgm = NULL;
+	}
 }
 
 void PlayState::Update(float dt)

@@ -513,10 +513,10 @@ Mtx44 Mtx44::GetTransformation(float Tx, float Ty, float Tz, float Sx, float Sy,
 	Mtx44 T, R, S;
 
 	T.SetToTranslation(Tx, Ty, Tz);
-	//R.SetToIdentity();
+	R.SetToRotation(Rz, 0, 0, 1);
 	S.SetToScale(Sx, Sy, Sz);
 
-	return T * S;
+	return T * R * S;
 }
 
 Mtx44 Mtx44::GetIdentity()

@@ -121,7 +121,7 @@ Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, flo
 {
 	Entity* entity = CreateGraphic(position, Vector2(size + stroke, size + stroke), NULL, Vector3(0.9f, 0.9f, 0.9f));
 
-	Entity* t = CreateTextGUI(Vector2(size, 0), text, 256);
+	Entity* t = CreateTextGUI(Vector2(size, 0), text, 200);
 	t->GetComponent<TextRenderer2D>()->SetAlignCenter(false);
 
 	entity->AttachChild(t);

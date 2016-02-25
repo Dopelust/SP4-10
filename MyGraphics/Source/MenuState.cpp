@@ -51,7 +51,7 @@ void MenuState::Init()
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "QUIT", 128));
 	exit = entity->GetComponent<Button>();
 
-	entity = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f), Vector2(Screen.width, Screen.height), Resource.GetTexture("NightChanges"), Vector4(1, 1, 1, 1.0f)));
+	entity = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f), Vector2(scene->GetResolutionX(scene->canvas), scene->GetResolutionY(scene->canvas)), Resource.GetTexture("NightChanges"), Vector4(1, 1, 1, 1.0f)));
 
 	Resume();
 }

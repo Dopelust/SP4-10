@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "SoundEngine.h"
 
 class Button;
 class Entity;
@@ -18,6 +19,7 @@ public:
 
 	static PlayState& Instance();
 
+	ISound* bgm;
 	Button* menu;
 
 private:

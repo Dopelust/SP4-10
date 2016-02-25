@@ -8,14 +8,53 @@ bool SoundEngine::IsPlaying(const char * name)
 	return engine->isCurrentlyPlaying(audio[name].c_str());
 }
 
+bool SoundEngine::IsPlaying(const SoundPack & sound)
+{
+	for (auto& s : sound.GetSounds())
+	{
+		if (IsPlaying(s.c_str()))
+			return true;
+	}
+
+	return false;
+}
+
 ISound* SoundEngine::Play2D(const char * name, float volume)
 {
 	ISound * sound = engine->play2D(audio[name].c_str(), false, true);
+
 	if (sound)
 	{
 		sound->setVolume(volume);
 		sound->setIsPaused(false);
+
 		return sound;
+	}
+
+	return NULL;
+}
+
+ISound * SoundEngine::Play2D(const SoundPack & sound, float volume)
+{
+	ISound * snd = engine->play2D(sound.GetSound().c_str(), false, true);
+
+	if (snd)
+	{
+		snd->setVolume(volume);
+		snd->setIsPaused(false);
+
+		return snd;
+	}
+
+	return NULL;
+}
+
+void SoundEngine::StopPlaying(ISound* sound)
+{
+	if (sound)
+	{
+		sound->stop();
+		sound->drop();
 	}
 }
 
@@ -29,6 +68,11 @@ void SoundEngine::Play3D(const char * name, const Vector3& position, float volum
 		sound->setVolume(volume);
 		sound->setIsPaused(false);
 	}
+}
+
+const SoundPack & SoundEngine::GetSoundPack(const char * name)
+{
+	return soundPack[name];
 }
 
 
@@ -55,9 +99,49 @@ void SoundEngine::Init()
 	audio["bubble"] = "Assets//Sound//bubble.mp3";
 	audio["splash"] = "Assets//Sound//splash.mp3";
 	audio["Juan"] = "Assets//Sound//NightChanges.mp3";
+
+	soundPack["bgm"].AddSound("Assets//Sound//bgm//war1.mp3");
+	soundPack["bgm"].AddSound("Assets//Sound//bgm//war2.mp3");
+	soundPack["bgm"].AddSound("Assets//Sound//bgm//war3.mp3");
+
+	soundPack["build"].AddSound("Assets//Sound//tower//build1.mp3");
+	soundPack["build"].AddSound("Assets//Sound//tower//build2.mp3");
+
+	soundPack["sell"].AddSound("Assets//Sound//tower//sell1.mp3");
+}
+
+void SoundEngine::SetVolume(float volume)
+{
+	engine->setSoundVolume(volume);
 }
 
 vec3df SoundEngine::GetVec3df(const Vector3 & vec)
 {
 	return vec3df(vec.x, vec.y, vec.z);
+}
+
+SoundPack::SoundPack()
+{
+}
+
+SoundPack::~SoundPack()
+{
+}
+
+void SoundPack::AddSound(const char * filepath)
+{
+	sounds.push_back(filepath);
+}
+
+const vector<string>& SoundPack::GetSounds() const
+{
+	return sounds;
+}
+
+const string & SoundPack::GetSound() const
+{
+	if (sounds.size())
+		return sounds[rand() % sounds.size()];
+
+	return "";
 }

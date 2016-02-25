@@ -74,6 +74,10 @@ void Assets::Init()
 	mesh["sphere"] = MeshBuilder::GenerateSphere(Vector3(1, 1, 1), 20, 20, 1);
 
 	//Texture
+	texture["Tile Occlusion"] = new Texture("Assets//tile_occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Tile Occlusion"] = new Spritesheet();
+	GenerateSprites("Tile Occlusion", 9, 3);
+
 	texture["Burst"] = new Texture("Assets//burst.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Dispenser"] = new Texture("Assets//watergun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Fountain"] = new Texture("Assets//fountain.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
