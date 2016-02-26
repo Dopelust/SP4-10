@@ -112,7 +112,8 @@ private:
 
 	queue<StageWave> waveQueue;
 
-	vector<vector<bool>> tileMap;
+	vector<vector<bool>> obstructionMap;
+	vector<vector<bool>> obstacleMap;
 };
 
 #endif

@@ -21,11 +21,12 @@ struct WaveData
 
 	}
 
-	inline void Add(int tier, float delay, int count)
+	inline void Add(int tier, float delay, int count, bool flying)
 	{
 		this->tier.push_back(tier);
 		this->delay.push_back(delay);
 		this->count.push_back(count);
+		this->flying.push_back(flying);
 	}
 
 	inline void Print()
@@ -59,6 +60,7 @@ struct WaveData
 	vector<int> tier;
 	vector<float> delay;
 	vector<int> count;
+	vector<bool> flying;
 };
 
 class StageData

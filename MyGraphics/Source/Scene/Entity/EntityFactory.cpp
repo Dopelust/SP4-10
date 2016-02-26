@@ -277,19 +277,31 @@ Entity* EntityFactory::GeneratePathFinder()
 
 #include "Component\Script\EnemyController.h"
 
-Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, const char* animator, const char* animation)
+Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, const char* animator, const char* animation, const bool flying)
 {
 	Entity* entity = new Entity("Enemy");//CreateGraphic(position, Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 1), 1);
 	//entity->Rename("Enemy");
 	entity->transform->SetPosition(position.x, position.y);
 	entity->transform->SetSize(TileWidth, TileHeight);
 
-	entity->AddComponent<SpriteRenderer>()->SetLayer(1);
+	entity->AddComponent<SpriteRenderer>()->SetLayer(4);
 	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
 	entity->GetComponent<SpriteAnimator>()->Play(animation, true);
 
 	entity->AddComponent<BoxCollider>()->size.Set(TileWidth * 0.725f, TileHeight * 0.725f);
 	entity->AddComponent<EnemyController>()->Init(enemyTier);
+	entity->GetComponent<EnemyController>()->LateInit(flying);
+
+	if (entity->GetComponent<EnemyController>()->flying)
+	{
+		Entity* wings = new Entity("Enemy Wings");
+		wings->transform->SetSize(TileWidth * 2, TileHeight * 2);
+		wings->AddComponent<SpriteRenderer>()->SetLayer(3);
+		wings->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator("Wings"));
+		wings->GetComponent<SpriteAnimator>()->Play("Wings", true);
+
+		entity->AttachChild(wings);
+	}
 
 	entity->AttachChild(CreateGraphic(Vector2(0, 0), Vector2(TileWidth * 0.85f, TileHeight * 0.65f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 

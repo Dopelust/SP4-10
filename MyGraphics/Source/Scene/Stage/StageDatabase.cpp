@@ -53,7 +53,14 @@ bool StageDatabase::Init(const char * fileData)
 			continue;
 		}
 
-		wave.Add(stoi(data[0]), stof(data[1]), stoi(data[2]));
+		if (stoi(data[3]) == 0)
+		{
+			wave.Add(stoi(data[0]), stof(data[1]), stoi(data[2]), false);
+		}
+		else
+		{
+			wave.Add(stoi(data[0]), stof(data[1]), stoi(data[2]), true);
+		}
 	}
 
 	stageData[fileData] = stage;

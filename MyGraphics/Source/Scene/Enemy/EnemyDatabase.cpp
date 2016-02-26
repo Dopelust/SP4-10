@@ -37,7 +37,14 @@ bool EnemyDatabase::Init(const char * fileData)
 		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
 	
 		EnemyData enemy;
-		enemy.Set(data[0], stoi(data[1]), stof(data[2]), stoi(data[3]), stoi(data[4]), stoi(data[5]));
+		if (stoi(data[4]) == 0)
+		{
+			enemy.Set(data[0], stoi(data[1]), stof(data[2]), stoi(data[3]), false, stoi(data[5]));
+		}
+		else
+		{
+			enemy.Set(data[0], stoi(data[1]), stof(data[2]), stoi(data[3]), false, stoi(data[5]));
+		}
 
 		enemyData.push_back(enemy);
 	}

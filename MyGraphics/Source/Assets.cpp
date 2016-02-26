@@ -101,13 +101,6 @@ void Assets::Init()
 	GenerateSpriteStrip("Splash", 5);
 	animator["Splash"]->AddAnimation("Splash", CreateAnimationStrip("Splash", "Splash", 5, 0.05f));
 
-	texture["FlyingSlime"] = new Texture("Assets//FlyingSlime.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	sprite["FlyingSlime"] = new Spritesheet();
-	animator["FlyingSlime"] = new Animator();
-	GenerateSpriteStrip("FlyingSlime", 3);
-	animator["FlyingSlime"]->AddAnimation("FlyingSlime", CreateAnimationStrip("FlyingSlime", "FlyingSlime", 3, 0.125f));
-	animation["FlyingSlime"]->AddFrame(sprite["FlyingSlime"]->GetSprite(1));
-
 	texture["Jellies"] = new Texture("Assets//JellySpriteSheet.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Jellies"] = new Spritesheet();
 	animator["Jellies"] = new Animator();
@@ -120,6 +113,13 @@ void Assets::Init()
 		CreateAnimationStrip(("Jellies" + ToString(i + 1)).c_str(), "Jellies", 2, 0.2f, 2 * i);
 		animator["Jellies"]->AddAnimation(("Jellies" + ToString(i + 1)).c_str(), animation["Jellies" + ToString(i + 1)]);
 	}
+
+	texture["Wings"] = new Texture("Assets//wings.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Wings"] = new Spritesheet();
+	animator["Wings"] = new Animator();
+	GenerateSpriteStrip("Wings", 3);
+	animator["Wings"]->AddAnimation("Wings", CreateAnimationStrip("Wings", "Wings", 3, 0.125f));
+	animation["Wings"]->AddFrame(sprite["Wings"]->GetSprite(1));
 
 	texture["NightChanges"] = new Texture("Assets//Menu.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 

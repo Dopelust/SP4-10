@@ -70,7 +70,14 @@ void StageManager::UpdatePathFinders()
 {
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		enemies[i]->GetComponent<PathFinder>()->UpdateMap(tileMap, enemies[i]->GetComponent<EnemyController>()->GetIndex(), endPoints);
+		if (!enemies[i]->GetComponent<EnemyController>()->flying)
+		{
+			enemies[i]->GetComponent<PathFinder>()->UpdateMap(obstructionMap, enemies[i]->GetComponent<EnemyController>()->GetIndex(), endPoints);
+		}
+		else
+		{
+			enemies[i]->GetComponent<PathFinder>()->UpdateMap(obstacleMap, enemies[i]->GetComponent<EnemyController>()->GetIndex(), endPoints);
+		}
 	}
 }
 
@@ -144,17 +151,31 @@ void StageManager::UpdateWave(double dt)
 
 void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 {
-	tileMap.resize(NumberOfCellsX * NumberOfTilesX);
-	for (unsigned i = 0; i < tileMap.size(); ++i)
+	obstructionMap.resize(NumberOfCellsX * NumberOfTilesX);
+	for (unsigned i = 0; i < obstructionMap.size(); ++i)
 	{
-		tileMap[i].resize(NumberOfCellsY * NumberOfTilesY);
+		obstructionMap[i].resize(NumberOfCellsY * NumberOfTilesY);
 	}
 
-	for (unsigned i = 0; i < tileMap.size(); ++i)
+	for (unsigned i = 0; i < obstructionMap.size(); ++i)
 	{
-		for (unsigned j = 0; j < tileMap[0].size(); ++j)
+		for (unsigned j = 0; j < obstructionMap[0].size(); ++j)
 		{
-			tileMap[i][j] = false;
+			obstructionMap[i][j] = false;
+		}
+	}
+
+	obstacleMap.resize(NumberOfCellsX * NumberOfTilesX);
+	for (unsigned i = 0; i < obstacleMap.size(); ++i)
+	{
+		obstacleMap[i].resize(NumberOfCellsY * NumberOfTilesY);
+	}
+
+	for (unsigned i = 0; i < obstacleMap.size(); ++i)
+	{
+		for (unsigned j = 0; j < obstacleMap[0].size(); ++j)
+		{
+			obstacleMap[i][j] = false;
 		}
 	}
 
@@ -163,12 +184,28 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 	{
 		for (unsigned j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
 		{
-			tileMap[i][j] = false;
+			obstructionMap[i][j] = false;
 			for (unsigned k = 0; k < obstructionIndex.size(); ++k)
 			{
 				if (Scene::scene->grid->GetTile(i, j)->index == obstructionIndex[k])
 				{
-					tileMap[i][j] = true;
+					obstructionMap[i][j] = true;
+					break;
+				}
+			}
+		}
+	}
+
+	for (unsigned i = 0; i < NumberOfCellsX * NumberOfTilesX; ++i)
+	{
+		for (unsigned j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
+		{
+			obstacleMap[i][j] = false;
+			for (unsigned k = 0; k < obstructionIndex.size(); ++k)
+			{
+				if (Scene::scene->grid->GetTile(i, j)->index == obstructionIndex[k])
+				{
+					obstacleMap[i][j] = true;
 					break;
 				}
 			}
@@ -178,15 +215,15 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 
 bool StageManager::AddObstruction(int i, int j)
 {
-	tileMap[i][j] = true;
+	obstructionMap[i][j] = true;
 
 	for (auto& end : endPoints)
 	{
 		for (auto& start : spawnPoints)
 		{
-			if (!pathfind->UpdateMap(tileMap, end, start))
+			if (!pathfind->UpdateMap(obstructionMap, end, start))
 			{
-				tileMap[i][j] = false;
+				obstructionMap[i][j] = false;
 
 				return false;
 			}
@@ -199,13 +236,13 @@ bool StageManager::AddObstruction(int i, int j)
 
 void StageManager::RemoveObstruction(int i, int j)
 {
-	tileMap[i][j] = false;
+	obstructionMap[i][j] = false;
 	UpdatePathFinders();
 }
 
 bool StageManager::CheckObstruction(int i, int j)
 {
-	return tileMap[i][j];
+	return obstructionMap[i][j];
 }
 
 bool StageManager::InitWave()
@@ -253,9 +290,19 @@ void StageManager::SpawnEnemies(double dt)
 	{
 		int spawnPt = rand() % spawnPoints.size();
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
-		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), currentWave->waveData.tier[currentWave->spawnNo], "Jellies", ("Jellies" + ToString(currentWave->waveData.tier[currentWave->spawnNo])).c_str());
+		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), 
+			currentWave->waveData.tier[currentWave->spawnNo], 
+			"Jellies", ("Jellies" + ToString(currentWave->waveData.tier[currentWave->spawnNo])).c_str(), 
+			currentWave->waveData.flying[currentWave->spawnNo]);
 
-		enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, spawnPoints[spawnPt], endPoints);
+		if (!enemy->GetComponent<EnemyController>()->flying)
+		{
+			enemy->AddComponent<PathFinder>()->UpdateMap(obstructionMap, spawnPoints[spawnPt], endPoints);
+		}
+		else
+		{
+			enemy->AddComponent<PathFinder>()->UpdateMap(obstacleMap, spawnPoints[spawnPt], endPoints);
+		}
 
 		enemies.push_back(enemy);
 
@@ -280,8 +327,8 @@ void StageManager::StartWave()
 
 void StageManager::AddEnemy(const Vector2 &position, const Vector2 index, int tier, int parentID)
 {
-	Entity* enemy = EntityFactory::GenerateEnemy(position, tier, "Jellies", ("Jellies" + ToString(tier)).c_str());
-	enemy->AddComponent<PathFinder>()->UpdateMap(tileMap, index, endPoints);
+	Entity* enemy = EntityFactory::GenerateEnemy(position, tier, "Jellies", ("Jellies" + ToString(tier)).c_str(), false);
+	enemy->AddComponent<PathFinder>()->UpdateMap(obstructionMap, index, endPoints);
 	enemy->GetComponent<EnemyController>()->parentID = parentID;
 
 	enemies.push_back(enemy);

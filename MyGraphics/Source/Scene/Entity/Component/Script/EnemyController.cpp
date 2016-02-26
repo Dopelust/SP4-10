@@ -46,9 +46,15 @@ void EnemyController::Init(int enemyTier)
 	this->tier = enemyTier;
 	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData().name.c_str()));
 	hits = GetData().hits;
-
+	flying = GetData().flying;
 	originalSpeed = GetData().movementSpeed;
 	movementSpeed = originalSpeed;
+}
+
+void EnemyController::LateInit(bool flying, int parentID)
+{
+	this->flying = flying;
+	this->parentID = parentID;
 }
 
 #include "../../../../Grid.h"
