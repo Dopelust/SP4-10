@@ -54,7 +54,7 @@ void PlayState::Init()
 	glClearColor(0.2, 0.2, 0.2, 1);
 
 	if (!Audio.IsPlaying(Audio.GetSoundPack("bgm")))
-		bgm = Audio.Play2D(Audio.GetSoundPack("bgm"), 0.05f);
+		bgm = Audio.Play2D(Audio.GetSoundPack("bgm"), 1);
 
 	scene = new Scene(NULL);
 	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);

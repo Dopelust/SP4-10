@@ -9,6 +9,8 @@ class GameState;
 class GameEngine
 {
 public:
+	static const int transitionRate = 8;
+
 	void ChangeState(GameState* state);
 
 	void PushState(GameState* state);
@@ -26,8 +28,11 @@ private:
 	GameEngine();
 	~GameEngine();
 
-	vector<GameState*> states;
+	void ChangeState();
 
-	float fps, elapsedTime, nextUpdate;
+	vector<GameState*> states;
+	GameState* queue;
+
+	float fps, elapsedTime, nextUpdate, transition;
 	bool active;
 };

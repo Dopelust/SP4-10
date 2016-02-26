@@ -15,7 +15,7 @@
 
 #include <fstream>
 
-const unsigned char FPS = 60; // FPS of this game	
+const unsigned char FPS = 21983; // FPS of this game	
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
 Application& Application::Instance()

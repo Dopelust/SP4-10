@@ -95,7 +95,7 @@ void EnemyController::Update(double dt)
 		directionN = (target - owner->transform->GetPosition()).Normalized();
 		owner->transform->Position() += directionN * movementSpeed * (float)dt;
 
-		if (owner->transform->GetPosition().DistSquared(target) < 4 * 4)
+		if (owner->transform->GetPosition().DistSquared(target) < (512 * dt) * (512 * dt))
 		{
 			if (path->IsEndOfPath())
 			{
@@ -110,7 +110,7 @@ void EnemyController::Update(double dt)
 	{
 		for (auto& end : stage->EndPoints())
 		{
-			if (GetIndex().DistSquared(end) < 4 * 4)
+			if (GetIndex().DistSquared(end) < (512 * dt) * (512 * dt))
 			{
 				pop = true;
 				done = true;
@@ -155,11 +155,11 @@ void EnemyController::Pop(int popCount)
 		else
 		{
 			done = true;
-			particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff"));
+			particle = EntityFactory::GenerateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff");
 		}
 
 		pop = true;
-
+		particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff"));
 	}
 
 	if (particle)

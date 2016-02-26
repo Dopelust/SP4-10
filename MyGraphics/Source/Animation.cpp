@@ -37,5 +37,5 @@ float Animation::GetAnimationTime()
 
 Sprite * Animation::GetFrame(float elapsedTime)
 {
-	return sprite[Math::Min((int)(elapsedTime / GetFramerate()), GetFrameCount())];
+	return sprite[Math::Min((int)(elapsedTime / GetFramerate()), GetFrameCount() - 1)];
 }

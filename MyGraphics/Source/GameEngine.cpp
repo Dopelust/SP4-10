@@ -19,7 +19,7 @@ bool GameEngine::IsActive()
 	return active;
 }
 
-GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0)
+GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0), transition(0), queue(NULL)
 {
 }
 
@@ -32,16 +32,26 @@ GameEngine::~GameEngine()
 	}
 }
 
+void GameEngine::ChangeState()
+{
+	if (queue)
+	{
+		if (!states.empty())
+		{
+			states.back()->Exit();
+			states.pop_back();
+		}
+
+		states.push_back(queue);
+		states.back()->Init();
+
+		queue = NULL;
+	}
+}
+
 void GameEngine::ChangeState(GameState* state)
 {
-	if (!states.empty())
-	{
-		states.back()->Exit();
-		states.pop_back();
-	}
-
-	states.push_back(state);
-	states.back()->Init();
+	queue = state;
 }
 
 void GameEngine::PushState(GameState* state)
@@ -77,13 +87,24 @@ void GameEngine::Update(float dt)
 	if (dt > 0.1f)
 		dt = 0.1f;
 
-	if (!states.empty())
+	if (queue)
+	{
+		Rise(transition, transitionRate * dt, 1);
+
+		if (transition == 1)
+			ChangeState();
+	}
+	else if (!states.empty())
+	{
+		Fall(transition, transitionRate * dt, 0);
+
 		states.back()->Update(dt);
+	}
 
 	if (elapsedTime > nextUpdate)
 	{
 		fps = 1.0f / dt;
-		nextUpdate+=0.1f;
+		nextUpdate += 0.1f;
 	}
 
 	elapsedTime += dt;
@@ -91,11 +112,14 @@ void GameEngine::Update(float dt)
 
 #include "FBO.h"
 #include "Screen.h"
+#include "Mesh2D.h"
 
 void GameEngine::Render()
 {
 	if (!states.empty())
 		states.back()->Render();
+
+	Graphics.GetShader("FBO")->SetUniform1f("overlay", 1 - transition);
 
 	FBO::Unbind();
 	Graphics.font->ImmediateDraw(ToString((int)fps), Screen.GetProjectionWidth() - 32, 0, 48);
@@ -111,7 +135,7 @@ void GameEngine::Terminate()
 
 void GameEngine::HandleEvents()
 {
-	if (!states.empty())
+	if (!queue && !states.empty())
 		states.back()->HandleEvents();
 
 	if (Input.IsPress(GLFW_KEY_ESCAPE))

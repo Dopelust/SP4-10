@@ -57,13 +57,12 @@ void GraphicsEngine::Finish()
 
 void GraphicsEngine::FinalPass(Texture * texture)
 {
+	font->Render();
+
 	FBO::Unbind();
 	GetShader("FBO")->Use();
 	texture->Bind();
 	FBO::Render();
-
-	//Quad.RenderInstances();
-	font->Render();
 }
 
 void GraphicsEngine::InitFBO()
