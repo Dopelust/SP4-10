@@ -122,8 +122,7 @@ void StageManager::UpdateWave(double dt)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
 				{
-					if (ec->GetTier() - ec->popCount > 0)
-						AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->GetIndex(), (ec->GetData().tier) - ec->popCount, enemies[i]->GetID());
+					AddEnemy(enemies[i]->transform->GetPosition().GetVector2(), ec->GetIndex(), (ec->GetData().tier) - ec->popCount, enemies[i]->GetID());
 				}
 			}
 

@@ -20,7 +20,8 @@ public:
 	~EnemyController();
 
 	void Init(Entity* ent);
-	void LateInit(int enemyTier);
+	void Init(int enemyTier);
+	void LateInit(bool flying = false, int parentID = -1);
 	void Update(double dt);
 	void Pop(int popCount = 1);
 	void Slow(float slowAmount, float duration);
@@ -30,8 +31,9 @@ public:
 	int GetOwnerID();
 	EnemyData& GetData();
 	
-	bool done, pop, split;
+	bool done, pop, split, flying;
 	int popCount;
+	int hits;
 
 	Vector2 GetIndex();
 	int steps;

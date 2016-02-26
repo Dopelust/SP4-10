@@ -289,7 +289,7 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 	entity->GetComponent<SpriteAnimator>()->Play(animation, true);
 
 	entity->AddComponent<BoxCollider>()->size.Set(TileWidth * 0.725f, TileHeight * 0.725f);
-	entity->AddComponent<EnemyController>()->LateInit(enemyTier);
+	entity->AddComponent<EnemyController>()->Init(enemyTier);
 
 	entity->AttachChild(CreateGraphic(Vector2(0, 0), Vector2(TileWidth * 0.85f, TileHeight * 0.65f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 

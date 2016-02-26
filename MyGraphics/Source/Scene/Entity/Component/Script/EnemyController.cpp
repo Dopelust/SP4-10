@@ -12,12 +12,15 @@ slowed(false),
 stunned(false),
 pop(false),
 split(false),
+flying(false),
 path(NULL),
 statusTimer(0),
 statusDuration(0),
 tier(0),
 originalSpeed(0),
 movementSpeed(0),
+parentID(-1),
+hits(1),
 popCount(0)
 {
 }
@@ -38,10 +41,11 @@ void EnemyController::Init(Entity* ent)
 #include "../../Component/Transform.h"
 #include "../../../../Assets.h"
 
-void EnemyController::LateInit(int enemyTier)
+void EnemyController::Init(int enemyTier)
 {
 	this->tier = enemyTier;
 	//owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData().name.c_str()));
+	hits = GetData().hits;
 
 	originalSpeed = GetData().movementSpeed;
 	movementSpeed = originalSpeed;
@@ -118,33 +122,39 @@ void EnemyController::Update(double dt)
 #include "ScaleScript.h"
 #include "FadeScript.h"
 #include "../SpriteRenderer.h"
+#include "../SpriteAnimator.h"
 
 void EnemyController::Pop(int popCount)
 {
 	Entity* particle = NULL;
 
-	if (tier - popCount > 0)
+	hits -= 1;
+
+	if (hits <= 0)
 	{
-		if (GetData().split > 1)
+		if (tier - popCount > 0)
 		{
-			split = true;
+			if (GetData().split > 1)
+			{
+				split = true;
+				done = true;
+				popCount = popCount;
+			}
+
+			tier -= popCount;
+			hits = GetData().hits;
+
+			owner->GetComponent<SpriteAnimator>()->Play(("Jellies" + ToString(tier)).c_str(), true);
+		}
+		else
+		{
 			done = true;
+			particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff"));
 		}
 
-		tier -= popCount;
+		pop = true;
 
-		this->popCount = popCount;
-
-		owner->GetComponent<SpriteAnimator>()->Play(("Jellies" + ToString(tier)).c_str(), true);
-		particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff"));
 	}
-	else
-	{
-		done = true;
-		particle = EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff");
-	}
-
-	pop = true;
 
 	if (particle)
 	{
