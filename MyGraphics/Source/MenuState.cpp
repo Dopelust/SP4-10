@@ -75,11 +75,12 @@ void MenuState::Update(float dt)
 #include "TestState.h"
 #include "PlayState.h"
 #include "OptionState.h"
+#include "LevelSelectionState.h"
 
 void MenuState::HandleEvents()
 {
 	if (play->IsState())
-		Engine.ChangeState(&PlayState::Instance());
+		Engine.ChangeState(&LevelSelectionState::Instance());
 
 	if (editor->IsState())
 		Engine.ChangeState(&TestState::Instance());

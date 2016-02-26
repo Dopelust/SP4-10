@@ -342,6 +342,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageGUI.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LevelSelectionState.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -602,6 +605,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageGUI.h">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelSelectionState.h">
+      <Filter>GameEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

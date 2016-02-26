@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\GBuffer.cpp" />
+    <ClCompile Include="Source\LevelSelectionState.cpp" />
     <ClCompile Include="Source\MenuState.cpp" />
     <ClCompile Include="Source\OptionState.cpp" />
     <ClCompile Include="Source\PlayState.cpp" />
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Assets.h" />
     <ClInclude Include="Source\GBuffer.h" />
+    <ClInclude Include="Source\LevelSelectionState.h" />
     <ClInclude Include="Source\MenuState.h" />
     <ClInclude Include="Source\MeshLayer.h" />
     <ClInclude Include="Source\OptionState.h" />
