@@ -80,8 +80,7 @@ bool Button::IsState(ButtonState state)
 void Button::Init(Entity * ent)
 {
 	transform = ent->GetComponent<Transform>();
-	graphic = ent->GetComponent<Graphic2D>();
-	color = graphic->GetColor();
+	SetGraphic(ent->GetComponent<Graphic2D>());
 }
 
 #include "Utility.h"
@@ -101,15 +100,18 @@ void Button::UpdateState()
 	{
 	case STATE_NULL:
 
-		graphic->GetColor() = color;
+		graphic->color = color;
 
 		if (IsHover() && !Input.IsMouseHeld(0))
+		{
+			Audio.Play2D("hover", 0.2f);
 			state = STATE_HOVER;
+		}
 
 		break;
 	case STATE_HOVER:
 
-		graphic->GetColor() = GetHoverColor();
+		graphic->color = GetHoverColor();
 
 		if (!IsHover())
 			state = STATE_NULL;
@@ -122,7 +124,7 @@ void Button::UpdateState()
 		break;
 	case STATE_PRIMED:
 
-		graphic->GetColor() = color;
+		graphic->color = color;
 
 		if (IsHover())
 			state = STATE_CLICK;
@@ -132,7 +134,7 @@ void Button::UpdateState()
 		break;
 	case STATE_CLICK:
 
-		graphic->GetColor() = GetClickColor();
+		graphic->color = GetClickColor();
 
 		if (IsHover())
 		{
@@ -145,11 +147,21 @@ void Button::UpdateState()
 		break;
 	case STATE_RELEASE:
 
-		graphic->GetColor() = color;
-		state = STATE_NULL;
+		graphic->color = color;
+
+		if (IsHover())
+			state = STATE_HOVER;
+		else
+			state = STATE_NULL;
 
 		break;
 	}
+}
+
+void Button::SetGraphic(Graphic2D * graphic)
+{
+	this->graphic = graphic;
+	color = graphic->color;
 }
 
 bool Button::IsEnabled()
@@ -157,17 +169,16 @@ bool Button::IsEnabled()
 	return enabled;
 }
 
-
 void Button::Enable()
 {
 	enabled = true;
 
-	graphic->GetColor() = color;
+	graphic->color = color;
 }
 
 void Button::Disable()
 {
 	enabled = false;
 
-	graphic->GetColor() = GetDisabledColor();
+	graphic->color = GetDisabledColor();
 }

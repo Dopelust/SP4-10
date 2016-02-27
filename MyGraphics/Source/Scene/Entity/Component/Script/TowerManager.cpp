@@ -125,7 +125,7 @@ void TowerManager::Update(double dt)
 
 			if (CanPlace(tile)) //If Valid Spot
 			{
-				graphic->SetColor(0, 1, 0, 0.5f); //Change Indicator To Green
+				graphic->color.Set(0, 1, 0, 0.5f); //Change Indicator To Green
 
 				if (Input.IsMousePress(0)) //If Left Click
 				{
@@ -134,7 +134,7 @@ void TowerManager::Update(double dt)
 			}
 			else //If Invalid Spot
 			{
-				graphic->SetColor(1, 0, 0, 0.5f); //Change Indicator To Red
+				graphic->color.Set(1, 0, 0, 0.5f); //Change Indicator To Red
 			}
 		}
 	}
@@ -199,7 +199,7 @@ void TowerManager::Unselect()
 {
 	if (selection)
 	{
-		selection->GetComponent<Graphic2D>()->SetColor(1, 1, 1, 1);
+		selection->GetComponent<Graphic2D>()->color.Set(1, 1, 1, 1);
 		gui->DisableUpgrades();
 		gui->DisableSale();
 
@@ -221,7 +221,7 @@ void TowerManager::Select(Entity * tower)
 	else
 		gui->EnableUpgrades();
 
-	tower->GetComponent<Graphic2D>()->SetColor(2, 2, 2, 1);
+	tower->GetComponent<Graphic2D>()->color.Set(2, 2, 2, 1);
 
 	ShowIndicator(false);
 	ShowInfo(tower);
@@ -265,4 +265,40 @@ Entity*  TowerManager::GetTower(const Vector3& position)
 		return towerMap[position];
 
 	return NULL;
+}
+
+#include "FileSystem.h"
+#include "Utility.h"
+
+void TowerManager::Load(const char * filepath)
+{
+	vector<string>& lines = File.GetLines(filepath);
+
+	for (auto& line : lines)
+	{
+		vector<string>& tokens = ParseLine(line, " ,");
+
+		Vector3 position(stoi(tokens[0]), stoi(tokens[1]), stoi(tokens[2]));
+		Vector3& index = Scene::scene->grid->GetIndex(position);
+
+		if (stage->AddObstruction((int)index.x, (int)index.y))
+		{
+			towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), tokens[3]);
+			towerMap[position]->GetComponent<TowerController>()->SetUpgrade(stoi(tokens[4]));
+		}
+	}
+}
+
+void TowerManager::Save(const char * filepath)
+{
+	ofstream& output = *File.BeginWriting(filepath);
+
+	for (auto& tower : towerMap)
+	{
+		TowerController* t = tower.second->GetComponent<TowerController>();
+
+		output << tower.first << " " << t->type << " " << t->upgrade << endl;
+	}
+
+	File.EndWriting();
 }

@@ -88,9 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\GBuffer.cpp" />
-    <ClCompile Include="Source\LevelSelectionState.cpp" />
     <ClCompile Include="Source\MenuState.cpp" />
-    <ClCompile Include="Source\OptionState.cpp" />
     <ClCompile Include="Source\PlayState.cpp" />
     <ClCompile Include="Source\Scene\AStar\ASnode.cpp" />
     <ClCompile Include="Source\Scene\AStar\AStar.cpp" />
@@ -100,6 +98,12 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\HoverText.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\OptionScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PathFinder.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp" />
@@ -171,10 +175,8 @@
   <ItemGroup>
     <ClInclude Include="Source\Assets.h" />
     <ClInclude Include="Source\GBuffer.h" />
-    <ClInclude Include="Source\LevelSelectionState.h" />
     <ClInclude Include="Source\MenuState.h" />
     <ClInclude Include="Source\MeshLayer.h" />
-    <ClInclude Include="Source\OptionState.h" />
     <ClInclude Include="Source\PlayState.h" />
     <ClInclude Include="Source\Scene\AStar\ASnode.h" />
     <ClInclude Include="Source\Scene\AStar\AStar.h" />
@@ -186,6 +188,12 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\HoverText.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\OptionScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PathFinder.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h" />

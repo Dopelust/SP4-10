@@ -23,7 +23,7 @@ bool StageDatabase::Init(const char * fileData)
 {
 	cout << "Initializing projectile database" << endl;
 
-	vector<string>& lines = FileSystem::Instance()->GetLines(ToString("Data//Levels//", fileData, ".txt"));
+	vector<string>& lines = File.GetLines(ToString("Data//Levels//", fileData, ".txt"));
 
 	if (lines.empty())
 		return false;

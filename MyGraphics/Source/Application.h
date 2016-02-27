@@ -15,6 +15,7 @@ public:
 	void Run();
 	void Exit();
 
+	void ResetTimer();
 	StopWatch timer;
 
 private:

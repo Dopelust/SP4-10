@@ -29,6 +29,8 @@ public:
 	void Update(double dt);
 	void UpdateState();
 
+	void SetGraphic(Graphic2D* graphic);
+
 	Transform* transform;
 
 	bool IsEnabled();

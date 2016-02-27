@@ -32,7 +32,7 @@ void Projectile::LateInit(string name)
 {
 	this->name = name;
 
-	owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(name.c_str()));
+	owner->GetComponent<Graphic2D>()->texture = Resource.GetTexture(name.c_str());
 }
 
 
@@ -123,11 +123,11 @@ void Projectile::PlaySound()
 {
 	if (name == "Bubble")
 	{
-		Audio.Play2D("bubble", 0.025f);
+		Audio.Play2D("bubble", 1);
 	}
 	else if (name == "Water")
 	{
-		Audio.Play2D("splash", 0.01f);
+		Audio.Play2D("splash", 0.33f);
 	}
 }
 
@@ -142,13 +142,13 @@ void Projectile::GenerateParticle()
 		Entity* particle = EntityFactory::Generate(owner->parent,
 			EntityFactory::CreateGraphic(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2() * 1.2f, Resource.GetTexture("Burst"), Vector4(1, 1, 1)));
 
-		particle->GetComponent<Graphic2D>()->GetColor().w = 0.6f;
+		particle->GetComponent<Graphic2D>()->color.w = 0.6f;
 		particle->GetComponent<Graphic2D>()->SetLayer(2);
 
 		particle->AddComponent<ScaleScript>()->rate = 32;
 
 		particle->AddComponent<FadeScript>()->rate = -3;
-		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<Graphic2D>()->GetColor().w;
+		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<Graphic2D>()->color.w;
 
 	}
 	else if (name == "Water")

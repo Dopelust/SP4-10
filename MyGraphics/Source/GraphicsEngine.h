@@ -22,7 +22,8 @@ public:
 
 	void ForwardPass(bool pass);
 	void Finish();
-
+	
+	Texture* BlurCurrentOutput(float radius, bool halfRes = true);
 	void FinalPass(Texture* texture);
 
 	void InitFBO();
@@ -36,6 +37,9 @@ public:
 	void UpdateP(Shader* shader, bool ortho = false);
 
 	void Render2D(const char* shader = "2D", int x = 1280, int y = 720, bool identity = true);
+	void RenderText();
+
+	void RenderOnScreen(Texture* texture);
 
 	GBuffer* gBuffer;
 	PostProcessor* pp;

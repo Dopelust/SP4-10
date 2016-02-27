@@ -1,8 +1,10 @@
 #include "GameState.h"
-#include "SoundEngine.h"
 
+class Sound;
 class Button;
 class Entity;
+class TowerManager;
+
 class PlayState : public GameState
 {
 public:
@@ -15,12 +17,11 @@ public:
 	void Pause();
 	void Resume();
 
-	void HandleEvents();
-
 	static PlayState& Instance();
 
-	ISound* bgm;
+	Sound* bgm;
 	Button* menu;
+	TowerManager* tower;
 
 private:
 	PlayState();

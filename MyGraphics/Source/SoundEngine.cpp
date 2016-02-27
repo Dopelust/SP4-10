@@ -19,9 +19,14 @@ bool SoundEngine::IsPlaying(const SoundPack & sound)
 	return false;
 }
 
-ISound* SoundEngine::Play2D(const char * name, float volume)
+Sound * SoundEngine::GetSound(const char * name)
 {
-	ISound * sound = engine->play2D(audio[name].c_str(), false, true);
+	return nullptr;
+}
+
+Sound* SoundEngine::Play2D(const char * name, float volume)
+{
+	Sound * sound = (Sound*)engine->play2D(audio[name].c_str(), false, true);
 
 	if (sound)
 	{
@@ -34,9 +39,9 @@ ISound* SoundEngine::Play2D(const char * name, float volume)
 	return NULL;
 }
 
-ISound * SoundEngine::Play2D(const SoundPack & sound, float volume)
+Sound * SoundEngine::Play2D(const SoundPack & sound, float volume)
 {
-	ISound * snd = engine->play2D(sound.GetSound().c_str(), false, true);
+	Sound * snd = (Sound*)engine->play2D(sound.GetSound().c_str(), false, true);
 
 	if (snd)
 	{
@@ -49,7 +54,7 @@ ISound * SoundEngine::Play2D(const SoundPack & sound, float volume)
 	return NULL;
 }
 
-void SoundEngine::StopPlaying(ISound* sound)
+void SoundEngine::StopPlaying(Sound* sound)
 {
 	if (sound)
 	{
@@ -96,9 +101,11 @@ SoundEngine & SoundEngine::Instance()
 void SoundEngine::Init()
 {
 	audio["click"] = "Assets//Sound//click.ogg";
+	audio["hover"] = "Assets//Sound//hover.ogg";
+
 	audio["bubble"] = "Assets//Sound//bubble.mp3";
 	audio["splash"] = "Assets//Sound//splash.mp3";
-	audio["Juan"] = "Assets//Sound//NightChanges.mp3";
+	audio["Night Changes"] = "Assets//Sound//NightChanges.mp3";
 
 	soundPack["bgm"].AddSound("Assets//Sound//bgm//war1.mp3");
 	soundPack["bgm"].AddSound("Assets//Sound//bgm//war2.mp3");
@@ -144,4 +151,12 @@ const string & SoundPack::GetSound() const
 		return sounds[rand() % sounds.size()];
 
 	return "";
+}
+
+Sound::Sound()
+{
+}
+
+Sound::~Sound()
+{
 }

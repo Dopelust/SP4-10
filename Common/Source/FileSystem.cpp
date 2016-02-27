@@ -2,14 +2,27 @@
 
 #include <iostream>
 
-FileSystem FileSystem::file;
-
-FileSystem * FileSystem::Instance()
+FileSystem& FileSystem::Instance()
 {
-	return &file;
+	static FileSystem file;
+	return file;
 }
 
-ofstream* FileSystem::BeginWriting(string filepath)
+bool FileSystem::Exists(const char * filepath)
+{
+	ifstream infile(filepath);
+	return infile.good();
+}
+
+void FileSystem::Remove(const char * filepath)
+{
+	if (remove(filepath) != 0)
+		Broadcast("Tried to delete " + string(filepath));
+	else
+		Broadcast("Deleted " + string(filepath));
+}
+
+ofstream* FileSystem::BeginWriting(const string& filepath)
 {
 	if (output.is_open())
 	{
@@ -35,12 +48,11 @@ void FileSystem::EndWriting()
 	Broadcast("Done writing.");
 }
 
-vector<string> FileSystem::GetLines(string filepath)
+vector<string> FileSystem::GetLines(const string& filepath)
 {
-	if (input.is_open())
-		input.close();
-
 	vector<string> lines;
+
+	ifstream input;
 	input.open(filepath);
 
 	if (input.is_open())

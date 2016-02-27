@@ -9,7 +9,7 @@
 #include "../../../Scene.h"
 #include "../Transform.h"
 #include "../../Entity.h"
-#include "../Graphic2D.h"
+#include "../SpriteRenderer.h"
 
 TileEditor::TileEditor() : index(0)
 {
@@ -22,7 +22,7 @@ TileEditor::~TileEditor()
 void TileEditor::Init(Entity* entity)
 {
 	selector = entity->GetComponent<TileSelector>();
-	graphic = entity->GetComponent<Graphic2D>();
+	sprite = entity->GetComponent<SpriteRenderer>();
 }
 
 void TileEditor::Update(double dt)
@@ -44,8 +44,8 @@ void TileEditor::Update(double dt)
 		if (Input.IsMouseHeld(0))
 			tile->index = index;
 
-		graphic->SetActive(true);
+		sprite->SetActive(true);
 	}
 	else
-		graphic->SetActive(false);
+		sprite->SetActive(false);
 }

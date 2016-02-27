@@ -135,15 +135,15 @@ string Scene::GetGridSavePath()
 
 bool Scene::Save()
 {
-	LUAEngine& lua = LUAEngine::Instance();
+	//LUAEngine& lua = LUAEngine::Instance();
 
-	if (lua.Load(GetCameraSavePath().c_str()))
-	{
-		lua.SetGlobalString("CAMERA_POSITION", ToString(camera.position).c_str());
-		lua.SetGlobalString("CAMERA_ORIENTATION", ToString(camera.orientation).c_str());
+	//if (lua.Load(GetCameraSavePath().c_str()))
+	//{
+	//	lua.SetGlobalString("CAMERA_POSITION", ToString(camera.position).c_str());
+	//	lua.SetGlobalString("CAMERA_ORIENTATION", ToString(camera.orientation).c_str());
 
-		lua.Save(GetCameraSavePath().c_str());
-	}
+	//	lua.Save(GetCameraSavePath().c_str());
+	//}
 
 	return true;
 }
@@ -152,18 +152,18 @@ bool Scene::Save()
 
 bool Scene::Load()
 {
-	LUAEngine& lua = LUAEngine::Instance();
+	//LUAEngine& lua = LUAEngine::Instance();
 
-	if (lua.Load(GetCameraSavePath().c_str()))
-	{
-		vector<float> position = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_POSITION")));
-		vector<float> orientation = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_ORIENTATION")));
+	//if (lua.Load(GetCameraSavePath().c_str()))
+	//{
+	//	vector<float> position = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_POSITION")));
+	//	vector<float> orientation = VectorStoF(ParseLine(lua.GetGlobalString("CAMERA_ORIENTATION")));
 
-		camera.position.Set(position[0], position[1], position[2]);
-		camera.orientation.Set(orientation[0], orientation[1]);
-		
-		camera.Update();
-	}
+	//	camera.position.Set(position[0], position[1], position[2]);
+	//	camera.orientation.Set(orientation[0], orientation[1]);
+	//	
+	//	camera.Update();
+	//}
 
 	return true;
 }

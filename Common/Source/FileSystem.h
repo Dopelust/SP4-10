@@ -5,23 +5,24 @@
 #include <vector>
 using namespace::std;
 
+#define File FileSystem::Instance()
+
 class FileSystem
 {
 public:
-	static FileSystem* Instance();
+	static FileSystem& Instance();
 
-	ofstream* BeginWriting(string filepath);
+	bool Exists(const char* filepath);
+	void Remove(const char* filepath);
+
+	ofstream* BeginWriting(const string& filepath);
 	void EndWriting();
 
-	vector<string> GetLines(string filepath);
+	vector<string> GetLines(const string& filepath);
 private:
 	FileSystem();
 	~FileSystem();
 
-	static FileSystem file;
-
 	ofstream output;
-	ifstream input;
-
 	void Broadcast(string message);
 };

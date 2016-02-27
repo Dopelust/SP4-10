@@ -53,7 +53,7 @@ struct Vector3
 	
 	Vector3& Rotate(float angle, Vector3 axis);
 
-	friend std::ostream& operator<<( std::ostream& os, Vector3& rhs); //print to ostream
+	friend std::ostream& operator<<( std::ostream& os, const Vector3& rhs); //print to ostream
 
 	friend Vector3 operator*( float scalar, const Vector3& rhs ); //what is this for?
 

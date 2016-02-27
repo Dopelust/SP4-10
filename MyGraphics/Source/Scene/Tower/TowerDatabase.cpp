@@ -23,7 +23,7 @@ bool TowerDatabase::Init(const char * type)
 {
 	cout << "Initializing tower database" << endl;
 
-	vector<string>& lines = FileSystem::Instance()->GetLines(ToString("Data//Prefab//Tower//", type, ".txt"));
+	vector<string>& lines = File.GetLines(ToString("Data//Prefab//Tower//", type, ".txt"));
 
 	if (lines.empty())
 		return false;

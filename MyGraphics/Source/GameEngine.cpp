@@ -19,7 +19,7 @@ bool GameEngine::IsActive()
 	return active;
 }
 
-GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0), transition(0), queue(NULL)
+GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0), transition(0), queue(NULL), shouldTerminate(false)
 {
 }
 
@@ -47,6 +47,11 @@ void GameEngine::ChangeState()
 
 		queue = NULL;
 	}
+}
+
+float GameEngine::GetTransition()
+{
+	return 1 - transition;
 }
 
 void GameEngine::ChangeState(GameState* state)
@@ -84,15 +89,26 @@ bool GameEngine::PopState()
 
 void GameEngine::Update(float dt)
 {
+	if (Input.IsPress(GLFW_KEY_ESCAPE))
+	{
+		PopState();
+
+		if (states.empty())
+			active = false;
+	}
+
 	if (dt > 0.1f)
 		dt = 0.1f;
 
 	if (queue)
 	{
-		Rise(transition, transitionRate * dt, 1);
+		transition += transitionRate * dt;
 
-		if (transition == 1)
+		if (transition > 1)
+		{
 			ChangeState();
+			Application::Instance().ResetTimer();
+		}
 	}
 	else if (!states.empty())
 	{
@@ -117,32 +133,23 @@ void GameEngine::Update(float dt)
 void GameEngine::Render()
 {
 	if (!states.empty())
+	{
 		states.back()->Render();
-
-	Graphics.GetShader("FBO")->SetUniform1f("overlay", 1 - transition);
+	}
 
 	FBO::Unbind();
 	Graphics.font->ImmediateDraw(ToString((int)fps), Screen.GetProjectionWidth() - 32, 0, 48);
+
+	if (shouldTerminate)
+	{
+		while (!states.empty())
+			PopState();
+
+		active = false;
+	}
 }
 
 void GameEngine::Terminate()
 {
-	while (!states.empty())
-		PopState();
-
-	active = false;
-}
-
-void GameEngine::HandleEvents()
-{
-	if (!queue && !states.empty())
-		states.back()->HandleEvents();
-
-	if (Input.IsPress(GLFW_KEY_ESCAPE))
-	{
-		PopState();
-
-		if (states.empty())
-			active = false;
-	}
+	shouldTerminate = true;
 }

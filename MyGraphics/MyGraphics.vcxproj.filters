@@ -107,6 +107,12 @@
     <Filter Include="Scene\Entity\Component\Script\Play\Particle">
       <UniqueIdentifier>{cf5fe0eb-a12b-44bc-854b-ce2b8a43d9a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Menu">
+      <UniqueIdentifier>{2f57baf9-83e8-4c34-a5f3-3b77bf710837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Entity\Component\Graphic">
+      <UniqueIdentifier>{2a8e798e-2f51-4d82-ba2d-3b44aff208b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Grid.cpp">
@@ -178,15 +184,6 @@
     <ClCompile Include="Source\Scene\Entity\Entity.cpp">
       <Filter>Scene\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Graphic2D.cpp">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\SpriteRenderer.cpp">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\TextRenderer2D.cpp">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Button.cpp">
       <Filter>Scene\Entity\Component\GUI</Filter>
     </ClCompile>
@@ -253,9 +250,6 @@
     <ClCompile Include="Source\TestState.cpp">
       <Filter>GameEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\SpriteAnimator.cpp">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Tile.cpp">
       <Filter>Spatial Partition</Filter>
     </ClCompile>
@@ -320,9 +314,6 @@
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\Script\StandardParticle.cpp" />
-    <ClCompile Include="Source\OptionState.cpp">
-      <Filter>GameEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\AStar\Path.cpp">
       <Filter>AStar</Filter>
     </ClCompile>
@@ -342,8 +333,35 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageGUI.cpp">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LevelSelectionState.cpp">
-      <Filter>GameEngine</Filter>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\OptionScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\TextRenderer2D.cpp">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\SpriteRenderer.cpp">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\SpriteAnimator.cpp">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Graphic2D.cpp">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,15 +430,6 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Entity.h">
       <Filter>Scene\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Graphic2D.h">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\SpriteRenderer.h">
-      <Filter>Scene\Entity\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\TextRenderer2D.h">
-      <Filter>Scene\Entity\Component</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Button.h">
       <Filter>Scene\Entity\Component\GUI</Filter>
@@ -493,9 +502,6 @@
     </ClInclude>
     <ClInclude Include="Source\TestState.h">
       <Filter>GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\SpriteAnimator.h">
-      <Filter>Scene\Entity\Component</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tile.h">
       <Filter>Spatial Partition</Filter>
@@ -585,9 +591,6 @@
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\StandardParticle.h" />
-    <ClInclude Include="Source\OptionState.h">
-      <Filter>GameEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\AStar\Path.h">
       <Filter>AStar</Filter>
     </ClInclude>
@@ -606,8 +609,35 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageGUI.h">
       <Filter>Scene\Entity\Component\Script\Play\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LevelSelectionState.h">
-      <Filter>GameEngine</Filter>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\OptionScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\TextRenderer2D.h">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\SpriteRenderer.h">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\SpriteAnimator.h">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Graphic2D.h">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

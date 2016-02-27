@@ -1,6 +1,6 @@
 #include "GameState.h"
 
-class Button;
+class MenuHandler;
 class MenuState : public GameState
 {
 public:
@@ -12,17 +12,12 @@ public:
 
 	void Pause();
 	void Resume();
-
-	void HandleEvents();
-
+	
 	static MenuState& Instance();
-
-	Button* play;
-	Button* editor;
-	Button* option;
-	Button* exit;
 
 private:
 	MenuState();
 	~MenuState();
+
+	MenuHandler* menu;
 };

@@ -11,6 +11,9 @@ public:
 
 	Entity* check;
 
+	bool IsCheck();
+	void SetCheck(bool check);
+
 	void Init(Entity* ent);
 	void Update(double dt);
 

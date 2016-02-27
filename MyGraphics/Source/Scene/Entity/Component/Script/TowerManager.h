@@ -54,6 +54,9 @@ public:
 
 	Entity* GetTower(const Vector3& position);
 
+	void Load(const char* filepath);
+	void Save(const char* filepath);
+
 private:
 	string type;
 

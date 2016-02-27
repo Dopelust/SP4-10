@@ -27,11 +27,12 @@ public:
 	static Entity* GenerateTextGUI(const Vector2& position, const char* text, float size);
 
 	static Entity* CreateSlider(const Vector2& position, const Vector2& size, const char* tag, float min, float value, float max, bool integer);
-	static Entity* CreateCheckbox(const Vector2& position, float size, float stroke, const char* text, bool* toggle);
+	static Entity* CreateCheckbox(const Vector2& position, float size, float stroke, const char* text);
 
 	static Entity* CreateSprite(const Vector2& position, const Vector2& size, Sprite* sprite, const Vector4& color, int layer = 0);
 	static Entity* CreateGraphic(const Vector2& position, const Vector2& size, Texture* texture, const Vector4& color, int layer = 0);
 	static Entity* CreateButton(const Vector2& position, const Vector2& size, Texture* texture, const Vector3& color);
+	static Entity* CreateTextButton(const Vector2& position, const char* text, float size, const Vector3& color);
 
 	static Entity* CreateTextGUI(const Vector2& position, const char* text, float size, bool alignCenter = true);
 

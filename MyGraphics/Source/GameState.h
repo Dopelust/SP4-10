@@ -13,8 +13,6 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
 
-	virtual void HandleEvents() = 0;
-
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 

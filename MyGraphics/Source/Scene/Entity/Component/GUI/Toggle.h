@@ -10,11 +10,11 @@ public:
 	~Toggle();
 
 	bool IsToggled();
-	void SetToggle(bool* toggle);
+	void SetToggle(bool toggle);
 
 	void Init(Entity* ent);
 	void Update(double dt);
 private:
 	Button* button;
-	bool* toggle;
+	bool toggle;
 };

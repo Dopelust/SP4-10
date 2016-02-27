@@ -9,7 +9,9 @@ class GameState;
 class GameEngine
 {
 public:
-	static const int transitionRate = 8;
+	static const int transitionRate = 12;
+
+	float GetTransition();
 
 	void ChangeState(GameState* state);
 
@@ -18,7 +20,6 @@ public:
 
 	void Update(float dt);
 	void Render();
-	void HandleEvents();
 
 	static GameEngine& Instance();
 
@@ -34,5 +35,5 @@ private:
 	GameState* queue;
 
 	float fps, elapsedTime, nextUpdate, transition;
-	bool active;
+	bool active, shouldTerminate;
 };

@@ -78,6 +78,9 @@ void Assets::Init()
 	sprite["Tile Occlusion"] = new Spritesheet();
 	GenerateSprites("Tile Occlusion", 9, 3);
 
+	texture["Vignette"] = new Texture("Assets//vignette.tga", GL_LINEAR, GL_LINEAR);
+	texture["Vignette2"] = new Texture("Assets//vignette2.tga", GL_LINEAR, GL_LINEAR);
+
 	texture["Burst"] = new Texture("Assets//burst.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Dispenser"] = new Texture("Assets//watergun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Fountain"] = new Texture("Assets//fountain.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
@@ -86,7 +89,6 @@ void Assets::Init()
 	texture["Bubble"] = new Texture("Assets//bubble.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Occlusion"] = new Texture("Assets//occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Bubble Blower"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	texture["Circle"] = new Texture("Assets//circle.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Range"] = new Texture("Assets//range_indicator.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
 	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);

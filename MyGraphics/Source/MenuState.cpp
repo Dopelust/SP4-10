@@ -26,7 +26,8 @@ MenuState::~MenuState()
 #include "Scene\Entity\Entity.h"
 #include "Scene\Entity\EntityFactory.h"
 
-#include "Scene\Entity\Component\GUI\Button.h"
+#include "Scene\Entity\Component\Script\Menu\InteractiveBackground.h"
+#include "Scene\Entity\Component\Script\Menu\MenuHandler.h"
 
 #include "Screen.h"
 void MenuState::Init()
@@ -35,29 +36,19 @@ void MenuState::Init()
 
 	scene = new Scene(NULL);
 
-	Entity* entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 400), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "LEVEL EDITOR", 128));
-	editor = entity->GetComponent<Button>();
+	Entity* entity = scene->canvas->AddChild("Main Menu");
+	menu = entity->AddComponent<MenuHandler>();
 
-	entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 500), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "PLAY", 128));
-	play = entity->GetComponent<Button>();
-
-	entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 300), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "OPTIONS", 128));
-	option = entity->GetComponent<Button>();
-
-	entity = EntityFactory::GenerateButton(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, 200), Vector2(200, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "QUIT", 128));
-	exit = entity->GetComponent<Button>();
-
-	entity = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f), Vector2(scene->GetResolutionX(scene->canvas), scene->GetResolutionY(scene->canvas)), Resource.GetTexture("NightChanges"), Vector4(1, 1, 1, 1.0f)));
-
+	entity = scene->canvas->AddChild("Background");
+	entity->AddComponent<InteractiveBackground>();
+	
 	Resume();
 }
 
 void MenuState::Exit()
 {
+	menu->Exit();
+
 	if (scene)
 	{
 		scene->Exit();
@@ -72,27 +63,9 @@ void MenuState::Update(float dt)
 	scene->Update(dt);
 }
 
-#include "TestState.h"
-#include "PlayState.h"
-#include "OptionState.h"
-#include "LevelSelectionState.h"
-
-void MenuState::HandleEvents()
-{
-	if (play->IsState())
-		Engine.ChangeState(&LevelSelectionState::Instance());
-
-	if (editor->IsState())
-		Engine.ChangeState(&TestState::Instance());
-
-	if (option->IsState())
-		Engine.ChangeState(&OptionState::Instance());
-
-	if (exit->IsState())
-		Engine.Terminate();
-}
-
 #include "FontManager.h"
+#include "Mesh2D.h"
+#include "Texture.h"
 
 void MenuState::Render()
 {
@@ -105,9 +78,19 @@ void MenuState::Render()
 
 	scene->DrawWorld();
 	Graphics.Render2D("2D", scene->GetResolutionX(scene->root), scene->GetResolutionY(scene->root), false);
+	Texture* texture = Graphics.BlurCurrentOutput(8);
+
+	Graphics.ForwardPass(0);
+
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);
+
+	Graphics.RenderOnScreen(texture);
 
 	scene->DrawCanvas();
 	Graphics.Render2D("2D", scene->GetResolutionX(scene->canvas), scene->GetResolutionY(scene->canvas), true);
+
+	Graphics.RenderOnScreen(Resource.GetTexture("Vignette"));
 
 	Graphics.ForwardPass(1);
 

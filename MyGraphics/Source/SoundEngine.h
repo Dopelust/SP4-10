@@ -13,6 +13,13 @@ using namespace irrklang;
 
 struct Vector3;
 
+class Sound : public ISound
+{
+public:
+	Sound();
+	~Sound();
+};
+
 class SoundPack
 {
 public:
@@ -40,10 +47,12 @@ public:
 	bool IsPlaying(const char* name);
 	bool IsPlaying(const SoundPack& sound);
 
-	ISound* Play2D(const char* name, float volume = 1);
-	ISound* Play2D(const SoundPack& sound, float volume = 1);
+	Sound* GetSound(const char* name);
 
-	void StopPlaying(ISound* sound);
+	Sound* Play2D(const char* name, float volume = 1);
+	Sound* Play2D(const SoundPack& sound, float volume = 1);
+
+	void StopPlaying(Sound* sound);
 
 	void Play3D(const char* name, const Vector3& position, float volume = 1);
 	const SoundPack& GetSoundPack(const char* name);

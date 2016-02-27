@@ -10,9 +10,7 @@
 
 bool Grid::Save(const char* filepath)
 {
-	FileSystem* file = FileSystem::Instance();
-
-	ofstream& output = *file->BeginWriting(filepath);
+	ofstream& output = *File.BeginWriting(filepath);
 
 	for (int y = NumberOfTilesY - 1; y >= 0; --y)
 	{
@@ -29,9 +27,7 @@ bool Grid::Save(const char* filepath)
 
 bool Grid::Load(const char* filepath)
 {
-	FileSystem* file = FileSystem::Instance();
-
-	vector<string>& lines = file->GetLines(filepath);
+	vector<string>& lines = File.GetLines(filepath);
 
 	if (lines.empty())
 		return false;

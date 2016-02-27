@@ -35,7 +35,7 @@ float LUAEngine::GetGlobalNumber(const char * tag)
 	if (!lua_isnumber(L, -1))
 		return 0;
 
-	return  lua_tonumber(L, -1);
+	return lua_tonumber(L, -1);
 }
 
 void LUAEngine::SetGlobalNumber(const char * tag, float var)
@@ -80,12 +80,10 @@ LUAEngine::~LUAEngine()
 
 bool LUAEngine::Save(const char* filepath)
 {
-	if (!Load(filepath))
-		return false;
+	//if (!Load(filepath))
+	//	return false;
 
-	FileSystem* file = FileSystem::Instance();
-
-	vector<string> lines = file->GetLines(filepath);
+	vector<string> lines = File.GetLines(filepath);
 
 	vector<string> newlines;
 	newlines.reserve(lines.size());
@@ -100,12 +98,12 @@ bool LUAEngine::Save(const char* filepath)
 			newlines.push_back(tag + " = " + "\"" + GetGlobalString(tag.c_str()) + "\"");
 	}
 
-	ofstream* output = file->BeginWriting(filepath);
+	ofstream* output = File.BeginWriting(filepath);
 
 	for (auto& line : newlines)
 		*output << line << endl;
 
-	file->EndWriting();
+	File.EndWriting();
 
 	return true;
 }

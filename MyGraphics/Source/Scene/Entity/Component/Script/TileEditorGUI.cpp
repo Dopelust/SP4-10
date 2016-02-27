@@ -21,8 +21,6 @@ TileEditorGUI::~TileEditorGUI()
 void TileEditorGUI::Init(Entity* entity)
 {
 	editor = entity->GetComponent<TileEditor>();
-
-	editor->graphic->SetTexture(Resource.GetTexture("Tileset"));
 	SetSelectedTile(0);
 }
 
@@ -43,12 +41,12 @@ void TileEditorGUI::AddButton(Button * button)
 	this->button.push_back(button);
 }
 
+#include "../SpriteRenderer.h"
+
 void TileEditorGUI::SetSelectedTile(int index)
 {
 	editor->index = index;
-
-	Vector4& uv = Resource.GetSpritesheet("Tileset")->GetSprite(index)->GetUV();
-	editor->graphic->SetUV(uv.x, uv.y, uv.z, uv.w);
+	editor->sprite->SetSprite(Resource.GetSpritesheet("Tileset")->GetSprite(index));
 
 	if (select)
 		select->transform->Position() = button[index]->transform->Position();

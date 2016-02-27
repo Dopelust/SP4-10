@@ -243,7 +243,7 @@ Vector3& Vector3::Rotate(float angle, Vector3 axis)
 	return *this;
 }
 
-std::ostream& operator<< (std::ostream& os, Vector3& rhs)
+std::ostream& operator<< (std::ostream& os, const Vector3& rhs)
 {
 	os << rhs.x << ", " << rhs.y << ", " << rhs.z;
 	return os;

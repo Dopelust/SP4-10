@@ -47,7 +47,7 @@ void TowerController::Init(Entity* ent)
 void TowerController::Init(string type)
 {
 	this->type = type;
-	this->owner->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture(GetData()->textureName.c_str()));
+	this->owner->GetComponent<Graphic2D>()->texture = (Resource.GetTexture(GetData()->textureName.c_str()));
 	stageManager = Scene::scene->root->GetChild("Stage Manager")->GetComponent<StageManager>();
 }
 
@@ -126,6 +126,12 @@ void TowerController::Update(double dt)
 	}
 	break;
 	}
+}
+
+void TowerController::SetUpgrade(int upgrade)
+{
+	this->upgrade = upgrade;
+	rank->SetSprite(Resource.GetSpritesheet("Rank")->GetSprite(upgrade));
 }
 
 bool TowerController::Upgrade()

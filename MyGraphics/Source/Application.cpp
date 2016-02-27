@@ -15,7 +15,7 @@
 
 #include <fstream>
 
-const unsigned char FPS = 21983; // FPS of this game	
+const unsigned char FPS = 60; // FPS of this game	
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
 Application& Application::Instance()
@@ -102,7 +102,6 @@ void Application::Run()
 	{
 		Engine.Update(timer.getElapsedTime());
 		Engine.Render();
-		Engine.HandleEvents();
 
 		Input.Flush();
 		
@@ -123,4 +122,9 @@ void Application::Exit()
 	glfwTerminate();
 
 	LUA.Save("Data//properties.lua");
+}
+
+void Application::ResetTimer()
+{
+	timer.getElapsedTime();
 }

@@ -45,6 +45,8 @@ void GraphicsEngine::ForwardPass(bool pass)
 	}
 }
 
+#include "GameEngine.h"
+
 void GraphicsEngine::Finish()
 {
 	Texture* output = gBuffer->GetOutput();
@@ -55,12 +57,20 @@ void GraphicsEngine::Finish()
 	Resource.shader.Flush();
 }
 
+Texture* GraphicsEngine::BlurCurrentOutput(float radius, bool halfRes)
+{
+	Texture* texture = GaussianBlur(gBuffer->GetOutput(), radius, halfRes);
+	texture->Bind();
+
+	return texture;
+}
+
 void GraphicsEngine::FinalPass(Texture * texture)
 {
-	font->Render();
-
 	FBO::Unbind();
 	GetShader("FBO")->Use();
+	GetShader("FBO")->SetUniform1f("overlay", Engine.GetTransition() - 0.02);
+
 	texture->Bind();
 	FBO::Render();
 }
@@ -134,6 +144,20 @@ void GraphicsEngine::Render2D(const char * shader, int x, int y, bool identity)
 {
 	screen_projection.SetToOrtho(0, x, 0, y, -10, 10);
 	Quad.RenderInstances(shader, identity);
+
+	RenderText();
+}
+
+void GraphicsEngine::RenderText()
+{
+	font->Render();
+}
+
+void GraphicsEngine::RenderOnScreen(Texture * texture)
+{
+	GetShader("FBO")->Use();
+	texture->Bind();
+	FBO::Render();
 }
 
 FBO * GraphicsEngine::GetFBO(fboType f)

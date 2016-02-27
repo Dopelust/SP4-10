@@ -23,7 +23,7 @@ bool EnemyDatabase::Init(const char * fileData)
 {
 	cout << "Initializing projectile database" << endl;
 
-	vector<string>& lines = FileSystem::Instance()->GetLines(ToString("Data//Prefab//Enemy//", fileData, ".txt"));
+	vector<string>& lines = File.GetLines(ToString("Data//Prefab//Enemy//", fileData, ".txt"));
 
 	if (lines.empty())
 		return false;

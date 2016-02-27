@@ -19,6 +19,7 @@ private:
 	static ShaderManager& Instance();
 
 	void Init();
+	Shader* GetCurrentShader();
 
 	map<string, Shader*> shader;
 	void Flush();

@@ -58,7 +58,7 @@ void TestState::Init()
 
 	scene->root->AddComponent<WorldZoomScript>();
 
-	Entity* editor = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.5f)));
+	Entity* editor = scene->root->AttachChild(EntityFactory::CreateSprite(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.5f)));
 	editor->AddComponent<TileSelector>();
 	editor->AddComponent<TileEditor>();
 	editor->AddComponent<TileEditorGUI>();
@@ -69,15 +69,13 @@ void TestState::Init()
 
 		for (int i = 0; i < 5; ++i)
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64 * i), Vector2(48, 48), Resource.GetTexture("Tileset"), Vector3(1, 1, 1)));
-
-			Vector4& uv = Resource.GetSpritesheet("Tileset")->GetSprite(i)->GetUV();
-			child->GetComponent<Graphic2D>()->SetUV(uv.x, uv.y, uv.z, uv.w);
+			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64 * i), Vector2(48, 48), NULL, Vector3(0.65f, 0.65f, 0.65f)));
+			child->AttachChild(EntityFactory::CreateSprite(Vector2(0, 0), Vector2(42, 42), Resource.GetSpritesheet("Tileset")->GetSprite(i), Vector4(1, 1, 1)));
 
 			editor->GetComponent<TileEditorGUI>()->AddButton(child->GetComponent<Button>());
 		}
 
-		editor->GetComponent<TileEditorGUI>()->select = entity->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(100, 100), Resource.GetTexture("Circle"), Vector4(1, 1, 1)));
+		editor->GetComponent<TileEditorGUI>()->select = entity->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), NULL, Vector4(1, 1, 1)));
 	}
 
 	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(100, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
@@ -110,15 +108,12 @@ void TestState::Exit()
 	}
 }
 
+#include "MenuState.h"
+
 void TestState::Update(float dt)
 {
 	scene->Update(dt);
-}
 
-#include "MenuState.h"
-
-void TestState::HandleEvents()
-{
 	if (menu->IsState())
 		Engine.ChangeState(&MenuState::Instance());
 

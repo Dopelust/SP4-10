@@ -55,6 +55,7 @@ public:
 
 	void Update(double dt);
 
+	void SetUpgrade(int upgrade);
 	bool Upgrade();
 	bool IsMaxUpgrade();
 

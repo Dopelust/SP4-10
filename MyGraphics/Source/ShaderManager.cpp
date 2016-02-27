@@ -60,3 +60,8 @@ void ShaderManager::Init()
 
 	cout << "[DONE]" << endl << endl;
 }
+
+Shader * ShaderManager::GetCurrentShader()
+{
+	return Shader::shader;
+}

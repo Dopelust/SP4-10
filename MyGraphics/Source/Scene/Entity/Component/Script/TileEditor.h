@@ -7,7 +7,7 @@
 class Transform;
 class TileEditorGUI;
 class TileSelector;
-class Graphic2D;
+class SpriteRenderer;
 
 class TileEditor : public Component
 {
@@ -21,7 +21,7 @@ public:
 private:
 	friend TileEditorGUI;
 
-	Graphic2D* graphic;
+	SpriteRenderer* sprite;
 	TileSelector* selector;
 
 	Vector2 snap;

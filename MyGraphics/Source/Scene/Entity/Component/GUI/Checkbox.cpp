@@ -10,6 +10,16 @@ Checkbox::~Checkbox()
 {
 }
 
+bool Checkbox::IsCheck()
+{
+	return toggle->IsToggled();
+}
+
+void Checkbox::SetCheck(bool check)
+{
+	toggle->SetToggle(check);
+}
+
 void Checkbox::Init(Entity * ent)
 {
 	toggle = ent->GetComponent<Toggle>();

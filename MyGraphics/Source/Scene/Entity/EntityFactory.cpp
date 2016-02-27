@@ -91,14 +91,14 @@ Entity * EntityFactory::CreateSlider(const Vector2 & position, const Vector2 & s
 	Entity* guide = entity->AttachChild(CreateButton(Vector2(), Vector2(size.x, size.y), NULL, Vector3(0, 0, 0)));
 	guide->GetComponent<Graphic2D>()->SetActive(false);
 
-	Entity* fill = entity->AttachChild(CreateGraphic(Vector2(), size, NULL, Vector3(0.75f, 0, 0)));
+	Entity* fill = entity->AttachChild(CreateGraphic(Vector2(), size, NULL, Vector3(0.9f, 0.9f, 0)));
 
 	Entity* slider = entity->AttachChild(CreateButton(Vector2(), Vector2(8, size.y), NULL, Vector3(0, 0, 0)));
 	slider->Rename("Slider");
 	slider->AddComponent<Slider>()->guide = guide->GetComponent<Button>();
 	slider->GetComponent<Slider>()->fill = fill->transform;
 
-	Entity* text = entity->AttachChild(CreateTextGUI(Vector2(-size.x *0.5f, 24), tag, 150));
+	Entity* text = entity->AttachChild(CreateTextGUI(Vector2(-size.x *0.5f, 24), tag, 256));
 	text->GetComponent<TextRenderer2D>()->SetAlignCenter(false);
 
 	text = entity->AttachChild(CreateTextGUI(Vector2(size.x * 0.5f + 16, 0), "", 200));
@@ -112,22 +112,22 @@ Entity * EntityFactory::CreateSlider(const Vector2 & position, const Vector2 & s
 	slider->GetComponent<Slider>()->SetMax(max);
 	slider->GetComponent<Slider>()->SetValue(value);
 
-	slider = slider->AttachChild(CreateGraphic(Vector2(), Vector2(4, size.y), NULL, Vector3(0.9f, 0.9f, 0.9f)));
+	slider = slider->AttachChild(CreateGraphic(Vector2(), Vector2(4, size.y), NULL, Vector3(1, 1, 1)));
 
 	return entity;
 }
 
-Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, float stroke, const char * text, bool * toggle)
+Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, float stroke, const char * text)
 {
 	Entity* entity = CreateGraphic(position, Vector2(size + stroke, size + stroke), NULL, Vector3(0.9f, 0.9f, 0.9f));
 
-	Entity* t = CreateTextGUI(Vector2(size, 0), text, 200);
+	Entity* t = CreateTextGUI(Vector2(size, 0), text, size * 8);
 	t->GetComponent<TextRenderer2D>()->SetAlignCenter(false);
 
 	entity->AttachChild(t);
 
 	Entity* button = entity->AttachChild(CreateButton(Vector2(), Vector2(size, size), NULL, Vector3(0.2f, 0.2f, 0.2f)));
-	button->AddComponent<Toggle>()->SetToggle(toggle);
+	button->AddComponent<Toggle>();
 
 	button->AddComponent<Checkbox>()->check = button->AttachChild(CreateGraphic(Vector2(), Vector2(size * 0.5f, size * 0.5f), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 	button->GetComponent<Checkbox>()->check->Rename("Check");
@@ -154,8 +154,8 @@ Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & 
 	entity->transform->SetPosition(position.x, position.y);
 	entity->transform->SetSize(size.x, size.y);
 
-	entity->AddComponent<Graphic2D>()->SetTexture(texture);
-	entity->GetComponent<Graphic2D>()->SetColor(color.x, color.y, color.z, color.w);
+	entity->AddComponent<Graphic2D>()->texture = texture;
+	entity->GetComponent<Graphic2D>()->color = color;
 	entity->GetComponent<Graphic2D>()->SetLayer(layer);
 	
 	return entity;
@@ -167,6 +167,19 @@ Entity * EntityFactory::CreateButton(const Vector2 & position, const Vector2 & s
 	entity->AddComponent<Button>();
 
 	entity->Rename("Button");
+
+	return entity;
+}
+
+Entity * EntityFactory::CreateTextButton(const Vector2 & position, const char * text, float size, const Vector3 & color)
+{
+	Entity* entity = CreateButton(position, FontManager::Instance().GetFont()->GetTextSize(text) * size, NULL, color);
+
+	TextRenderer2D* t = entity->AttachChild(CreateTextGUI(Vector2(), text, size))->GetComponent<TextRenderer2D>();
+	t->color = color;
+
+	entity->GetComponent<Button>()->SetGraphic(t);
+	entity->GetComponent<Graphic2D>()->SetActive(false);
 
 	return entity;
 }
@@ -202,30 +215,30 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 	entity->AddComponent<TowerController>()->index = Vector2(index.x, index.y);
 	entity->GetComponent<TowerController>()->Init(type);
 
-	if (type == "bubble blower")
+	if (type == "bubble_blower")
 	{
-		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Bubble Blower"));
+		entity->GetComponent<Graphic2D>()->texture = Resource.GetTexture("Bubble Blower");
 		entity->transform->Size() *= 1.75f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
 	else if (type == "sniper")
 	{
-		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Sniper"));
+		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Sniper"));
 		entity->transform->Size() *= 2.5f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.3f, TileHeight * 1.3f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
 	else if (type == "fountain")
 	{
-		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Fountain"));
+		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Fountain"));
 		entity->transform->Size() *= 1.1f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 1.1f, TileHeight * 1.1f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
 	else if (type == "dispenser")
 	{
-		entity->GetComponent<Graphic2D>()->SetTexture(Resource.GetTexture("Dispenser"));
+		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Dispenser"));
 		entity->transform->Size() *= 1.75f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
@@ -295,7 +308,8 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 	if (entity->GetComponent<EnemyController>()->flying)
 	{
 		Entity* wings = new Entity("Enemy Wings");
-		wings->transform->SetSize(TileWidth * 2, TileHeight * 2);
+		wings->transform->SetPosition(0, 4);
+		wings->transform->SetSize(TileWidth * 1.75f, TileHeight * 1.75f);
 		wings->AddComponent<SpriteRenderer>()->SetLayer(3);
 		wings->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator("Wings"));
 		wings->GetComponent<SpriteAnimator>()->Play("Wings", true);
@@ -303,7 +317,7 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 		entity->AttachChild(wings);
 	}
 
-	entity->AttachChild(CreateGraphic(Vector2(0, 0), Vector2(TileWidth * 0.85f, TileHeight * 0.65f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	entity->AttachChild(CreateGraphic(Vector2(0, -1), Vector2(TileWidth * 0.85f, TileHeight * 0.65f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 
 	Generate(scene->root, entity);
 	return entity;

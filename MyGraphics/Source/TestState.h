@@ -14,8 +14,6 @@ public:
 	void Pause();
 	void Resume();
 
-	void HandleEvents();
-
 	static TestState& Instance();
 
 	Button* menu;
