@@ -161,7 +161,9 @@ void Button::UpdateState()
 void Button::SetGraphic(Graphic2D * graphic)
 {
 	this->graphic = graphic;
-	color = graphic->color;
+
+	if (graphic)
+		color = graphic->color;
 }
 
 bool Button::IsEnabled()

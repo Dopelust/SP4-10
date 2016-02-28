@@ -4,26 +4,29 @@
 #include "Vector2.h"
 
 class Transform;
-class MenuHandler;
+class StateHandler;
 
-class MenuObject : public Component
+class StateObject : public Component
 {
 public:
-	MenuObject();
-	~MenuObject();
+	StateObject();
+	~StateObject();
 
-	MenuHandler* menu;
+	StateHandler* menu;
+
+	Entity* owner;
 
 	virtual void Init(Entity* ent);
 	virtual void Update(double dt);
 
 	void Appear();
-	void Disappear();
+	void Disappear(bool left);
+
+	bool ReachedTarget();
 
 protected:
 	float rate;
-	bool appear;
-	Vector2 position, target;
+	Vector2 target;
 
 	Transform* transform;
 };

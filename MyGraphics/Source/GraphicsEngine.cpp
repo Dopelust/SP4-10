@@ -69,10 +69,12 @@ void GraphicsEngine::FinalPass(Texture * texture)
 {
 	FBO::Unbind();
 	GetShader("FBO")->Use();
-	GetShader("FBO")->SetUniform1f("overlay", Engine.GetTransition() - 0.02);
+	GetShader("FBO")->SetUniform1f("overlay", Engine.GetTransition());
 
 	texture->Bind();
 	FBO::Render();
+
+	GetShader("FBO")->SetUniform1f("overlay", 1);
 }
 
 void GraphicsEngine::InitFBO()

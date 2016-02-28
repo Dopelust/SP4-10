@@ -1,10 +1,10 @@
 #pragma once
 
-#include "MenuObject.h"
+#include "StateObject.h"
 
 class Button;
 
-class MenuScript : public MenuObject
+class MenuScript : public StateObject
 {
 public:
 	MenuScript();

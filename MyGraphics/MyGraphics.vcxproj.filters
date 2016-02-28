@@ -113,6 +113,9 @@
     <Filter Include="Scene\Entity\Component\Graphic">
       <UniqueIdentifier>{2a8e798e-2f51-4d82-ba2d-3b44aff208b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Menu\Level Selection">
+      <UniqueIdentifier>{493a615b-0cde-42d0-8aa0-4ffd50f520e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Grid.cpp">
@@ -342,13 +345,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.cpp">
-      <Filter>Scene\Entity\Component\Script\Menu</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.cpp">
-      <Filter>Scene\Entity\Component\Script\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.cpp">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\TextRenderer2D.cpp">
@@ -362,6 +359,30 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\Graphic2D.cpp">
       <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\CSVRenderer.cpp">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectObject.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\StateHandler.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\StateObject.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\PageSystem.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -618,13 +639,7 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuObject.h">
-      <Filter>Scene\Entity\Component\Script\Menu</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\MenuHandler.h">
-      <Filter>Scene\Entity\Component\Script\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.h">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\TextRenderer2D.h">
@@ -638,6 +653,30 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Graphic2D.h">
       <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\CSVRenderer.h">
+      <Filter>Scene\Entity\Component\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectObject.h">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelSelectScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\StateHandler.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\StateObject.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.h">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\PageSystem.h">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

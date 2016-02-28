@@ -39,32 +39,35 @@ void Cell::Place(int i, int j, int index)
 	tile[i][j].index = index;
 }
 
+#include "Mtx44.h"
+
 void Cell::Draw(int i, int j)
 {
 	for (int x = 0; x < NumberOfTilesX; ++x)
 	for (int y = 0; y < NumberOfTilesY; ++y)
 	{
-		tile[x][y].Draw(i + x, j + y);
+		Mtx44& mtx = tile[x][y].GetTransformation(i + x, j + y);
+		tile[x][y].Draw(mtx);
 
 		if (tile[x][y].index != 2)
 		{
 			if (y + 1 < NumberOfTilesY && tile[x][y + 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 7);
+				Tile::DrawOcclusion(mtx, 7);
 			if (y - 1 >= 0 && tile[x][y - 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 1);
+				Tile::DrawOcclusion(mtx, 1);
 			if (x + 1 < NumberOfTilesX && tile[x + 1][y].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 3);
+				Tile::DrawOcclusion(mtx, 3);
 			if (x - 1 >= 0 && tile[x - 1][y].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 5);
+				Tile::DrawOcclusion(mtx, 5);
 
 			if (y + 1 < NumberOfTilesY && x + 1 < NumberOfTilesX && tile[x + 1][y + 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 6);
+				Tile::DrawOcclusion(mtx, 6);
 			if (y + 1 < NumberOfTilesY && x - 1 >= 0 && tile[x - 1][y + 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 8);
+				Tile::DrawOcclusion(mtx, 8);
 			if (y - 1 >= 0 && x + 1 < NumberOfTilesX && tile[x + 1][y - 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 0);
+				Tile::DrawOcclusion(mtx, 0);
 			if (y - 1 >= 0 && x - 1 >= 0 && tile[x - 1][y - 1].index == 2)
-				Tile::DrawOcclusion(i + x, j + y, 2);
+				Tile::DrawOcclusion(mtx, 2);
 		}
 	}
 }

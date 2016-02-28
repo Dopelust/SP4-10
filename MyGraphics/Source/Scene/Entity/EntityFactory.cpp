@@ -45,36 +45,7 @@ Entity* EntityFactory::GenerateSlider(const Vector2 & position, const Vector2 & 
 
 Entity* EntityFactory::GenerateInputField(const Vector2& position, const Vector3& color, int limit, float textSize)
 {
-	Vector2 size = FontManager::Instance().GetFont()->GetTextSize("O") * textSize;
-	size.x *= (limit + 1);
-	size.y *= 1.3f;
-
-	Entity* entity = new Entity("Input");
-	entity->transform->SetPosition(position.x, position.y);
-	entity->transform->SetSize(size.x + 4, size.y + 4);
-
-	entity->AddComponent<Graphic2D>();
-
-	Entity* button = entity->AttachChild(CreateButton(Vector2(), size, NULL, Vector3(color.x, color.y, color.z)));
-
-	Entity* child = entity->AddChild("Input Field");
-	child->transform->SetPosition(-size.x * 0.5f, -size.y * 0.1f, 0);
-	child->transform->SetSize(textSize);
-	child->AddComponent<TextRenderer2D>()->SetAlignCenter(false);
-
-	child->AddComponent<InputField>()->SetLimit(limit);
-	child->GetComponent<InputField>()->SetActivator(button->GetComponent<Button>());
-	child->GetComponent<InputField>()->SetTextRenderer(child->GetComponent<TextRenderer2D>());
-
-	Entity* ticker = child->AddChild("Ticker");
-	ticker->transform->SetPosition(0, size.y * 0.1f, 0);
-	ticker->transform->SetSize(2, size.y * 0.8f);
-	ticker->AddComponent<Graphic2D>();
-
-	child->GetComponent<InputField>()->SetTicker(ticker);
-
-	Generate(scene->canvas, entity);
-	return entity;
+	return Generate(scene->canvas, CreateInputField(position, color, limit, textSize));
 }
 
 Entity * EntityFactory::GenerateTextGUI(const Vector2 & position, const char* text, float size)
@@ -135,6 +106,39 @@ Entity * EntityFactory::CreateCheckbox(const Vector2 & position, float size, flo
 	return entity;
 }
 
+Entity * EntityFactory::CreateInputField(const Vector2 & position, const Vector3 & color, int limit, float textSize)
+{
+	Vector2 size = FontManager::Instance().GetFont()->GetTextSize("O") * textSize;
+	size.x *= (limit + 1);
+	size.y *= 1.3f;
+
+	Entity* entity = new Entity("Input");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x + 4, size.y + 4);
+
+	entity->AddComponent<Graphic2D>();
+
+	Entity* button = entity->AttachChild(CreateButton(Vector2(), size, NULL, Vector3(color.x, color.y, color.z)));
+
+	Entity* child = entity->AddChild("Input Field");
+	child->transform->SetPosition(-size.x * 0.5f, -size.y * 0.1f, 0);
+	child->transform->SetSize(textSize);
+	child->AddComponent<TextRenderer2D>()->SetAlignCenter(false);
+
+	child->AddComponent<InputField>()->SetLimit(limit);
+	child->GetComponent<InputField>()->SetActivator(button->GetComponent<Button>());
+	child->GetComponent<InputField>()->SetTextRenderer(child->GetComponent<TextRenderer2D>());
+
+	Entity* ticker = child->AddChild("Ticker");
+	ticker->transform->SetPosition(0, size.y * 0.1f, 0);
+	ticker->transform->SetSize(2, size.y * 0.8f);
+	ticker->AddComponent<Graphic2D>();
+
+	child->GetComponent<InputField>()->SetTicker(ticker);
+
+	return entity;
+}
+
 Entity * EntityFactory::CreateSprite(const Vector2 & position, const Vector2 & size, Sprite * sprite, const Vector4 & color, int layer)
 {
 	Entity* entity = new Entity("Sprite");
@@ -144,6 +148,22 @@ Entity * EntityFactory::CreateSprite(const Vector2 & position, const Vector2 & s
 	entity->AddComponent<SpriteRenderer>()->SetSprite(sprite);
 	entity->GetComponent<SpriteRenderer>()->color = color;
 	entity->GetComponent<SpriteRenderer>()->SetLayer(layer);
+
+	return entity;
+}
+
+#include "Component\Script\CSVRenderer.h"
+
+Entity * EntityFactory::CreateCSVGraphic(const Vector2 & position, const Vector2 & size, const char * filepath, const Vector4 & color, int layer)
+{
+	Entity* entity = new Entity("Graphic");
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x, size.y);
+
+	entity->AddComponent<CSVRenderer>()->UploadCSV(filepath);
+	entity->GetComponent<CSVRenderer>()->SetSpritesheet(Resource.GetSpritesheet("Tileset"));
+	entity->GetComponent<CSVRenderer>()->SetLayer(layer);
+	entity->GetComponent<CSVRenderer>()->color = color;
 
 	return entity;
 }

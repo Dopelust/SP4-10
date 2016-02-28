@@ -6,19 +6,22 @@
 #include <map>
 using namespace::std;
 
+class CSVRenderer;
+class InputField;
 class Button;
 
-class LevelSelectScript : public Component, public LevelSelectObject
+class LevelScript : public Component, public LevelSelectObject
 {
 public:
-	LevelSelectScript();
-	~LevelSelectScript();
+	LevelScript();
+	~LevelScript();
 
 	void Init(Entity* ent);
-	void Update(double dt);
-	
+	void Update(double dt);	
 	void AddLevel(const char* name, const char* level, const Vector2& position, Entity* owner);
 
 private:
-	map<string, Button*> levels;
+	CSVRenderer* csv;
+	InputField* input;
+	Button* play;
 };

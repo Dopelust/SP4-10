@@ -72,7 +72,7 @@ LUAEngine::LUAEngine()
 
 LUAEngine::~LUAEngine()
 {
-	lua_close(L);
+//	lua_close(L);
 }
 
 #include "FileSystem.h"

@@ -23,7 +23,7 @@ OptionScript::~OptionScript()
 
 void OptionScript::Init(Entity * ent)
 {
-	MenuObject::Init(ent);
+	StateObject::Init(ent);
 
 	Entity* entity = ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 200), "BACK", 400, Vector3(0.7f, 0.7f, 0)));
 	back = entity->GetComponent<Button>();
@@ -40,10 +40,10 @@ void OptionScript::Init(Entity * ent)
 
 	Audio.SetVolume(bgm->GetValue() * 0.01f);
 
-	position.Set(Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
-	transform->Position() = position.GetVector3();
+	target.Set(Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
+	transform->Position() = target.GetVector3();
 
-	rate = 10;
+	rate = 16;
 }
 
 #include "MenuHandler.h"
@@ -52,10 +52,10 @@ void OptionScript::Init(Entity * ent)
 
 void OptionScript::Update(double dt)
 {
-	MenuObject::Update(dt);
+	StateObject::Update(dt);
 
 	if (back->IsState())
-		menu->Switch(menu->menu);
+		menu->Pop();
 
 	if (bgm->ValueChanged())
 		Audio.SetVolume(bgm->GetValue() * 0.01f);

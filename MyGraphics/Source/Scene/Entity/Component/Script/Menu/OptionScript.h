@@ -1,12 +1,12 @@
 #pragma once
 
-#include "MenuObject.h"
+#include "StateObject.h"
 
 class Checkbox;
 class Slider;
 class Button;
 
-class OptionScript : public MenuObject
+class OptionScript : public StateObject
 {
 public:
 	OptionScript();

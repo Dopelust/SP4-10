@@ -72,6 +72,9 @@ public:
 	vector<Entity*>& Enemies();
 	vector<Vector2>& EndPoints();
 
+	bool Load(const char* filepath);
+	void Save(const char* filepath);
+
 private:
 	friend StageGUI;
 

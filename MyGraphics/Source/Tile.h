@@ -6,6 +6,8 @@
 #include <vector>
 using namespace::std;
 
+class Mtx44;
+
 class Tile
 {
 public:
@@ -13,9 +15,11 @@ public:
 	~Tile();
 
 	int index;
-	void Draw(int i, int j); 
 
-	static void DrawOcclusion(int i, int j, int orientation);
+	static Mtx44 GetTransformation(int i, int j);
+	static void DrawOcclusion(const Mtx44& mtx, int orientation);
+
+	void Draw(const Mtx44& mtx);
 };
 
 #endif

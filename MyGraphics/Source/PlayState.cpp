@@ -46,7 +46,7 @@ PlayState::~PlayState()
 #include "Grid.h"
 #include "Utility.h"
 #include "Spritesheet.h"
-
+#include "FileSystem.h"
 #include "SoundEngine.h"
 
 void PlayState::Init()
@@ -57,8 +57,6 @@ void PlayState::Init()
 		bgm = Audio.Play2D(Audio.GetSoundPack("bgm"), 1);
 
 	scene = new Scene(NULL);
-	scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
-	scene->grid->Load("Data//Levels//level1.csv");
 	scene->camera.position.Set(0, -TileHeight, 0);
 
 	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(80, 30), NULL, Vector3(0.5f, 0.5f, 0.5f));
@@ -198,20 +196,32 @@ void PlayState::Init()
 	editor->GetComponent<TowerManager>()->gui = editor->GetComponent<TowerGUI>();
 	editor->GetComponent<TowerGUI>()->DisableUpgrades();
 
-	//ProjectileDatabase::Init("arrow");
 	EnemyDatabase::Init("jelly");
-	StageDatabase::Init("level1");
 
 	Entity* stageManager;
 	stageManager = new Entity();
 	stageManager->Rename("Stage Manager");
+	stageManager->AddComponent<PathFinder>();
+	stage = stageManager->AddComponent<StageManager>();
+	stage->gui = stageManager->AddComponent<StageGUI>();
+
+	if (stage->Load("Data//Save//stats.txt"))
+	{
+		scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
+		scene->grid->Load(ToString("Data//Levels//" + stage->GetStageName() + ".csv").c_str());
+	}
+	else
+	{
+		stage->LoadStage(level);
+
+		scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
+		scene->grid->Load(ToString("Data//Levels//" + level + ".csv").c_str());
+	}
+
 	vector<int> a;
 	a.push_back(1);
 	a.push_back(2);
-	stageManager->AddComponent<PathFinder>();
-	stageManager->AddComponent<StageManager>()->LateInit(scene->grid, a);
-	stageManager->GetComponent<StageManager>()->gui = stageManager->AddComponent<StageGUI>();
-	stageManager->GetComponent<StageManager>()->LoadStage("level1");
+	stage->LateInit(scene->grid, a);
 
 	EnemyController::stage = stageManager->GetComponent<StageManager>();
 
@@ -226,6 +236,7 @@ void PlayState::Init()
 
 void PlayState::Exit()
 {
+	stage->Save("Data//Save//stats.txt");
 	tower->Save("Data//Save//save.txt");
 
 	if (scene)

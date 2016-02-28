@@ -20,7 +20,7 @@ MenuScript::~MenuScript()
 
 void MenuScript::Init(Entity * ent)
 {
-	MenuObject::Init(ent);
+	StateObject::Init(ent);
 
 	Entity* entity =
 		ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 600), "NIGHT CHANGES", 800));
@@ -51,15 +51,15 @@ void MenuScript::Init(Entity * ent)
 		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
-	position.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
-	transform->Position() = position.GetVector3();
+	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
+	transform->Position() = target.GetVector3();
 
-	rate = 10;
+	rate = 16;
 }
 
 #include "MenuHandler.h"
 #include "OptionScript.h"
-#include "LevelSelectScript.h"
+#include "LevelHandler.h"
 
 #include "../../GUI/Button.h"
 #include "../../../../../GameEngine.h"
@@ -68,10 +68,10 @@ void MenuScript::Init(Entity * ent)
 
 void MenuScript::Update(double dt)
 {
-	MenuObject::Update(dt);
+	StateObject::Update(dt);
 
 	if (play->IsState())
-		menu->Switch(menu->levelselect);
+		menu->Push(menu->GetState<LevelHandler>());
 
 	if (resume->IsState())
 		Engine.ChangeState(&PlayState::Instance());
@@ -80,7 +80,7 @@ void MenuScript::Update(double dt)
 		Engine.ChangeState(&TestState::Instance());
 
 	if (option->IsState())
-		menu->Switch(menu->option);
+		menu->Push(menu->GetState<OptionScript>());
 
 	if (exit->IsState())
 		Engine.Terminate();

@@ -26,6 +26,6 @@ void SpriteRenderer::Draw(const Mtx44 & parent)
 		else
 			T.SetToIdentity();
 
-		Quad.GetInstance(sprite->GetTexture(), layer).Add(parent * T, color, sprite->GetUV());
+		sprite->Render(parent * T, color, layer);
 	}
 }

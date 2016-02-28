@@ -27,3 +27,10 @@ Texture * Sprite::GetTexture()
 {
 	return texture;
 }
+
+#include "Mesh2D.h"
+
+void Sprite::Render(const Mtx44 & mtx, const Vector4& color, int layer)
+{
+	Quad.GetInstance(GetTexture(), layer).Add(mtx, color, GetUV());
+}

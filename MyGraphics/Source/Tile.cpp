@@ -11,25 +11,26 @@ Tile::~Tile()
 {
 }
 
-#include "Mesh2D.h"
 #include "Assets.h"
 
 #include "Spritesheet.h"
 #include "Sprite.h"
 
-void Tile::Draw(int i, int j)
+#include "Mtx44.h"
+
+Mtx44 Tile::GetTransformation(int i, int j)
 {
-	Sprite* sprite = Resource.GetSpritesheet("Tileset")->GetSprite(index);
-	Quad.GetInstance(sprite->GetTexture()).Add(Mtx44::GetTransformation(i * TileWidth, j * TileHeight, 0, TileWidth, TileHeight), Vector4(1,1,1), sprite->GetUV());
+	return Mtx44::GetTransformation(i * TileWidth, j * TileHeight, 0, TileWidth, TileHeight);
 }
 
-#include "InputHandler.h"
-
-void Tile::DrawOcclusion(int i, int j, int orientation)
+void Tile::Draw(const Mtx44 & mtx)
 {
-	if (!Input.IsHeld('O'))
-	{
-		Sprite* sprite = Resource.GetSpritesheet("Tile Occlusion")->GetSprite(orientation);
-		Quad.GetInstance(sprite->GetTexture()).Add(Mtx44::GetTransformation(i * TileWidth, j * TileHeight, 0, TileWidth, TileHeight, 1, 0, 0), Vector4(0.15f, 0.15f, 0.15f), sprite->GetUV());
-	}
+	Sprite* sprite = Resource.GetSpritesheet("Tileset")->GetSprite(index);
+	sprite->Render(mtx, Vector4(1, 1, 1), 0);
+}
+
+void Tile::DrawOcclusion(const Mtx44 & mtx, int orientation)
+{
+	Sprite* sprite = Resource.GetSpritesheet("Tile Occlusion")->GetSprite(orientation);
+	sprite->Render(mtx, Vector4(0.15f, 0.15f, 0.15f), 0);
 }

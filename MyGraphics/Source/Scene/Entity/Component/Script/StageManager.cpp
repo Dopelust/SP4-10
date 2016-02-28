@@ -54,6 +54,8 @@ using namespace std;
 void StageManager::LoadStage(string stageName)
 {
 	currentStage = stageName;
+
+	StageDatabase::Init(stageName.c_str());
 	maxWave = GetData().stageData.size();
 
 	//InitAllWave();
@@ -347,4 +349,33 @@ vector<Entity*>& StageManager::Enemies()
 vector<Vector2>& StageManager::EndPoints()
 {
 	return endPoints;
+}
+
+#include "FileSystem.h"
+
+bool StageManager::Load(const char * filepath)
+{
+	if (File.Exists(filepath))
+	{
+		vector<string>& lines = File.GetLines(filepath);
+
+		for (auto& line : lines)
+		{
+			vector<string>& tokens = ParseLine(line, " ,");
+			LoadStage(tokens[0]);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+void StageManager::Save(const char * filepath)
+{
+	ofstream& output = *File.BeginWriting(filepath);
+
+	output << currentStage << endl;
+
+	File.EndWriting();
 }
