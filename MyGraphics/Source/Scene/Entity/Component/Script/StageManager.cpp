@@ -53,6 +53,9 @@ using namespace std;
 
 void StageManager::LoadStage(string stageName)
 {
+	gold = 100;
+	health = 20;
+
 	currentStage = stageName;
 
 	StageDatabase::Init(stageName.c_str());
@@ -84,6 +87,10 @@ void StageManager::UpdatePathFinders()
 }
 
 #include "EnemyController.h"
+#include "StageGUI.h"
+
+#include "../../../Scene.h"
+#include "../../../../Tile.h"
 
 void StageManager::Update(double dt)
 {
@@ -91,12 +98,32 @@ void StageManager::Update(double dt)
 	{
 	case FREETIME:
 		
-		if (true)
+		if (gui->ButtonPress())
 			StartWave();
 
 		break;
 	case WAVE:
 		UpdateWave(dt);
+
+		if (gui->ButtonPress())
+		{
+			state = PAUSED;
+			Scene::scene->SetTimeScale(0);
+		}
+
+		break;
+	case PAUSED:
+
+		if (gui->ButtonPress())
+		{
+			state = WAVE;
+			Scene::scene->SetTimeScale(1);
+		}
+
+		break;
+	case WIN:
+		break;
+	case LOSE:
 		break;
 	}
 }
@@ -104,6 +131,7 @@ void StageManager::Update(double dt)
 #include "../../../Enemy/EnemyData.h"
 #include "../../Entity.h"
 #include "../Transform.h"
+#include "TowerManager.h"
 
 void StageManager::UpdateWave(double dt)
 {	
@@ -114,16 +142,22 @@ void StageManager::UpdateWave(double dt)
 		state = FREETIME;
 		waveDone = false;
 		waveQueue.pop();
+		++currentWave;
+
+		Save("Data//Save//stats.txt");
+		tower->Save("Data//Save//save.txt");
+
 		return;
 	}
 	
-	for (unsigned i = 0; i < enemies.size(); ++i)
+	for (int i = 0; i < enemies.size(); ++i)
 	{
 		EnemyController* ec = enemies[i]->GetComponent<EnemyController>();
 
 		if (ec->pop)
 		{
 			// To Do : Add player money
+			gold++;
 
 			ec->pop = false;
 
@@ -139,7 +173,6 @@ void StageManager::UpdateWave(double dt)
 			{
 				EntityFactory::Destroy(enemies[i]);
 				enemies.erase(enemies.begin() + i);
-				--i;
 				continue;
 			}
 		}
@@ -148,8 +181,30 @@ void StageManager::UpdateWave(double dt)
 	Fall(waveTimer, dt, 0);
 }
 
-#include "../../../Scene.h"
-#include "../../../../Tile.h"
+bool StageManager::Hit()
+{
+	if (state == WAVE)
+	{
+		--health;
+
+		if (health <= 0)
+			state = LOSE;
+
+		return true;
+	}
+
+	return false;
+}
+
+int StageManager::GetGold()
+{
+	return gold;
+}
+
+void StageManager::ReduceGold(int gold)
+{
+	this->gold -= gold;
+}
 
 void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 {
@@ -249,7 +304,7 @@ bool StageManager::CheckObstruction(int i, int j)
 
 bool StageManager::InitWave()
 {
-	if (currentWave + 1 < GetData().GetNumStages())
+	if (currentWave < GetData().GetNumStages())
 	{
 		StageWave wave;
 		wave.waveData = GetData().stageData[currentWave];
@@ -262,8 +317,6 @@ bool StageManager::InitWave()
 			}
 		}
 		waveQueue.push(wave);
-
-		++currentWave;
 
 		waveTimer = wave.waveData.GetWaveTime();
 		spawnTimer = 1000;
@@ -363,6 +416,9 @@ bool StageManager::Load(const char * filepath)
 		{
 			vector<string>& tokens = ParseLine(line, " ,");
 			LoadStage(tokens[0]);
+			currentWave = stoi(tokens[1]);
+			health = stoi(tokens[2]);
+			gold = stoi(tokens[3]);
 		}
 
 		return true;
@@ -375,7 +431,12 @@ void StageManager::Save(const char * filepath)
 {
 	ofstream& output = *File.BeginWriting(filepath);
 
-	output << currentStage << endl;
+	output << currentStage << ", ";
+	output << currentWave << ", ";
+	output << health << ", ";
+	output << gold << ", ";
 
 	File.EndWriting();
+
+	gui->SetPopup("Saved Game");
 }

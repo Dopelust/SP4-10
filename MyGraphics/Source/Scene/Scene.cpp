@@ -11,7 +11,8 @@
 
 Scene* Scene::scene = NULL;
 
-Scene::Scene(const char* filepath) : root(new Entity("Root")), canvas(new Entity("Canvas")), canvasUI(*canvas->AddComponent<CanvasUI>()), grid(NULL), filepath(filepath)
+Scene::Scene(const char* filepath) : root(new Entity("Root")), canvas(new Entity("Canvas")), canvasUI(*canvas->AddComponent<CanvasUI>()), 
+grid(NULL), filepath(filepath), timeScale(1)
 {
 	scene = this;
 	Camera::current = &camera;
@@ -65,8 +66,20 @@ bool Scene::CreateSpatialPartition(GridType type)
 	}
 }
 
+float Scene::GetTimeScale()
+{
+	return timeScale;
+}
+
+void Scene::SetTimeScale(float timeScale)
+{
+	this->timeScale = timeScale;
+}
+
 void Scene::Update(double dt)
 {
+	dt *= timeScale;
+
 	EntityFactory::GenerateEntities();
 
 	Screen.SetProjectionResolution(GetResolutionX(root), GetResolutionY(root));

@@ -317,7 +317,7 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 	entity->transform->SetPosition(position.x, position.y);
 	entity->transform->SetSize(TileWidth, TileHeight);
 
-	entity->AddComponent<SpriteRenderer>()->SetLayer(4);
+	entity->AddComponent<SpriteRenderer>()->SetLayer(1);
 	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
 	entity->GetComponent<SpriteAnimator>()->Play(animation, true);
 
@@ -330,7 +330,8 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 		Entity* wings = new Entity("Enemy Wings");
 		wings->transform->SetPosition(0, 4);
 		wings->transform->SetSize(TileWidth * 1.75f, TileHeight * 1.75f);
-		wings->AddComponent<SpriteRenderer>()->SetLayer(3);
+		wings->AddComponent<SpriteRenderer>()->SetLayer(4);
+		entity->AddComponent<SpriteRenderer>()->SetLayer(5);
 		wings->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator("Wings"));
 		wings->GetComponent<SpriteAnimator>()->Play("Wings", true);
 

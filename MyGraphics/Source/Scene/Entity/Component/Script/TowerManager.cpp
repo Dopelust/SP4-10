@@ -96,6 +96,8 @@ bool TowerManager::PlaceTower()
 	if (stage->AddObstruction((int)index.x, (int)index.y))
 	{
 		towerMap[position] = EntityFactory::GenerateTower(position.GetVector2(), type);
+		stage->ReduceGold(TowerDatabase::GetData(type.c_str())[0].cost);
+
 		Audio.Play2D(Audio.GetSoundPack("build"), 0.5f);
 
 		type = "";
@@ -111,6 +113,14 @@ bool TowerManager::PlaceTower()
 
 void TowerManager::Update(double dt)
 {
+	if (stage->state == StageManager::PAUSED)
+	{
+		CancelPlacement();
+		Unselect();
+
+		return;
+	}
+
 	Tile* tile = selector->GetSelection();
 
 	if (IsPlacing()) //Placing A Tower
@@ -301,4 +311,9 @@ void TowerManager::Save(const char * filepath)
 	}
 
 	File.EndWriting();
+}
+
+bool TowerManager::CanPurchase(const char * type)
+{
+	return stage->GetGold() >= TowerDatabase::GetData(type)[0].cost;
 }

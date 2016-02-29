@@ -99,8 +99,11 @@ void EnemyController::Update(double dt)
 		{
 			if (path->IsEndOfPath())
 			{
-				pop = true;
-				done = true;
+				if (stage->Hit())
+				{
+					pop = true;
+					done = true;
+				}
 			}
 			else
 				path->Traverse();
@@ -112,8 +115,12 @@ void EnemyController::Update(double dt)
 		{
 			if (GetIndex().DistSquared(end) < (512 * dt) * (512 * dt))
 			{
-				pop = true;
-				done = true;
+				if (stage->Hit())
+				{
+					pop = true;
+					done = true;
+				}
+			
 				break;
 			}
 		}

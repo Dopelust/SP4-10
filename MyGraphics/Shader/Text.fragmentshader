@@ -29,7 +29,7 @@ void main()
 	float finalAlpha = alpha + (1.0 - alpha) * alpha2;
 	vec3 finalColor = mix(fragmentColor.xyz * 0.05, fragmentColor.xyz, alpha/alpha2);
 
-	color =  vec4(finalColor, finalAlpha);
+	color =  vec4(finalColor, finalAlpha * fragmentColor.w);
 
 //	color = vec4(1,1,1,1)
 }

@@ -4,6 +4,7 @@
 
 class TextRenderer2D;
 class StageManager;
+class Button;
 
 class StageGUI : public Component
 {
@@ -14,8 +15,19 @@ public:
 	void Init(Entity* ent);
 	void Update(double dt);
 
+	bool ButtonPress();
+	void SetPopup(const char* text);
+
 private:
 	StageManager* stage;
+
+	TextRenderer2D* pauseText;
+	Button* pause;
+	
+	TextRenderer2D* popup;
+
+	TextRenderer2D* health;
+	TextRenderer2D* gold;
 
 	TextRenderer2D* wave;
 	TextRenderer2D* timer;

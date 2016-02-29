@@ -16,6 +16,7 @@ struct Vector2;
 
 class PathFinder;
 
+class TowerManager;
 class StageGUI;
 class Grid;
 class GridInfo;
@@ -54,6 +55,7 @@ public:
 	StageManager();
 	~StageManager();
 
+	TowerManager* tower;
 	StageGUI* gui;
 
 	void Init(Entity* ent);
@@ -75,8 +77,26 @@ public:
 	bool Load(const char* filepath);
 	void Save(const char* filepath);
 
+	enum StageState
+	{
+		FREETIME,
+		WAVE,
+		PAUSED,
+		WIN,
+		LOSE,
+		MAX_STATE,
+	};
+	StageState state;
+
+	bool Hit();
+	int GetGold();
+	void ReduceGold(int gold);
+
 private:
 	friend StageGUI;
+
+	int gold;
+	int health;
 
 	void CreateTileMap(vector<int>& obstructionIndex);
 	void UpdatePathFinders();
@@ -100,15 +120,6 @@ private:
 	int maxWave;
 	int currentWave;
 	bool waveDone;
-
-	enum StageState
-	{
-		FREETIME,
-		WAVE,
-		MAX_STATE,
-	};
-
-	StageState state;
 
 	float waveTimer;
 	float spawnTimer;

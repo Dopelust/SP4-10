@@ -85,8 +85,12 @@ void TowerGUI::Update(double dt)
 		{
 			hover->SetText(b.first.c_str());
 			hover->owner->SetActive(true);
-			break;
 		}
+
+		if (manager->CanPurchase(b.first.c_str()))
+			b.second->Enable();
+		else
+			b.second->Disable();
 	}
 
 	GLenum key = GLFW_KEY_1;

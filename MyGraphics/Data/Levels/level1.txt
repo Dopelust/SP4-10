@@ -1,7 +1,7 @@
 Health,	150
 // Wave 1
 // Tier, Delay, Count, flying
-5, 1, 1000, 1
+5, 0.1, 1, 0
 
 // Wave 2
 1, 0.8, 3, 0
@@ -12,7 +12,5 @@ Health,	150
 
 // Wave 4
 1, 0.2, 2, 0
-2, 0.5, 1, 0
-1, 0.2, 5, 0
 
 // Ignore this

@@ -57,6 +57,7 @@ public:
 	void Load(const char* filepath);
 	void Save(const char* filepath);
 
+	bool CanPurchase(const char* type);
 private:
 	string type;
 

@@ -228,6 +228,7 @@ void PlayState::Init()
 
 	scene->root->AttachChild(stageManager);
 	editor->GetComponent<TowerManager>()->stage = stageManager->GetComponent<StageManager>();
+	stageManager->GetComponent<StageManager>()->tower = editor->GetComponent<TowerManager>();
 
 	tower = editor->GetComponent<TowerManager>();
 	tower->Load("Data//Save//save.txt");
@@ -237,8 +238,8 @@ void PlayState::Init()
 
 void PlayState::Exit()
 {
-	stage->Save("Data//Save//stats.txt");
-	tower->Save("Data//Save//save.txt");
+	//stage->Save("Data//Save//stats.txt");
+	//tower->Save("Data//Save//save.txt");
 
 	if (scene)
 	{
