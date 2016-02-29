@@ -73,9 +73,22 @@ void TowerGUI::Init(Entity * ent)
 }
 
 #include "../../../../InputHandler.h"
+#include "HoverText.h"
 
 void TowerGUI::Update(double dt)
 {
+	hover->owner->SetActive(false);
+
+	for (auto& b : button)
+	{
+		if (b.second->IsHover())
+		{
+			hover->SetText(b.first.c_str());
+			hover->owner->SetActive(true);
+			break;
+		}
+	}
+
 	GLenum key = GLFW_KEY_1;
 
 	for (auto& b : button)

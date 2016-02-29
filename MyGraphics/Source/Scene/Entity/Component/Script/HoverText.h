@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Component.h"
+#include "Vector3.h"
 
 class Transform;
 class Graphic2D;
@@ -12,7 +13,8 @@ public:
 	HoverText();
 	~HoverText();
 
-	TextRenderer2D* text;
+	Entity* owner;
+	Entity* text;
 
 	void Init(Entity* ent);
 	void Update(double dt);
@@ -22,4 +24,6 @@ public:
 private:
 	Transform* transform;
 	Graphic2D* graphic;
+
+	Vector3 offset;
 };

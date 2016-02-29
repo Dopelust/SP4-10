@@ -15,12 +15,11 @@ HoverText::~HoverText()
 
 void HoverText::Init(Entity * ent)
 {
+	owner = ent;
 	transform = ent->transform;
 
 	graphic = ent->GetComponent<Graphic2D>();
 	graphic->SetAlignCenter(false);
-
-	SetActive(false);
 }
 
 #include "../../../../InputHandler.h"
@@ -28,10 +27,19 @@ void HoverText::Init(Entity * ent)
 
 void HoverText::Update(double dt)
 {
-	transform->Position() = Input.GetCursorPos().GetVector3();
+	transform->Position() = offset + Input.GetCursorPos().GetVector3();
 }
+
+#include "../../../../FontManager.h"
+#include "../../../../Font.h"
 
 void HoverText::SetText(const char * text)
 {
-	this->text->SetText(text);
+	this->text->GetComponent<TextRenderer2D>()->SetText(text);
+	
+	Vector3 size = FontManager::Instance().GetFont()->GetTextSize(text).GetVector3() * this->text->transform->GetSize();
+	this->text->transform->SetPosition(0, size.y * 0.5f, 0);
+
+	offset.x = -size.x;
+	transform->Size() = size;
 }

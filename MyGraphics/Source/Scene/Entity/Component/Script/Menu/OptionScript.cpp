@@ -63,11 +63,11 @@ void OptionScript::Update(double dt)
 
 void OptionScript::SaveOptions()
 {
-	if (LUA.Load("Data//properties.lua"))
-	{
-		LUA.SetGlobalNumber("BGM_VOLUME", bgm->GetValue());
-		LUA.SetGlobalNumber("SFX_VOLUME", sfx->GetValue());
+	//if (LUA.Load("Data//properties.lua"))
+	//{
+	//	LUA.SetGlobalNumber("BGM_VOLUME", bgm->GetValue());
+	//	LUA.SetGlobalNumber("SFX_VOLUME", sfx->GetValue());
 
-		LUA.Save("Data//properties.lua");
-	}
+	//	LUA.Save("Data//properties.lua");
+	//}
 }

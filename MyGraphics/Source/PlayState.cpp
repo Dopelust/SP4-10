@@ -42,6 +42,7 @@ PlayState::~PlayState()
 #include "Scene\Entity\Component\SpriteRenderer.h"
 #include "Scene\Entity\Component\Script\PathFinder.h"
 #include "Scene\Entity\Component\Script\EnemyController.h"
+#include "Scene\Entity\Component\Script\HoverText.h"
 
 #include "Grid.h"
 #include "Utility.h"
@@ -80,7 +81,6 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Bubble Blower"), Vector4(1,1,1,1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Bubble Blower", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("bubble_blower")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("bubble_blower", child->GetComponent<Button>());
 
@@ -89,7 +89,6 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), Resource.GetTexture("Fountain"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Fountain", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("fountain")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("fountain", child->GetComponent<Button>());
 
@@ -98,7 +97,6 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(96, 96), Resource.GetTexture("Sniper"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Sniper", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("sniper")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("sniper", child->GetComponent<Button>());
 
@@ -107,7 +105,6 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Dispenser"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Dispenser", 128));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("dispenser")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("dispenser", child->GetComponent<Button>());
 	}
@@ -193,8 +190,12 @@ void PlayState::Init()
 		}
 	}
 
+	Entity* hover = EntityFactory::GenerateGraphic(Vector2(), Vector2(), NULL, Vector4(0, 0, 0, 0.75f), 1);
+	hover->AddComponent<HoverText>()->text = hover->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "", 160, false));
+
 	editor->GetComponent<TowerManager>()->gui = editor->GetComponent<TowerGUI>();
 	editor->GetComponent<TowerGUI>()->DisableUpgrades();
+	editor->GetComponent<TowerGUI>()->hover = hover->GetComponent<HoverText>();
 
 	EnemyDatabase::Init("jelly");
 

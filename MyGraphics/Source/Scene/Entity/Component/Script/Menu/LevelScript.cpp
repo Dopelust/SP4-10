@@ -32,14 +32,17 @@ void LevelScript::Init(Entity * ent)
 }
 
 #include "Utility.h"
+#include "FileSystem.h"
 
 void LevelScript::Update(double dt)
 {
 	csv->UploadCSV(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
 
-	if (play->IsState())
+	if (File.Exists(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str()) && play->IsState())
 		PlayLevel(input->GetOutput().c_str());
 }
+
+#include "../../../../../Assets.h"
 
 void LevelScript::AddLevel(const char * name, const char * level, const Vector2 & position, Entity* owner)
 {

@@ -33,6 +33,7 @@ private:
 
 	vector<GameState*> states;
 	GameState* queue;
+	bool advance;
 
 	float fps, elapsedTime, nextUpdate, transition;
 	bool active, shouldTerminate;

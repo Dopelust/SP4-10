@@ -10,10 +10,12 @@ struct TowerData;
 class TowerManager;
 class TextRenderer2D;
 class SpriteRenderer;
+class HoverText;
 
 class TowerGUI : public Component
 {
 public:
+	HoverText* hover;
 	SpriteRenderer* rank;
 
 	TextRenderer2D* cost;

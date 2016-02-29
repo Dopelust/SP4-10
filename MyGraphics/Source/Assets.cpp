@@ -81,6 +81,8 @@ void Assets::Init()
 	texture["Vignette"] = new Texture("Assets//vignette.tga", GL_LINEAR, GL_LINEAR);
 	texture["Vignette2"] = new Texture("Assets//vignette2.tga", GL_LINEAR, GL_LINEAR);
 
+	texture["Loading"] = new Texture("Assets//loading.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+
 	texture["Burst"] = new Texture("Assets//burst.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Dispenser"] = new Texture("Assets//watergun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Fountain"] = new Texture("Assets//fountain.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);

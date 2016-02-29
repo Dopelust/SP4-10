@@ -30,12 +30,15 @@ void CSVRenderer::SetIndividualSize(int width, int height)
 
 void CSVRenderer::UploadCSV(const char * filepath)
 {
-	vector<string>& lines = File.GetLines(filepath);
-
 	for (auto& c : csv)
 		c.clear();
 
 	csv.clear();
+
+	if (!File.Exists(filepath))
+		return;
+
+	vector<string>& lines = File.GetLines(filepath);
 
 	for (int y = 0; y < lines.size(); ++y)
 	{

@@ -19,7 +19,7 @@ bool GameEngine::IsActive()
 	return active;
 }
 
-GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0), transition(0), queue(NULL), shouldTerminate(false)
+GameEngine::GameEngine() : active(true), fps(0), elapsedTime(0), nextUpdate(0), transition(0), queue(NULL), shouldTerminate(false), advance(false)
 {
 }
 
@@ -102,9 +102,12 @@ void GameEngine::Update(float dt)
 
 	if (queue)
 	{
-		transition += transitionRate * dt;
+		Rise(transition, transitionRate * dt, 1);
 
-		if (transition > 1)
+		if (transition == 1)
+			advance = true;
+		
+		if (advance)
 		{
 			ChangeState();
 			Application::Instance().ResetTimer();
