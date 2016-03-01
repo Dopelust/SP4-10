@@ -27,7 +27,7 @@ void TowerGUI::ShowInfo(const char* type, int rank)
 		name->SetText(type);
 		damage->SetText(ToString(tower->pierce + 1).c_str());
 		range->SetText(ToString(tower->range).c_str());
-		force->SetText(ToString(tower->speed).c_str());
+		force->SetText(ToString(tower->speed * 0.1f).c_str());
 		speed->SetText(ToString(1.0f / tower->cooldown).c_str());
 		projectiles->SetText(ToString(tower->shot).c_str());
 
@@ -90,8 +90,8 @@ void TowerGUI::Update(double dt)
 		{
 			b.second->Disable();
 
-			b.second->text->color.Set(1, 0, 0);
-			b.second->SetColor(0.75f, 0, 0, 1);
+			b.second->text->color.Set(0.6f, 0, 0);
+			b.second->SetColor(0.6f, 0, 0, 1);
 		}
 	}
 

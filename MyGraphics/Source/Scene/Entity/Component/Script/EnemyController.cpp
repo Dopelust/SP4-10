@@ -103,11 +103,7 @@ void EnemyController::Update(double dt)
 		{
 			if (path->IsEndOfPath())
 			{
-				if (stage->Hit())
-				{
-					pop = true;
-					done = true;
-				}
+				stage->Hit(owner);
 			}
 			else
 			{
@@ -122,12 +118,7 @@ void EnemyController::Update(double dt)
 		{
 			if (GetIndex().DistSquared(end) < (512 * dt) * (512 * dt))
 			{
-				if (stage->Hit())
-				{
-					pop = true;
-					done = true;
-				}
-			
+				stage->Hit(owner);
 				break;
 			}
 		}

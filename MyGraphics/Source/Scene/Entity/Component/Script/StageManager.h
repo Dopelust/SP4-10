@@ -120,7 +120,7 @@ public:
 	};
 	StageState state;
 
-	bool Hit();
+	bool Hit(Entity* enemy);
 	int GetGold();
 	void ReduceGold(int gold);
 	void AddGold(int gold);

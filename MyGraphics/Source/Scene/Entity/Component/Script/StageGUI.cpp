@@ -25,7 +25,7 @@ void StageGUI::Init(Entity * ent)
 	stage = ent->GetComponent<StageManager>();
 
 	{
-		Entity* entity = EntityFactory::GenerateTextGUI(Vector2(Screen.GetProjectionWidth() * 0.5f, Screen.GetProjectionHeight() * 0.5f), "", 400);
+		Entity* entity = EntityFactory::GenerateTextGUI(Vector2(GridWidth * 0.5f, Screen.GetProjectionHeight() * 0.55f), "", 400);
 		popup = entity->GetComponent<TextRenderer2D>();
 		popup->color.w = 0;
 	}
@@ -79,14 +79,15 @@ void StageGUI::Update(double dt)
 		break;
 	}
 
-	Fall(popup->color.w, dt * 0.75f, 0);
+	Fall(popup->color.w, dt * 0.6f, 0);
 }
 
 #include "../GUI/Button.h"
+#include "../../../../InputHandler.h"
 
 bool StageGUI::ButtonPress()
 {
-	return pause->IsState();
+	return pause->IsState(Button::STATE_CLICK) || pause->IsState(Button::STATE_PRESS);
 }
 
 void StageGUI::SetPopup(const char * text)

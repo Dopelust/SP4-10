@@ -113,6 +113,7 @@ void StageManager::Update(double dt)
 			Scene::scene->SetTimeScale(0);
 
 			tower->SetActive(false);
+			tower->Unselect();
 		}
 		else
 			UpdateWave(dt);
@@ -135,11 +136,12 @@ void StageManager::Update(double dt)
 		gui->SetPopup("You win!");
 		break;
 	case LOSE:
+		gui->SetPopup("You lose!");
 		break;
 	}
 }
 
-
+#include "FileSystem.h"
 
 void StageManager::UpdateWave(double dt)
 {	
@@ -153,10 +155,15 @@ void StageManager::UpdateWave(double dt)
 		++currentWave;
 		++achievement.wavesCompleted;
 
-		if (currentWave >= GetData().GetNumStages() - 1)
+		if (currentWave >= GetData().GetNumStages())
 		{
 			state = WIN;
 			++achievement.gamesWon;
+
+			File.Remove("Data//Save//stats.txt");
+			File.Remove("Data//Save//save.txt");
+
+			return;
 		}
 
 		Save("Data//Save//stats.txt");
@@ -190,6 +197,7 @@ void StageManager::UpdateWave(double dt)
 			{
 				EntityFactory::Destroy(enemies[i]);
 				enemies.erase(enemies.begin() + i);
+				--i;
 				continue;
 			}
 		}
@@ -198,15 +206,30 @@ void StageManager::UpdateWave(double dt)
 	Fall(waveTimer, dt, 0);
 }
 
-bool StageManager::Hit()
+bool StageManager::Hit(Entity* enemy)
 {
 	if (state == WAVE)
 	{
 		--health;
 		++achievement.enemiesLeaked;
 
+		EntityFactory::Destroy(enemy);
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			if (enemy == enemies[i])
+			{
+				enemies.erase(enemies.begin() + i);
+				break;
+			}
+
+		}
+
 		if (health <= 0)
+		{
 			state = LOSE;
+			Scene::scene->SetTimeScale(0);
+		}
 
 		return true;
 	}
@@ -430,8 +453,6 @@ vector<Vector2>& StageManager::EndPoints()
 	return endPoints;
 }
 
-#include "FileSystem.h"
-
 bool StageManager::Load(const char * filepath)
 {
 	if (File.Exists(filepath))
@@ -464,7 +485,7 @@ void StageManager::Save(const char * filepath)
 
 	File.EndWriting();
 
-	gui->SetPopup("Saved Game");
+	gui->SetPopup("Game Saved");
 }
 
 bool StageManager::LoadAchievement(const char* filepath)

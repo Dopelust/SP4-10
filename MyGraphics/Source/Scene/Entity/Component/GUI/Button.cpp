@@ -74,7 +74,27 @@ Button::Button() : state(ButtonState::STATE_NULL), enabled(true), key(0)
 
 bool Button::IsState(ButtonState state)
 {
-	return this->state == state;
+	switch (state)
+	{
+	case STATE_CLICK:
+		return Input.IsMousePress(0) && IsHover();
+
+	case STATE_CLICK_HOLD:
+		return this->state == STATE_CLICK;
+
+	case STATE_PRESS:
+
+		if (Input.IsPress(key))
+			return true;
+		else
+			return false;
+
+	case STATE_HELD:
+		return this->state == STATE_PRESS;
+
+	default:
+		return this->state == state;
+	}
 }
 
 void Button::Init(Entity * ent)

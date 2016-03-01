@@ -78,12 +78,10 @@ void Scene::SetTimeScale(float timeScale)
 
 void Scene::Update(double dt)
 {
-	dt *= timeScale;
-
 	EntityFactory::GenerateEntities();
 
 	Screen.SetProjectionResolution(GetResolutionX(root), GetResolutionY(root));
-	root->Update(dt);
+	root->Update(dt * timeScale);
 
 	Screen.SetProjectionResolution(GetResolutionX(canvas), GetResolutionY(canvas));
 	canvas->Update(dt);

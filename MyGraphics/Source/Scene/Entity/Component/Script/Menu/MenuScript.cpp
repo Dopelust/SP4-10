@@ -31,7 +31,7 @@ void MenuScript::Init(Entity * ent)
 	play = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 375), "CONTINUE", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 390), "CONTINUE", 400, Vector3(0.7f, 0.7f, 0)));
 	resume = entity->GetComponent<Button>();
 
 	if (File.Exists("Data//Save//save.txt"))
@@ -40,19 +40,19 @@ void MenuScript::Init(Entity * ent)
 		resume->Disable();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 300), "LEVEL EDITOR", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 330), "LEVEL EDITOR", 400, Vector3(0.7f, 0.7f, 0)));
 	editor = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 225), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
 	option = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 210), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
 	achievement = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 75), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
 	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
