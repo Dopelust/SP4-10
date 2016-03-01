@@ -90,6 +90,11 @@ void StageManager::UpdatePathFinders()
 #include "../../../Scene.h"
 #include "../../../../Tile.h"
 
+#include "../../../Enemy/EnemyData.h"
+#include "../../Entity.h"
+#include "../Transform.h"
+#include "TowerManager.h"
+
 void StageManager::Update(double dt)
 {
 	switch (state)
@@ -107,15 +112,21 @@ void StageManager::Update(double dt)
 		{
 			state = PAUSED;
 			Scene::scene->SetTimeScale(0);
+
+			tower->SetActive(false);
 		}
 
 		break;
 	case PAUSED:
 
+		tower->CancelPlacement();
+
 		if (gui->ButtonPress())
 		{
 			state = WAVE;
 			Scene::scene->SetTimeScale(1);
+
+			tower->SetActive(true);
 		}
 
 		break;
@@ -127,10 +138,7 @@ void StageManager::Update(double dt)
 	}
 }
 
-#include "../../../Enemy/EnemyData.h"
-#include "../../Entity.h"
-#include "../Transform.h"
-#include "TowerManager.h"
+
 
 void StageManager::UpdateWave(double dt)
 {	

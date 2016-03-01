@@ -65,6 +65,9 @@ void EnemyController::LateInit(bool flying, int parentID)
 
 void EnemyController::Update(double dt)
 {
+	if (done)
+		return;
+
 	if (!path)
 		path = owner->GetComponent<PathFinder>();
 

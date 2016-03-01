@@ -112,8 +112,7 @@ void PlayState::Init()
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -72), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
-		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Bomb"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Bomb", 128));
+		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Bomb"), Vector4(1, 1, 1, 1)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("bomb")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("bomb", child->GetComponent<Button>());
 
@@ -121,8 +120,7 @@ void PlayState::Init()
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -144), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
-		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Gun", 128));
+		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
 		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString('$', TowerDatabase::GetData("gun")[0].cost).c_str(), 200));
 		editor->GetComponent<TowerGUI>()->AddButton("gun", child->GetComponent<Button>());
 	}

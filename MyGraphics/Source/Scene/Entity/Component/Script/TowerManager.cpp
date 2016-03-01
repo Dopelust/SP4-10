@@ -113,14 +113,6 @@ bool TowerManager::PlaceTower()
 
 void TowerManager::Update(double dt)
 {
-	if (stage->state == StageManager::PAUSED)
-	{
-		CancelPlacement();
-		Unselect();
-
-		return;
-	}
-
 	Tile* tile = selector->GetSelection();
 
 	if (IsPlacing()) //Placing A Tower
