@@ -50,6 +50,8 @@ PlayState::~PlayState()
 #include "FileSystem.h"
 #include "SoundEngine.h"
 
+#include "Screen.h"
+
 void PlayState::Init()
 {
 	glClearColor(0.2, 0.2, 0.2, 1);
@@ -126,8 +128,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("gun", child->GetComponent<Button>());
 	}
 
@@ -147,7 +149,7 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->rank = child->GetComponent<SpriteRenderer>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -32), "Damage:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(8, -32), "Damage:", 150, false));
 			child->GetComponent<TextRenderer2D>()->color.Set(1, 0, 0);
 
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
@@ -156,7 +158,7 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->damage = child->GetComponent<TextRenderer2D>();
  		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -64), "Range:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(8, -64), "Range:", 150, false));
 			child->GetComponent<TextRenderer2D>()->color.Set(0.1f, 0.1f, 1);
 
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
@@ -165,7 +167,7 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->range = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -96), "Accuracy:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(8, -96), "Accuracy:", 150, false));
 			child->GetComponent<TextRenderer2D>()->color.Set(1, 0.25f, 0);
 
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
@@ -174,7 +176,7 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->force = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -128), "Speed:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(8, -128), "Speed:", 150, false));
 			child->GetComponent<TextRenderer2D>()->color.Set(1, 0, 1);
 
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
@@ -183,13 +185,13 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->speed = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -160), "Projectiles:", 150, false));
+			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(8, -160), "Projectiles:", 150, false));
 			child = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(150, 0), "", 150, false));
 
 			editor->GetComponent<TowerGUI>()->projectiles = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(64, -230), Vector2(96, 32), NULL, Vector3(0, 0.8f, 0)));
+			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(64, -230), Vector2(96, 32), NULL, Vector3(0, 0.6f, 0), true));
 			child->GetComponent<Button>()->SetKey(GLFW_KEY_U);
 			child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, 0), "Upgrade", 150));
 
@@ -200,7 +202,7 @@ void PlayState::Init()
 			editor->GetComponent<TowerGUI>()->cost = child->GetComponent<TextRenderer2D>();
 		}
 		{
-			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(64, -280), Vector2(96, 32), NULL, Vector3(0.8f, 0, 0)));
+			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(64, -280), Vector2(96, 32), NULL, Vector3(0.6f, 0, 0), true));
 			child->GetComponent<Button>()->SetKey(GLFW_KEY_S);
 			child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, 0), "Sell", 150));
 

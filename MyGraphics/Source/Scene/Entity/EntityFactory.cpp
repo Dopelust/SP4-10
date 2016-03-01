@@ -30,9 +30,9 @@ Entity* EntityFactory::GeneratePlayer()
 	return NULL;
 }
 
-Entity * EntityFactory::GenerateButton(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector3& color)
+Entity * EntityFactory::GenerateButton(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector3& color, bool gloss)
 {
-	return Generate(scene->canvas, CreateButton(position, size, texture, color));
+	return Generate(scene->canvas, CreateButton(position, size, texture, color, gloss));
 }
 
 Entity* EntityFactory::GenerateSlider(const Vector2 & position, const Vector2 & size, const char* tag, Texture * texture, float min, float value, float max,bool integer)
@@ -181,12 +181,17 @@ Entity * EntityFactory::CreateGraphic(const Vector2 & position, const Vector2 & 
 	return entity;
 }
 
-Entity * EntityFactory::CreateButton(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector3 & color)
+Entity * EntityFactory::CreateButton(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector3 & color, bool gloss)
 {
 	Entity* entity = CreateGraphic(position, size, texture, color);
 	entity->AddComponent<Button>();
 
 	entity->Rename("Button");
+
+	if (gloss)
+	{
+		entity->AttachChild(CreateGraphic(Vector2(0, size.y * 0.3f), Vector2(size.x, size.y * 0.4f), NULL, Vector4(1, 1, 1, 0.2f), 1));
+	}
 
 	return entity;
 }
@@ -360,7 +365,7 @@ Entity * EntityFactory::CreateParticle(const Vector2 & position, const Vector2 &
 	entity->transform->SetSize(size.x, size.y);
 
 	entity->AddComponent<SpriteRenderer>()->color.w = alpha;
-	entity->GetComponent<SpriteRenderer>()->SetLayer(2);
+	entity->GetComponent<SpriteRenderer>()->SetLayer(6);
 
 	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
 	entity->GetComponent<SpriteAnimator>()->Play(animation, false);

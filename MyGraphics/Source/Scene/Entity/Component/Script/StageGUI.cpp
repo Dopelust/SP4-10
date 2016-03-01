@@ -52,7 +52,7 @@ void StageGUI::Init(Entity * ent)
 		gold->SetAlignCenter(false);
 	}
 	{
-		Entity* entity = EntityFactory::GenerateButton(Vector2(64, TileHeight * 0.5f), Vector2(128, TileHeight), NULL, Vector3(0.6f, 0.6f, 0.6f));
+		Entity* entity = EntityFactory::GenerateButton(Vector2(64, TileHeight * 0.5f), Vector2(128, TileHeight), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
 		pause = entity->GetComponent<Button>();
 		pause->SetKey(' ');
 		pause->text = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "START", 200))->GetComponent<TextRenderer2D>();
