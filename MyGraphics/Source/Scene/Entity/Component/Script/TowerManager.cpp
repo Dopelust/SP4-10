@@ -241,9 +241,13 @@ void TowerManager::UpgradeTower()
 		stage->ReduceGold(tower->GetUpgradePrice());
 		tower->Upgrade();
 		ShowInfo(selection);
+		++stage->achievement.towersUpgraded;
 
 		if (tower->IsMaxUpgrade())
+		{
 			gui->DisableUpgrades();
+			++stage->achievement.towersMaxUpgraded;
+		}
 
 		Audio.Play2D(Audio.GetSoundPack("build"), 0.5f);
 	}

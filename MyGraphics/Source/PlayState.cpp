@@ -125,9 +125,9 @@ void PlayState::Init()
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -144), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
-		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
-		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>();
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
+		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
 		editor->GetComponent<TowerGUI>()->AddButton("gun", child->GetComponent<Button>());
 	}
 
@@ -242,6 +242,8 @@ void PlayState::Init()
 		scene->CreateSpatialPartition(Scene::GRID_3D_VOXEL);
 		scene->grid->Load(ToString("Data//Levels//" + level + ".csv").c_str());
 	}
+
+	stage->LoadAchievement("Data//Save//achievementStats.txt");
 
 	vector<int> a;
 	a.push_back(1);

@@ -48,7 +48,11 @@ void MenuScript::Init(Entity * ent)
 	option = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
+	achievement = entity->GetComponent<Button>();
+
+	entity =
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 75), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
 	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
@@ -60,6 +64,7 @@ void MenuScript::Init(Entity * ent)
 #include "MenuHandler.h"
 #include "OptionScript.h"
 #include "LevelHandler.h"
+#include "AchievementScript.h"
 
 #include "../../GUI/Button.h"
 #include "../../../../../GameEngine.h"
@@ -73,14 +78,20 @@ void MenuScript::Update(double dt)
 	if (play->IsState())
 		menu->Push(menu->GetState<LevelHandler>());
 
-	if (resume->IsState())
+	else if (resume->IsState())
 		Engine.ChangeState(&PlayState::Instance());
 
-	if (editor->IsState())
+	else if (editor->IsState())
 		Engine.ChangeState(&TestState::Instance());
 
-	if (option->IsState())
+	else if (option->IsState())
 		menu->Push(menu->GetState<OptionScript>());
+
+	else if (achievement->IsState())
+	{
+		menu->Push(menu->GetState<AchievementScript>());
+		menu->GetState<AchievementScript>()->LoadAchievements("Data//Save//achievementStats.txt");
+	}
 
 	if (exit->IsState())
 		Engine.Terminate();

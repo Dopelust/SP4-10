@@ -11,6 +11,7 @@
 #include "MenuScript.h"
 #include "OptionScript.h"
 #include "LevelHandler.h"
+#include "AchievementScript.h"
 
 #include "../../../../../SoundEngine.h"
 
@@ -28,6 +29,8 @@ void MenuHandler::Init(Entity * ent)
 	Push(GetState<MenuScript>());
 
 	AddState(ent->AddChild("Options")->AddComponent<OptionScript>());
+
+	AddState(ent->AddChild("Achievements")->AddComponent<AchievementScript>());
 
 	AddState(ent->AddChild("Level Selection")->AddComponent<LevelHandler>());
 

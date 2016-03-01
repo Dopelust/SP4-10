@@ -384,6 +384,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.cpp">
       <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -677,6 +680,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.h">
       <Filter>Scene\Entity\Component\Script\Menu\Level Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

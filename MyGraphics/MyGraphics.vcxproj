@@ -99,6 +99,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\HoverText.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\HoverText.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.h" />

@@ -53,9 +53,9 @@ void TowerController::Init(string type)
 
 void TowerController::Update(double dt)
 {
-	ai = (TowerAI)GetAI();
-
 	firingTimer += (float)dt;
+
+	ai = (TowerAI)GetAI();
 
 	switch (ai)
 	{
@@ -136,7 +136,7 @@ void TowerController::SetUpgrade(int upgrade)
 
 bool TowerController::Upgrade()
 {
-	upgrade++;
+	++upgrade;
 	rank->SetSprite(Resource.GetSpritesheet("Rank")->GetSprite(upgrade));
 
 	return true;

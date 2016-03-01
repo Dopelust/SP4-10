@@ -48,6 +48,34 @@ struct StageWave
 	int spawnNo;
 };
 
+struct Achievement
+{
+	Achievement() :
+	gamesPlayed(0),
+	gamesWon(0),
+	towersPlaced(0),
+	towersUpgraded(0),
+	towersMaxUpgraded(0),
+	enemiesPopped(0),
+	enemiesLeaked(0),
+	wavesCompleted(0)
+	{
+	}
+
+	~Achievement()
+	{
+	}
+
+	int gamesPlayed;
+	int gamesWon;
+	int towersPlaced;
+	int towersUpgraded;
+	int towersMaxUpgraded;
+	int enemiesPopped;
+	int enemiesLeaked;
+	int wavesCompleted;
+};
+
 class StageManager :
 	public Component
 {
@@ -76,6 +104,10 @@ public:
 
 	bool Load(const char* filepath);
 	void Save(const char* filepath);
+	bool LoadAchievement(const char* filepath);
+	void SaveAchievement(const char* filepath);
+
+	Achievement achievement;
 
 	enum StageState
 	{

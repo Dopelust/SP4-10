@@ -38,8 +38,6 @@ void StageManager::LateInit(Grid* grid, vector<int>& obstructionIndex)
 	endPoints = grid->GetTilesWithIndex(4);
 
 	CreateTileMap(obstructionIndex);
-
-	//UpdatePathFinders();
 }
 
 #include <iostream>
@@ -59,6 +57,8 @@ void StageManager::LoadStage(string stageName)
 	maxWave = GetData().stageData.size();
 	gold = GetData().startGold;
 	health = GetData().startHealth;
+
+	++achievement.gamesPlayed;
 	//InitAllWave();
 }
 
@@ -151,14 +151,17 @@ void StageManager::UpdateWave(double dt)
 		waveDone = false;
 		waveQueue.pop();
 		++currentWave;
+		++achievement.wavesCompleted;
 
 		if (currentWave >= GetData().GetNumStages() - 1)
 		{
 			state = WIN;
+			++achievement.gamesWon;
 		}
 
 		Save("Data//Save//stats.txt");
 		tower->Save("Data//Save//save.txt");
+		SaveAchievement("Data//Save//achievementStats.txt");
 
 		return;
 	}
@@ -170,10 +173,11 @@ void StageManager::UpdateWave(double dt)
 		if (ec->pop)
 		{
 			++gold;
+			++achievement.enemiesPopped;
 
 			ec->pop = false;
 	
-			// Split ( DLC ? )
+			// Split ( DLC )
 			if (ec->split)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
@@ -199,6 +203,7 @@ bool StageManager::Hit()
 	if (state == WAVE)
 	{
 		--health;
+		++achievement.enemiesLeaked;
 
 		if (health <= 0)
 			state = LOSE;
@@ -305,6 +310,8 @@ bool StageManager::AddObstruction(int i, int j)
 		}
 	}
 	
+	++achievement.towersPlaced;
+
 	UpdatePathFinders();
 	return true;
 }
@@ -312,6 +319,7 @@ bool StageManager::AddObstruction(int i, int j)
 void StageManager::RemoveObstruction(int i, int j)
 {
 	obstructionMap[i][j] = false;
+
 	UpdatePathFinders();
 }
 
@@ -457,4 +465,47 @@ void StageManager::Save(const char * filepath)
 	File.EndWriting();
 
 	gui->SetPopup("Saved Game");
+}
+
+bool StageManager::LoadAchievement(const char* filepath)
+{
+	if (File.Exists(filepath))
+	{
+		vector<string>& lines = File.GetLines(filepath);
+
+		for (auto& line : lines)
+		{
+			vector<string>& tokens = ParseLine(line, " ,");
+			achievement.gamesPlayed = stoi(tokens[0]);
+			achievement.gamesWon = stoi(tokens[1]);
+			achievement.towersPlaced = stoi(tokens[2]);
+			achievement.towersUpgraded = stoi(tokens[3]);
+			achievement.towersMaxUpgraded = stoi(tokens[4]);
+			achievement.enemiesPopped = stoi(tokens[5]);
+			achievement.enemiesLeaked = stoi(tokens[6]);
+			achievement.wavesCompleted = stoi(tokens[7]);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+void StageManager::SaveAchievement(const char* filepath)
+{
+	ofstream& output = *File.BeginWriting(filepath);
+
+	output << achievement.gamesPlayed << ", ";
+	output << achievement.gamesWon << ", ";
+	output << achievement.towersPlaced << ", ";
+	output << achievement.towersUpgraded << ", ";
+	output << achievement.towersMaxUpgraded << ", ";
+	output << achievement.enemiesPopped << ", ";
+	output << achievement.enemiesLeaked << ", ";
+	output << achievement.wavesCompleted << ", ";
+
+	File.EndWriting();
+
+	//gui->SetPopup("Saved Game");
 }
