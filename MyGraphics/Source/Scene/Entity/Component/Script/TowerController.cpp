@@ -182,6 +182,16 @@ string TowerController::GetProjectileType()
 	return GetData()->projectileName;
 }
 
+void TowerController::SetSearchMode(FireMode mode)
+{
+	this->fireMode = mode;
+}
+
+TowerController::FireMode TowerController::GetFireMode()
+{
+	return fireMode;
+}
+
 bool TowerController::Hover(Vector2& hoverIndex)
 {
 	if (this->index == hoverIndex)
@@ -228,9 +238,9 @@ bool TowerController::SearchForTarget()
 			float distSq = (entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared();
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				//if (entityList[i]->GetComponent<EnemyController>()->steps > highestStep)
+				if (entityList[i]->GetComponent<EnemyController>()->steps > highestStep)
 				{
-					//highestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					highestStep = entityList[i]->GetComponent<EnemyController>()->steps;
 					first = entityList[i];
 				}
 			}
@@ -245,9 +255,9 @@ bool TowerController::SearchForTarget()
 		{
 			if ((entityList[i]->transform->GetPosition() - this->owner->transform->GetPosition()).LengthSquared() < range * range)
 			{
-				//if (entityList[i]->GetComponent<EnemyController>()->steps < lowestStep)
+				if (entityList[i]->GetComponent<EnemyController>()->steps < lowestStep)
 				{
-					//lowestStep = entityList[i]->GetComponent<EnemyController>()->steps;
+					lowestStep = entityList[i]->GetComponent<EnemyController>()->steps;
 					last = entityList[i];
 				}
 			}
@@ -340,11 +350,6 @@ void TowerController::Fire()
 		}
 		break;
 	case 2:
-		{
-
-		}
-		break;
-	case 3:
 		{
 			  int shots = GetData()->shot;
 			  float angle = 360 / shots;

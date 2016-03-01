@@ -23,6 +23,7 @@ public:
 		SEARCH_AND_DESTROY,
 		STATIC,
 		FIXED_ROTATION,
+		MAX_AI,
 	};
 
 	TowerAI ai;
@@ -45,8 +46,6 @@ public:
 		MAX_MODE,
 	};
 
-	FireMode fireMode;
-
 	TowerController();
 	~TowerController();
 
@@ -61,14 +60,6 @@ public:
 
 	bool Hover(Vector2& hoverIndex);
 	
-	Entity* owner;
-	Entity* target;
-	// Which index on the grid the tower is on
-	Vector2 index; 
-
-	string type;
-	int upgrade;
-
 	TowerData* GetData();
 	int GetAI();
 	int GetCost();
@@ -77,14 +68,15 @@ public:
 	int GetRange();
 	string GetProjectileType();
 
-	// Timers
-	float firingTimer;
-	float searchTimer;
+	void SetSearchMode(TowerController::FireMode mode);
+	TowerController::FireMode GetFireMode();
 
-	Vector2 direction;
-	float rotation;
+	// Which index on the grid the tower is on
+	Vector2 index; 
 
-	vector<Entity*> entityList;
+	string type;
+	int upgrade;
+
 	StageManager* stageManager;
 
 	SpriteRenderer* rank;
@@ -95,6 +87,20 @@ private:
 	bool CheckTarget();
 	void TargetRotation(float dt);
 	void Fire();
+
+	Entity* owner;
+	Entity* target;
+
+	FireMode fireMode;
+
+	// Timers
+	float firingTimer;
+	float searchTimer;
+
+	Vector2 direction;
+	float rotation;
+
+	vector<Entity*> entityList;
 };
 
 #endif

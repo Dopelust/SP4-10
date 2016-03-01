@@ -45,6 +45,7 @@ struct WaveData
 		tier.clear();
 		delay.clear();
 		count.clear();
+		flying.clear();
 	}
 
 	float GetWaveTime()
@@ -67,7 +68,8 @@ class StageData
 {
 public:
 	StageData() :
-		health(0)
+		startHealth(0),
+		startGold(0)
 	{
 
 	}
@@ -87,7 +89,8 @@ public:
 		return stageData.size();
 	}
 
-	int health;
+	int startHealth;
+	int startGold;
 	vector<WaveData> stageData;
 };
 

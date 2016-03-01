@@ -1,0 +1,6 @@
+//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	AI,	Projectile, 	Type,	Val,	Dura,	Style,	Description
+25,	64,	2, 		1,	5,	300,	Sniper,		0,	Bubble, 	1,	50,	1,	0,	Long Ranged Destroys multiple tiers
+30, 	128,	1.5, 		1,	8,	300,	Sniper,		0,	Bubble, 	1,	50,	1,	0,	Splashes water
+90, 	256,	1.5, 		1,	10,	300,	Sniper,		0,	Bubble, 	1,	50,	1,	0,	Splashes water
+150, 	512,	1.2, 		1,	15,	300,	Sniper,		0,	Bubble, 	1,	50,	1,	0,	Splashes water
+300, 	512,	0.8, 		1,	20,	300,	Sniper,		0,	Bubble, 	1,	50,	1,	0,	Splashes water

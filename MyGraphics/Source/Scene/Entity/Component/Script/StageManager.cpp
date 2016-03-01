@@ -39,7 +39,7 @@ void StageManager::LateInit(Grid* grid, vector<int>& obstructionIndex)
 
 	CreateTileMap(obstructionIndex);
 
-	UpdatePathFinders();
+	//UpdatePathFinders();
 }
 
 #include <iostream>
@@ -53,14 +53,12 @@ using namespace std;
 
 void StageManager::LoadStage(string stageName)
 {
-	gold = 100;
-	health = 20;
-
 	currentStage = stageName;
 
 	StageDatabase::Init(stageName.c_str());
 	maxWave = GetData().stageData.size();
-
+	gold = GetData().startGold;
+	health = GetData().startHealth;
 	//InitAllWave();
 }
 
@@ -122,6 +120,7 @@ void StageManager::Update(double dt)
 
 		break;
 	case WIN:
+		gui->SetPopup("You win!");
 		break;
 	case LOSE:
 		break;
@@ -144,6 +143,11 @@ void StageManager::UpdateWave(double dt)
 		waveQueue.pop();
 		++currentWave;
 
+		if (currentWave < GetData().GetNumStages())
+		{
+			state = WIN;
+		}
+
 		Save("Data//Save//stats.txt");
 		tower->Save("Data//Save//save.txt");
 
@@ -156,11 +160,11 @@ void StageManager::UpdateWave(double dt)
 
 		if (ec->pop)
 		{
-			// To Do : Add player money
-			gold++;
+			++gold;
 
 			ec->pop = false;
-
+	
+			// Split ( DLC ? )
 			if (ec->split)
 			{
 				for (int j = 0; j < ec->GetData().split; ++j)
@@ -324,7 +328,6 @@ bool StageManager::InitWave()
 		return true;
 	}
 
-	//Win
 	return false;
 }
 
@@ -345,11 +348,12 @@ void StageManager::SpawnEnemies(double dt)
 	{
 		int spawnPt = rand() % spawnPoints.size();
 		Vector3 spawnPos = Scene::scene->grid->GetPosition(spawnPoints[spawnPt]);
+
 		Entity* enemy = EntityFactory::GenerateEnemy(spawnPos.GetVector2(), 
 			currentWave->waveData.tier[currentWave->spawnNo], 
 			"Jellies", ("Jellies" + ToString(currentWave->waveData.tier[currentWave->spawnNo])).c_str(), 
 			currentWave->waveData.flying[currentWave->spawnNo]);
-
+		
 		if (!enemy->GetComponent<EnemyController>()->flying)
 		{
 			enemy->AddComponent<PathFinder>()->UpdateMap(obstructionMap, spawnPoints[spawnPt], endPoints);

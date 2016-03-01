@@ -21,7 +21,8 @@ originalSpeed(0),
 movementSpeed(0),
 parentID(-1),
 hits(1),
-popCount(0)
+popCount(0),
+steps(0)
 {
 }
 
@@ -106,7 +107,10 @@ void EnemyController::Update(double dt)
 				}
 			}
 			else
+			{
+				++steps;
 				path->Traverse();
+			}
 		}
 	}
 	else
@@ -179,7 +183,7 @@ void EnemyController::Pop(int popCount)
 void EnemyController::Slow(float slowAmount, float duration)
 {
 	slowed = true;
-	movementSpeed = originalSpeed - slowAmount;
+	movementSpeed = originalSpeed * (slowAmount * 0.01);//- slowAmount;
 	statusDuration = duration;
 }
 

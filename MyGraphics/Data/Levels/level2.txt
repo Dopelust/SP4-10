@@ -1,4 +1,5 @@
-Health,	150
+// Starting Health, Gold
+Wave,	150,	100
 // Wave 1
 // Tier, Delay, Count, flying
 5, 1, 1000, 1

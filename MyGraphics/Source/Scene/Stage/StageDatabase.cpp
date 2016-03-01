@@ -47,9 +47,10 @@ bool StageDatabase::Init(const char * fileData)
 		RemoveChar(line, '	'); //Remove whitespaces
 		vector<string>& data = DivideLine(line, ','); //Divide lines by comma
 
-		if (data[0] == "Health")
+		if (data[0] == "Wave")
 		{
-			stage.health = stoi(data[1]);
+			stage.startHealth = stoi(data[1]);
+			stage.startGold = stoi(data[2]);
 			continue;
 		}
 
