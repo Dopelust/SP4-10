@@ -58,6 +58,7 @@ public:
 	void Save(const char* filepath);
 
 	bool CanPurchase(const char* type);
+	bool CanUpgrade();
 private:
 	string type;
 

@@ -111,6 +111,8 @@ void GameEngine::Update(float dt)
 		{
 			ChangeState();
 			Application::Instance().ResetTimer();
+
+			advance = false;
 		}
 	}
 	else if (!states.empty())

@@ -66,6 +66,8 @@ public:
 	int GetDamage();
 	float GetCooldown();
 	int GetRange();
+	int GetSellPrice();
+	int GetUpgradePrice();
 	string GetProjectileType();
 
 	void SetSearchMode(TowerController::FireMode mode);

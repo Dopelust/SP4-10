@@ -68,7 +68,7 @@ bool Button::IsHover()
 	return false;
 }
 
-Button::Button() : state(ButtonState::STATE_NULL), enabled(true)
+Button::Button() : state(ButtonState::STATE_NULL), enabled(true), key(0)
 {
 }
 
@@ -102,7 +102,12 @@ void Button::UpdateState()
 
 		graphic->color = color;
 
-		if (IsHover() && !Input.IsMouseHeld(0))
+		if (key && Input.IsPress(key))
+		{
+			Audio.Play2D("click");
+			state = STATE_PRESS;
+		}
+		else if (IsHover() && !Input.IsMouseHeld(0))
 		{
 			Audio.Play2D("hover", 0.2f);
 			state = STATE_HOVER;
@@ -113,12 +118,20 @@ void Button::UpdateState()
 
 		graphic->color = GetHoverColor();
 
-		if (!IsHover())
-			state = STATE_NULL;
-		if (Input.IsMousePress(0))
+		if (key && Input.IsPress(key))
 		{
 			Audio.Play2D("click");
-			state = STATE_CLICK;
+			state = STATE_PRESS;
+		}
+		else
+		{
+			if (!IsHover())
+				state = STATE_NULL;
+			if (Input.IsMousePress(0))
+			{
+				Audio.Play2D("click");
+				state = STATE_CLICK;
+			}
 		}
 
 		break;
@@ -126,10 +139,18 @@ void Button::UpdateState()
 
 		graphic->color = color;
 
-		if (IsHover())
-			state = STATE_CLICK;
-		else if (Input.IsMouseRelease(0))
-			state = STATE_NULL;
+		if (key && Input.IsPress(key))
+		{
+			Audio.Play2D("click");
+			state = STATE_PRESS;
+		}
+		else
+		{
+			if (IsHover())
+				state = STATE_CLICK;
+			else if (Input.IsMouseRelease(0))
+				state = STATE_NULL;
+		}
 
 		break;
 	case STATE_CLICK:
@@ -155,7 +176,20 @@ void Button::UpdateState()
 			state = STATE_NULL;
 
 		break;
+
+	case STATE_PRESS:
+		graphic->color = GetClickColor();
+
+		if (!Input.IsHeld(key))
+			state = STATE_RELEASE;
+
+		break;
 	}
+}
+
+void Button::SetKey(int key)
+{
+	this->key = key;
 }
 
 void Button::SetGraphic(Graphic2D * graphic)
@@ -165,6 +199,14 @@ void Button::SetGraphic(Graphic2D * graphic)
 	if (graphic)
 		color = graphic->color;
 }
+
+
+void Button::SetColor(float r, float g, float b, float a)
+{
+	if (graphic)
+		color = graphic->color = Vector4(r, g, b, a);
+}
+
 
 bool Button::IsEnabled()
 {

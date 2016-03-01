@@ -151,7 +151,7 @@ void StageManager::UpdateWave(double dt)
 		waveQueue.pop();
 		++currentWave;
 
-		if (currentWave < GetData().GetNumStages())
+		if (currentWave >= GetData().GetNumStages() - 1)
 		{
 			state = WIN;
 		}
@@ -216,6 +216,11 @@ int StageManager::GetGold()
 void StageManager::ReduceGold(int gold)
 {
 	this->gold -= gold;
+}
+
+void StageManager::AddGold(int gold)
+{
+	this->gold += gold;
 }
 
 void StageManager::CreateTileMap(vector<int>& obstructionIndex)

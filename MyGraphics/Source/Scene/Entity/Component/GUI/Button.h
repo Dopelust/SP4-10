@@ -16,6 +16,7 @@ public:
 		STATE_HOVER,
 		STATE_PRIMED,
 		STATE_CLICK,
+		STATE_PRESS,
 		STATE_RELEASE,
 	};
 
@@ -37,7 +38,12 @@ public:
 	void Enable();
 	void Disable();
 
+	void SetColor(float r, float g, float b, float a);
+	void SetKey(int key);
+
 private:
+	int key;
+
 	bool enabled;
 	ButtonState state;
 

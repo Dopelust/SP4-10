@@ -62,7 +62,7 @@ void StageGUI::Update(double dt)
 	wave->SetText(ToString("Wave ", stage->currentWave + 1).c_str());
 	timer->SetText(ToString("Time: ", (int)(stage->waveTimer + 0.5f)).c_str());
 	health->SetText(ToString(stage->health, "HP").c_str());
-	gold->SetText(ToString("$", stage->gold).c_str());
+	gold->SetText(ToString(stage->gold, 'G').c_str());
 
 	switch (stage->state)
 	{

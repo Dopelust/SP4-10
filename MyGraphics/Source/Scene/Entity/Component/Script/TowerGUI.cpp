@@ -42,15 +42,7 @@ void TowerGUI::ShowInfo(const char* type, int rank)
 			cost->SetText(ToString('$', tower->cost).c_str());
 		}
 
-		int price = 0;
-
-		for (int i = 0; i <= rank; ++i)
-		{
-			tower = &TowerDatabase::GetData(type)[i];
-			price += tower->cost * 0.5f;
-		}
-
-		sellprice->SetText(ToString('$', price).c_str());
+		sellprice->SetText(ToString('$', TowerDatabase::GetSellPrice(type, rank)).c_str());
 	}
 	else
 	{
@@ -88,28 +80,37 @@ void TowerGUI::Update(double dt)
 		}
 
 		if (manager->CanPurchase(b.first.c_str()))
+		{
 			b.second->Enable();
+			b.second->SetColor(0.85f, 0.85f, 0.85f, 1);
+		}
 		else
+		{
 			b.second->Disable();
+			b.second->SetColor(0.85f, 0, 0, 1);
+		}
 	}
-
-	GLenum key = GLFW_KEY_1;
 
 	for (auto& b : button)
 	{
-		if (b.second->IsState(Button::STATE_CLICK) || Input.IsPress(key))
+		if (b.second->IsState(Button::STATE_CLICK) || b.second->IsState(Button::STATE_PRESS))
 		{
 			manager->SetToPlace(b.first.c_str());
 			break;
 		}
-
-		++key;
 	}
 
-	if (upgrade->IsEnabled() && (upgrade->IsState() || Input.IsPress(GLFW_KEY_U)))
-		manager->UpgradeTower();
+	if (manager->CanUpgrade())
+	{
+		EnableUpgrades();
 
-	else if (sell->IsEnabled() && (sell->IsState() || Input.IsPress(GLFW_KEY_S)))
+		if (upgrade->IsState())
+			manager->UpgradeTower();
+	}
+	else
+		DisableUpgrades();
+
+	if (sell->IsState())
 		manager->SellTower();
 }
 
@@ -136,4 +137,5 @@ void TowerGUI::DisableUpgrades()
 void TowerGUI::AddButton(const char * key, Button * button)
 {
 	this->button[key] = button;
+	this->button[key]->SetKey(GLFW_KEY_0 + this->button.size());
 }

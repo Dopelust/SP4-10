@@ -9,7 +9,7 @@ class GameState;
 class GameEngine
 {
 public:
-	static const int transitionRate = 12;
+	static const int transitionRate = 16;
 
 	float GetTransition();
 

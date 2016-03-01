@@ -38,12 +38,15 @@ void TowerManager::Init(Entity* entity)
 
 void TowerManager::SetToPlace(const char * type)
 {
-	Unselect();
+	if (CanPurchase(type))
+	{
+		Unselect();
 
-	ShowIndicator(true);
-	ShowInfo(type);
+		ShowIndicator(true);
+		ShowInfo(type);
 
-	this->type = type;
+		this->type = type;
+	}
 }
 
 void TowerManager::CancelPlacement()
@@ -231,10 +234,11 @@ void TowerManager::Select(Entity * tower)
 
 void TowerManager::UpgradeTower()
 {
-	if (selection)
+	if (CanUpgrade())
 	{
 		TowerController* tower = selection->GetComponent<TowerController>();
 
+		stage->ReduceGold(tower->GetUpgradePrice());
 		tower->Upgrade();
 		ShowInfo(selection);
 
@@ -249,11 +253,13 @@ void TowerManager::SellTower()
 {
 	if (selection)
 	{
+		stage->AddGold(selection->GetComponent<TowerController>()->GetSellPrice());
+
 		Vector3& index = Scene::scene->grid->GetIndex(selection->transform->GetPosition());
 		stage->RemoveObstruction(index.x, index.y);
 
 		EntityFactory::Destroy(selection);
-		towerMap[selection->transform->GetPosition()] = NULL;
+		towerMap.erase(selection->transform->GetPosition());
 
 		Unselect();
 
@@ -308,4 +314,17 @@ void TowerManager::Save(const char * filepath)
 bool TowerManager::CanPurchase(const char * type)
 {
 	return stage->GetGold() >= TowerDatabase::GetData(type)[0].cost;
+}
+
+bool TowerManager::CanUpgrade()
+{
+	if (selection)
+	{
+		TowerController* tower = selection->GetComponent<TowerController>();
+
+		if (!tower->IsMaxUpgrade() && stage->GetGold() >= tower->GetUpgradePrice())
+			return true;
+	}
+
+	return false;
 }

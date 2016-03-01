@@ -91,6 +91,7 @@ public:
 	bool Hit();
 	int GetGold();
 	void ReduceGold(int gold);
+	void AddGold(int gold);
 
 private:
 	friend StageGUI;

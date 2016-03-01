@@ -182,6 +182,19 @@ string TowerController::GetProjectileType()
 	return GetData()->projectileName;
 }
 
+int TowerController::GetSellPrice()
+{
+	return TowerDatabase::GetSellPrice(type.c_str(), upgrade);
+}
+
+int TowerController::GetUpgradePrice()
+{
+	if (IsMaxUpgrade())
+		return 0;
+
+	return TowerDatabase::GetData(type.c_str())[upgrade + 1].cost;
+}
+
 void TowerController::SetSearchMode(FireMode mode)
 {
 	this->fireMode = mode;

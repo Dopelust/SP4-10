@@ -169,7 +169,7 @@ void EnemyController::Pop(int popCount)
 		else
 		{
 			done = true;
-			particle = EntityFactory::GenerateParticle(Vector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff");
+			particle = EntityFactory::GenerateParticle(owner->transform->GetPosition().GetVector2(), owner->transform->GetSize().GetVector2() * 0.9f, "Puff", "Puff");
 		}
 
 		pop = true;

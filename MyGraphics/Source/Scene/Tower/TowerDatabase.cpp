@@ -61,3 +61,15 @@ int TowerDatabase::GetMaxUpgrade(const char * type)
 {
 	return Math::Min((int)GetData(type).size() - 1, 4);
 }
+
+int TowerDatabase::GetSellPrice(const char* type, int upgrade)
+{
+	int price = 0;
+
+	for (int i = 0; i <= upgrade; ++i)
+	{
+		price += TowerDatabase::GetData(type)[i].cost * 0.5f;
+	}
+
+	return price;
+}

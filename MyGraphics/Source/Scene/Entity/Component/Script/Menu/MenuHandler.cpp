@@ -39,7 +39,7 @@ void MenuHandler::Update(double dt)
 	StateHandler::Update(dt);
 
 	if (bgm->isFinished())
-		Audio.Play2D("Night Changes", 1);
+		bgm = Audio.Play2D("Night Changes", 1);
 }
 
 void MenuHandler::Exit()
