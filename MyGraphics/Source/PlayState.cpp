@@ -81,8 +81,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(64, 64), Resource.GetTexture("Bubble Blower"), Vector4(1,1,1,1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bubble_blower")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bubble_blower")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("bubble_blower", child->GetComponent<Button>());
 
 		TowerDatabase::Init("fountain");
@@ -90,8 +90,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), Resource.GetTexture("Fountain"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("fountain")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("fountain")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("fountain", child->GetComponent<Button>());
 
 		TowerDatabase::Init("sniper");
@@ -99,8 +99,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(96, 96), Resource.GetTexture("Sniper"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("sniper")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("sniper")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("sniper", child->GetComponent<Button>());
 
 		TowerDatabase::Init("dispenser");
@@ -108,8 +108,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Dispenser"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("dispenser")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("dispenser")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("dispenser", child->GetComponent<Button>());
 
 		TowerDatabase::Init("bomb");
@@ -117,8 +117,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Bomb"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bomb")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bomb")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("bomb", child->GetComponent<Button>());
 
 		TowerDatabase::Init("gun");
@@ -126,8 +126,8 @@ void PlayState::Init()
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
 		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
-		child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
-			->GetComponent<TextRenderer2D>()->color.Set(0.85f, 0.85f, 0);
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
+			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("gun", child->GetComponent<Button>());
 	}
 

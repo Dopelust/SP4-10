@@ -5,6 +5,8 @@
 
 class Transform;
 class Graphic2D;
+class TextRenderer2D;
+
 class Button : public Component
 {
 public:
@@ -19,6 +21,8 @@ public:
 		STATE_PRESS,
 		STATE_RELEASE,
 	};
+
+	TextRenderer2D* text;
 
 	Vector3 GetMaxCoord();
 	Vector3 GetMinCoord();

@@ -18,6 +18,7 @@ StageGUI::~StageGUI()
 #include "../../EntityFactory.h"
 #include "../../../../GridInfo.h"
 #include "Vector2.h"
+#include "../GUI/Button.h"
 
 void StageGUI::Init(Entity * ent)
 {
@@ -53,7 +54,8 @@ void StageGUI::Init(Entity * ent)
 	{
 		Entity* entity = EntityFactory::GenerateButton(Vector2(64, TileHeight * 0.5f), Vector2(128, TileHeight), NULL, Vector3(0.6f, 0.6f, 0.6f));
 		pause = entity->GetComponent<Button>();
-		pauseText = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "START", 200))->GetComponent<TextRenderer2D>();
+		pause->SetKey(' ');
+		pause->text = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "START", 200))->GetComponent<TextRenderer2D>();
 	}
 }
 
@@ -67,13 +69,13 @@ void StageGUI::Update(double dt)
 	switch (stage->state)
 	{
 	case StageManager::FREETIME:
-		pauseText->SetText("START");
+		pause->text->SetText("START");
 		break;
 	case StageManager::WAVE:
-		pauseText->SetText("PAUSE");
+		pause->text->SetText("PAUSE");
 		break;
 	case StageManager::PAUSED:
-		pauseText->SetText("RESUME");
+		pause->text->SetText("RESUME");
 		break;
 	}
 

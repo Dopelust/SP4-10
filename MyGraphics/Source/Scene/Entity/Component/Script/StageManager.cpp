@@ -106,7 +106,6 @@ void StageManager::Update(double dt)
 
 		break;
 	case WAVE:
-		UpdateWave(dt);
 
 		if (gui->ButtonPress())
 		{
@@ -115,11 +114,11 @@ void StageManager::Update(double dt)
 
 			tower->SetActive(false);
 		}
+		else
+			UpdateWave(dt);
 
 		break;
 	case PAUSED:
-
-		tower->CancelPlacement();
 
 		if (gui->ButtonPress())
 		{
@@ -128,6 +127,8 @@ void StageManager::Update(double dt)
 
 			tower->SetActive(true);
 		}
+		else
+			tower->CancelPlacement();
 
 		break;
 	case WIN:

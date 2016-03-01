@@ -82,12 +82,16 @@ void TowerGUI::Update(double dt)
 		if (manager->CanPurchase(b.first.c_str()))
 		{
 			b.second->Enable();
+
+			b.second->text->color.Set(0.85f, 0.85f, 0);
 			b.second->SetColor(0.85f, 0.85f, 0.85f, 1);
 		}
 		else
 		{
 			b.second->Disable();
-			b.second->SetColor(0.85f, 0, 0, 1);
+
+			b.second->text->color.Set(1, 0, 0);
+			b.second->SetColor(0.75f, 0, 0, 1);
 		}
 	}
 

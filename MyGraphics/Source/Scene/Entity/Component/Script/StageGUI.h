@@ -21,7 +21,6 @@ public:
 private:
 	StageManager* stage;
 
-	TextRenderer2D* pauseText;
 	Button* pause;
 	
 	TextRenderer2D* popup;
