@@ -14,6 +14,7 @@ public:
 	~TextRenderer2D();
 
 	void SetText(const char* text);
+	const string& GetText();
 
 	FontManager* GetFont();
 

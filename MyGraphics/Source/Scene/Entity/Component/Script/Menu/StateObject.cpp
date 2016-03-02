@@ -38,5 +38,5 @@ void StateObject::Disappear(bool left)
 
 bool StateObject::ReachedTarget()
 {
-	return transform->GetPosition().DistSquared(target.GetVector3()) < 1;
+	return transform->GetPosition().DistSquared(target.GetVector3()) < 16*16;
 }

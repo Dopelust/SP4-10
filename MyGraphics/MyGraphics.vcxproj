@@ -95,6 +95,7 @@
     <ClCompile Include="Source\Scene\AStar\Path.cpp" />
     <ClCompile Include="Source\Scene\Enemy\EnemyDatabase.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\GUI\Canvas.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Popup.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\CSVRenderer.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\EnemyController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
@@ -118,9 +119,11 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\PlayerController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ProjectileController.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\ScaleScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\SimplePopup.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageGUI.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StageManager.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\StandardParticle.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\StandardPopup.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditor.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileEditorGUI.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\TileSelector.cpp" />
@@ -195,6 +198,7 @@
     <ClInclude Include="Source\Scene\Enemy\EnemyData.h" />
     <ClInclude Include="Source\Scene\Enemy\EnemyDatabase.h" />
     <ClInclude Include="Source\Scene\Entity\Component\GUI\Canvas.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Popup.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Resolution.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\CSVRenderer.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\EnemyController.h" />
@@ -219,9 +223,11 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\PlayerController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ProjectileController.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\ScaleScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\SimplePopup.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageGUI.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StageManager.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\StandardParticle.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\StandardPopup.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditor.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileEditorGUI.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\TileSelector.h" />

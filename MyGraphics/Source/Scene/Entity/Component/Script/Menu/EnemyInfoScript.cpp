@@ -29,9 +29,6 @@ void EnemyInfoScript::Init(Entity * ent)
 {
 	StateObject::Init(ent);
 
-	/*Entity* entity = ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 70), "BACK", 400, Vector3(0.7f, 0.7f, 0)));
-	back = entity->GetComponent<Button>();*/
-
 	InitEnemy(ent);
 }
 
@@ -45,10 +42,7 @@ void EnemyInfoScript::Init(Entity * ent)
 
 void EnemyInfoScript::InitEnemy(Entity *ent)
 {
-	Entity *entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 650), "NOTEBOOK", 400, true));
-	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
-
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 600), "ENEMIES", 200, true));
+	Entity* entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 610), "ENEMIES", 512, true));
 	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
 
 	int count = 1;

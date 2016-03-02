@@ -62,9 +62,13 @@ void PlayState::Init()
 	scene = new Scene(NULL);
 	scene->camera.position.Set(0, -TileHeight, 0);
 
-	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(80, 30), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Return", 128));
-	menu = entity->GetComponent<Button>();
+	EntityFactory::GenerateGraphic(Vector2(GridWidth, 0), Vector2(Screen.GetProjectionWidth() - GridWidth, Screen.GetProjectionHeight()), NULL, 
+		Vector4(0.2f, 0.2f, 0.2f), -1)
+		->GetComponent<Graphic2D>()->SetAlignCenter(false);
+	EntityFactory::GenerateGraphic(Vector2(), Vector2(Screen.GetProjectionWidth(), TileHeight), NULL, Vector4(0.15f, 0.15f, 0.15f))
+		->GetComponent<Graphic2D>()->SetAlignCenter(false);
+	EntityFactory::GenerateGraphic(Vector2(0, Screen.GetProjectionHeight() - TileHeight), Vector2(Screen.GetProjectionWidth(), TileHeight), NULL, Vector4(0.1f, 0.1f, 0.1f))
+		->GetComponent<Graphic2D>()->SetAlignCenter(false);
 
 	Entity* editor = scene->root->AttachChild(EntityFactory::CreateGraphic(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.2f)));
 	editor->AddComponent<BoxCollider>()->size.Set(TileWidth, TileHeight);
@@ -75,8 +79,8 @@ void PlayState::Init()
 	editor->GetComponent<TowerManager>()->selector = selector->AddComponent<TileSelector>();
 
 	{
-		entity = scene->canvas->AddChild("Hotbar");
-		entity->transform->SetPosition(1090, 640);
+		Entity* entity = scene->canvas->AddChild("Hotbar");
+		entity->transform->SetPosition(1095, 610);
 
 		TowerDatabase::Init("bubble_blower");
 		Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, 0), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
@@ -134,8 +138,8 @@ void PlayState::Init()
 	}
 
 	{
-		entity = scene->canvas->AddChild("Info");
-		entity->transform->SetPosition(1030, 400);
+		Entity* entity = scene->canvas->AddChild("Info");
+		entity->transform->SetPosition(1030, 370);
 
 		{
 			Entity* child = entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(60, 12), "", 200, false));
@@ -264,8 +268,13 @@ void PlayState::Init()
 	Resume();
 }
 
+#include "Time.h"
+
 void PlayState::Exit()
 {
+	Time.SetTimeScale(1);
+	Input.Resume();
+	Graphics.blur = 0;
 	//stage->Save("Data//Save//stats.txt");
 	//tower->Save("Data//Save//save.txt");
 
@@ -295,14 +304,6 @@ void PlayState::Update(float dt)
 			bgm = Audio.Play2D(Audio.GetSoundPack("bgm"), 1);
 
 	scene->Update(dt);
-
-	if (menu->IsState())
-	{
-		Time.SetTimeScale(1);
-		Graphics.blur = 0;
-
-		Engine.ChangeState(&MenuState::Instance());
-	}
 }
 
 void PlayState::Render()
@@ -316,6 +317,17 @@ void PlayState::Render()
 
 	scene->DrawWorld();
 	Graphics.Render2D("2D", scene->GetResolutionX(scene->root), scene->GetResolutionY(scene->root), false);
+
+	if (Graphics.blur)
+	{
+		Texture* texture = Graphics.BlurCurrentOutput(Graphics.blur, false);
+
+		Graphics.ForwardPass(0);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST);
+
+		Graphics.RenderOnScreen(texture);
+	}
 
 	scene->DrawCanvas();
 	Graphics.Render2D("2D", scene->GetResolutionX(scene->canvas), scene->GetResolutionY(scene->canvas), true);

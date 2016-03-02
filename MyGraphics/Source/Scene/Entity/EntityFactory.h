@@ -21,6 +21,8 @@ public:
 
 	static Entity* GeneratePlayer();
 
+	static Entity* GeneratePopup(const Vector2& size, const char* text, float textsize);
+	static Entity* GenerateTextButton(const Vector2& position, const char* text, float size, const Vector3& color);
 	static Entity* GenerateButton(const Vector2& position, const Vector2& size, Texture* texture, const Vector3& color, bool gloss = false);
 	static Entity* GenerateSlider(const Vector2& position, const Vector2& size, const char* tag, Texture* texture, float min, float value, float max,bool integer);
 	static Entity* GenerateInputField(const Vector2& position, const Vector3& color, int limit, float textSize);

@@ -79,6 +79,6 @@ void LevelHandler::Update(double dt)
 	if (back->IsState())
 	{
 		menu->Pop();
-		page->SetPage(0);
+	//	page->SetPage(0);
 	}
 }

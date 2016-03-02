@@ -26,7 +26,6 @@ public:
 	static PlayState& Instance();
 
 	Sound* bgm;
-	Button* menu;
 
 	StageManager* stage;
 	TowerManager* tower;

@@ -24,4 +24,5 @@ private:
 	CSVRenderer* csv;
 	InputField* input;
 	Button* play;
+	Button* editor;
 };

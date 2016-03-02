@@ -15,6 +15,7 @@
 
 #include "../../GUI/Button.h"
 #include "../../../../../SoundEngine.h"
+#include "../../TextRenderer2D.h"
 
 InfoHandler::InfoHandler()
 {
@@ -79,6 +80,6 @@ void InfoHandler::Update(double dt)
 	if (back->IsState())
 	{
 		menu->Pop();
-		page->SetPage(0);
+		//page->SetPage(0);
 	}
 }

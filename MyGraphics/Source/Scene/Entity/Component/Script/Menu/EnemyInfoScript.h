@@ -20,6 +20,4 @@ public:
 
 private:
 	void InitEnemy(Entity *ent);
-
-	Button *back;
 };

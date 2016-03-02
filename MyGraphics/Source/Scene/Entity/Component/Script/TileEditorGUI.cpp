@@ -18,17 +18,51 @@ TileEditorGUI::~TileEditorGUI()
 {
 }
 
-void TileEditorGUI::Init(Entity* entity)
+void TileEditorGUI::SetEditor(TileEditor * editor)
 {
-	editor = entity->GetComponent<TileEditor>();
+	this->editor = editor;
 	SetSelectedTile(0);
 }
 
+void TileEditorGUI::Init(Entity* entity)
+{
+	
+}
+
+#include "HoverText.h"
+
 void TileEditorGUI::Update(double dt)
 {
+	hover->owner->SetActive(false);
+
 	for (int i = 0; i < button.size(); ++i)
 	{
-		if (button[i]->IsState(Button::STATE_CLICK))
+		if (button[i]->IsHover())
+		{
+			hover->owner->SetActive(true);
+
+			switch (i)
+			{
+			case 0:
+				hover->SetText("Floor"); break;
+			case 1:
+				hover->SetText("Hole"); break;
+			case 2:
+				hover->SetText("Wall"); break;
+			case 3:
+				hover->SetText("Entrance"); break;
+			case 4:
+				hover->SetText("Exit"); break;
+			}
+
+			break;
+		}
+	}
+
+
+	for (int i = 0; i < button.size(); ++i)
+	{
+		if (button[i]->IsState(Button::STATE_CLICK) || button[i]->IsState(Button::STATE_PRESS))
 		{
 			SetSelectedTile(i);
 			break;
@@ -39,6 +73,7 @@ void TileEditorGUI::Update(double dt)
 void TileEditorGUI::AddButton(Button * button)
 {
 	this->button.push_back(button);
+	button->SetKey('0' + this->button.size());
 }
 
 #include "../SpriteRenderer.h"

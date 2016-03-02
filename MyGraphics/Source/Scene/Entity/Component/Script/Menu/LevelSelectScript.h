@@ -17,7 +17,7 @@ public:
 	void Init(Entity* ent);
 	void Update(double dt);
 	
-	void AddLevel(const char* name, const char* level, const Vector2& position, Entity* owner);
+	void AddLevel(const char* name, const char* level, const Vector2& position, Entity* owner, bool lock);
 
 private:
 	map<string, Button*> levels;

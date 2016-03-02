@@ -53,8 +53,8 @@ Texture* GraphicsEngine::GetFinalOutput()
 
 	output = pp->Pass(PostProcessor::BLOOM, output);
 
-	if (blur)
-		output = GaussianBlur(output, blur, false);
+	//if (blur)
+		//output = GaussianBlur(output, blur, false);
 
 	return output;
 }

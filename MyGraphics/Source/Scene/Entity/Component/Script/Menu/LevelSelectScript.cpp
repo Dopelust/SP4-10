@@ -20,12 +20,22 @@ LevelSelectScript::~LevelSelectScript()
 #include "../CSVRenderer.h"
 #include "../../TextRenderer2D.h"
 
+#include "FileSystem.h"
+#include "Utility.h"
+
 void LevelSelectScript::Init(Entity * ent)
 {
-	AddLevel("Level 1", "level1", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.33f, 525), ent);
-	AddLevel("Level 2", "level2", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.66f, 525), ent);
-	AddLevel("Level 3", "level3", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.33f, 265), ent);
-	AddLevel("Level 4", "level4", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.66f, 265), ent);
+	int level = 1;
+
+	vector<string>& line = File.GetLines("Data//Save//unlocked.txt");
+
+	if (!line.empty())
+		level = stoi(line[0]);
+
+	AddLevel("Level 1", "level1", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.33f, 525), ent, level < 1);
+	AddLevel("Level 2", "level2", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.66f, 525), ent, level < 2);
+	AddLevel("Level 3", "level3", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.33f, 265), ent, level < 3);
+	AddLevel("Level 4", "level4", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.66f, 265), ent, level < 4);
 }
 
 #include "MenuHandler.h"
@@ -40,16 +50,16 @@ void LevelSelectScript::Update(double dt)
 	}
 }
 
-#include "FileSystem.h"
-#include "Utility.h"
-
 #define size Vector2(21 * 16, 13 * 16)
 #define stroke Vector2(6, 6)
 
-void LevelSelectScript::AddLevel(const char * name, const char * level, const Vector2 & position, Entity* owner)
+void LevelSelectScript::AddLevel(const char * name, const char * level, const Vector2 & position, Entity* owner, bool lock)
 {
 	Entity* entity = LevelSelectObject::AddLevel(name, level, position, owner);
 
 	levels[level] = entity->AddComponent<Button>();
 	levels[level]->SetGraphic(entity->GetComponent<CSVRenderer>());
+
+	if (lock)
+		levels[level]->Disable();
 }

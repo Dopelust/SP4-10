@@ -2,18 +2,7 @@
 Wave,	20,	50
 // Wave 1
 // Tier, Delay, Count, flying
-5, 1, 1000, 1
 
-// Wave 2
-1, 0.8, 3, 0
-
-// Wave 3
-1, 0.5, 5, 0
-2, 0.6, 1, 0
-
-// Wave 4
-1, 0.2, 2, 0
-2, 0.5, 1, 0
 1, 0.2, 5, 0
 
 // Ignore this

@@ -51,9 +51,27 @@ Vector4 Button::GetClickColor()
 
 #include "../../../Scene.h"
 #include "Canvas.h"
+#include "Popup.h"
 
 bool Button::IsHover()
 {
+	if (Canvas.GetPopup())
+	{
+		bool popup = false;
+
+		for (auto& button : Canvas.GetPopup()->GetButtonList())
+		{
+			if (button == this)
+			{
+				popup = true;
+				break;
+			}
+		}
+		
+		if (!popup)
+			return false;
+	}
+
 	Vector2& cursor = Input.GetCursorPos();
 
 	Vector3& min = GetMinCoord();

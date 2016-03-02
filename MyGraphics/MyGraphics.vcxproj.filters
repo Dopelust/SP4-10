@@ -399,6 +399,16 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.cpp">
       <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Time.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\GUI\Popup.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\StandardPopup.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\SimplePopup.cpp">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -704,6 +714,16 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.h">
       <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Time.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\GUI\Popup.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\StandardPopup.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\SimplePopup.h">
+      <Filter>Scene\Entity\Component\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

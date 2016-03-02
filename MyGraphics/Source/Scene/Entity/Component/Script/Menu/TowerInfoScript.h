@@ -20,6 +20,4 @@ public:
 
 private:
 	void InitTowers(Entity *ent);
-
-	Button *back;
 };

@@ -40,23 +40,19 @@ void MenuScript::Init(Entity * ent)
 		resume->Disable();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 330), "LEVEL EDITOR", 400, Vector3(0.7f, 0.7f, 0)));
-	editor = entity->GetComponent<Button>();
-
-	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "NOTEBOOK", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 330), "HELP", 400, Vector3(0.7f, 0.7f, 0)));
 	notebook = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 210), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
 	achievement = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 210), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
 	option = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 90), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
 	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
@@ -85,9 +81,6 @@ void MenuScript::Update(double dt)
 
 	else if (resume->IsState())
 		Engine.ChangeState(&PlayState::Instance());
-
-	else if (editor->IsState())
-		Engine.ChangeState(&TestState::Instance());
 
 	else if (option->IsState())
 		menu->Push(menu->GetState<OptionScript>());

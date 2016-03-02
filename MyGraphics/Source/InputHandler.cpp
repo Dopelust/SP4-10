@@ -123,7 +123,7 @@ bool InputHandler::IsPressOrRepeat(int key)
 
 bool InputHandler::IsPress(int key)
 {
-	return this->key[key].state == GLFW_PRESS && !this->key[key].releaseBuffer;
+	return this->key[key].state == GLFW_PRESS && !this->key[key].releaseBuffer && !pause;
 }
 
 bool InputHandler::IsHeld(int key)
@@ -133,17 +133,17 @@ bool InputHandler::IsHeld(int key)
 
 bool InputHandler::IsMouseRelease(unsigned short button)
 {
-	return glfwGetMouseButton(Screen.window, button) == GLFW_RELEASE && !pause;
+	return glfwGetMouseButton(Screen.window, button) == GLFW_RELEASE;
 }
 
 bool InputHandler::IsMouseHeld(unsigned short button)
 {
-	return glfwGetMouseButton(Screen.window, button) == GLFW_PRESS && !pause;
+	return glfwGetMouseButton(Screen.window, button) == GLFW_PRESS;
 }
 
 bool InputHandler::IsMousePress(unsigned short button)
 {
-	return glfwGetMouseButton(Screen.window, button) == GLFW_PRESS && !clickBuffer[button] && !pause;
+	return glfwGetMouseButton(Screen.window, button) == GLFW_PRESS && !clickBuffer[button];
 }
 
 void InputHandler::ApplyMouseBuffer(unsigned short button)

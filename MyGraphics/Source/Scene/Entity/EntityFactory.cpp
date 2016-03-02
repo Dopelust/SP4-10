@@ -30,6 +30,49 @@ Entity* EntityFactory::GeneratePlayer()
 	return NULL;
 }
 
+#include "Component\GUI\Popup.h"
+#include "Component\Script\StandardPopup.h"
+
+Entity * EntityFactory::GeneratePopup(const Vector2 & size, const char* text, float textsize)
+{
+	Entity* entity = GenerateGraphic(Vector2(scene->GetResolutionX(scene->canvas) * 0.5f, scene->GetResolutionY(scene->canvas) * 0.5f),
+		size, NULL, Vector4(0.7f, 0.7f, 0.7f));
+
+	entity->AttachChild(CreateGraphic(Vector2(0, (size.y - size.y * 0.75f) * 0.5f), Vector2(size.x * 0.9f, size.y * 0.75f), NULL, Vector4(0.75f, 0.75f, 0.75f)));
+	entity->AttachChild(CreateGraphic(Vector2(0, size.y * 0.5f), Vector2(size.x, 32), NULL,
+		Vector4(0.1f, 0.1f, 0.1f)));
+
+	entity->AddComponent<Popup>();
+	entity->AddComponent<StandardPopup>()->text =
+		entity->AttachChild(CreateTextGUI(Vector2(0, size.y * 0.125f), text, textsize))->GetComponent<TextRenderer2D>();
+
+	Entity* child = entity->AttachChild(CreateGraphic(Vector2(size.x * 0.3375f, -size.y * 0.375f), Vector2(64 + 4, 20 + 4), NULL, Vector3(0.3f, 0.3f, 0.3f)));
+	child->AttachChild(CreateTextGUI(Vector2(), "Cancel", 128));
+	Button* button = child->AttachChild(CreateButton(Vector2(), Vector2(64, 20), NULL, Vector3(0.7f, 0.7f, 0.7f), true))->GetComponent<Button>();
+	entity->GetComponent<Popup>()->AddButton(button);
+	entity->GetComponent<StandardPopup>()->cancel = button;
+
+	child = entity->AttachChild(CreateGraphic(Vector2(size.x * 0.3375f - 68 - 8, -size.y * 0.375f), Vector2(64 + 4, 20 + 4), NULL, Vector3(0.3f, 0.3f, 0.3f)));
+	child->AttachChild(CreateTextGUI(Vector2(), "OK", 128));
+	button = child->AttachChild(CreateButton(Vector2(), Vector2(64, 20), NULL, Vector3(0.7f, 0.7f, 0.7f), true))->GetComponent<Button>();
+	entity->GetComponent<Popup>()->AddButton(button);
+	entity->GetComponent<StandardPopup>()->ok = button;
+
+	child = entity->AttachChild(CreateGraphic(Vector2(size.x * 0.5f - 13 - 3, size.y * 0.5f), Vector2(22 + 4, 22 + 4), NULL, Vector3(0.3f, 0.3f, 0.3f)));
+	child->AttachChild(CreateTextGUI(Vector2(), "X", 128));
+	button = child->AttachChild(CreateButton(Vector2(), Vector2(22, 22), NULL, Vector3(0.7f, 0, 0), true))->GetComponent<Button>();
+	entity->GetComponent<Popup>()->AddButton(button);
+	entity->GetComponent<StandardPopup>()->close = button;
+	
+	entity->SetActive(false);
+	return entity;
+}
+
+Entity * EntityFactory::GenerateTextButton(const Vector2 & position, const char * text, float size, const Vector3 & color)
+{
+	return Generate(scene->canvas, CreateTextButton(position, text, size, color));
+}
+
 Entity * EntityFactory::GenerateButton(const Vector2 & position, const Vector2 & size, Texture * texture, const Vector3& color, bool gloss)
 {
 	return Generate(scene->canvas, CreateButton(position, size, texture, color, gloss));
@@ -287,7 +330,7 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1));
+	Entity* entity = CreateGraphic(position, Vector2(), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1), 7);
 
 	if (type == "Bubble")
 	{

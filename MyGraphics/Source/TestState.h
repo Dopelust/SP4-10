@@ -2,6 +2,8 @@
 
 class InputField;
 class Button;
+class Entity;
+
 class TestState : public GameState
 {
 public:
@@ -15,11 +17,14 @@ public:
 	void Resume();
 
 	static TestState& Instance();
+	
+	Entity* popup;
 
 	Button* menu;
 	Button* load;
 	Button* save;
-
+	Button* remove;
+	
 	InputField* input;
 
 private:

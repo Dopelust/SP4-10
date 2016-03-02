@@ -21,6 +21,11 @@ void TextRenderer2D::SetText(const char * text)
 	this->text = text;
 }
 
+const string & TextRenderer2D::GetText()
+{
+	return text;
+}
+
 void TextRenderer2D::Draw(const Mtx44 & parent)
 {
 	if (alignCenter)

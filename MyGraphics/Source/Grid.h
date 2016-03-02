@@ -19,6 +19,8 @@ public:
 	virtual bool Save(const char* filepath);
 	virtual bool Load(const char* filepath);
 
+	void Reset();
+
 	Grid(Scene* owner);
 	virtual ~Grid();
 	

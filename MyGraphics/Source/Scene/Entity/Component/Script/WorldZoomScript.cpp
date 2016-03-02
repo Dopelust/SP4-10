@@ -4,6 +4,10 @@
 #include "../Resolution.h"
 #include "../../Entity.h"
 
+#include "../../../Scene.h"
+#include "../GUI/Canvas.h"
+
+
 WorldZoomScript::WorldZoomScript()
 {
 }
@@ -19,6 +23,9 @@ void WorldZoomScript::Init(Entity* entity)
 
 void WorldZoomScript::Update(double dt)
 {
+	if (Canvas.GetPopup())
+		return;
+
 	if (Input.GetScroll().y)
 	{
 		resolution->width -= Input.GetScroll().y * 2048 * dt;

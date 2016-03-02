@@ -36,39 +36,39 @@ void AchievementScript::Init(Entity * ent)
 	entity = ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 100), "RESET", 400, Vector3(0.7f, 0.7f, 0)));
 	reset = entity->GetComponent<Button>();
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 650), "Lifetime Stats", 400, true));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 610), "LIFETIME STATS", 512, true));
 	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 550), "Games Played", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 550), ToString(achievement.gamesPlayed).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 530), "Games Played", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 530), ToString(achievement.gamesPlayed).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 500), "Games Won", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 500), ToString(achievement.gamesWon).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 500), "Games Won", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 500), ToString(achievement.gamesWon).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 450), "Towers Placed", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 450), ToString(achievement.towersPlaced).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 470), "Towers Placed", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 470), ToString(achievement.towersPlaced).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 400), "Towers Upgraded", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 400), ToString(achievement.towersUpgraded).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 440), "Towers Upgraded", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 440), ToString(achievement.towersUpgraded).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 350), "Towers Max Upgraded", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 350), ToString(achievement.towersMaxUpgraded).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 410), "Towers Max Upgraded", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 410), ToString(achievement.towersMaxUpgraded).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 300), "Jellies Popped", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 300), ToString(achievement.enemiesPopped).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 380), "Jellies Popped", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 380), ToString(achievement.enemiesPopped).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 250), "Enemies Leaked", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 250), ToString(achievement.enemiesLeaked).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 350), "Enemies Leaked", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 350), ToString(achievement.enemiesLeaked).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, 200), "Waves Completed", 200, false));
-	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, 200), ToString(achievement.wavesCompleted).c_str(), 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.3f, 320), "Waves Completed", 200, false));
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, 320), ToString(achievement.wavesCompleted).c_str(), 200, false));
 	texts.push_back(entity->GetComponent<TextRenderer2D>());
 
 	/*Entity* SmoothSlide = ent->AttachChild(EntityFactory::CreateSlider(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5, Scene::scene->GetResolutionY(Scene::scene->canvas)*0.45f), Vector2(400, 12), "SFX", 0, LUA.GetGlobalNumber("SFX_VOLUME"), 100, true));

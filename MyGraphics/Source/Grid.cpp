@@ -22,6 +22,7 @@ bool Grid::Save(const char* filepath)
 		output << endl;
 	}
 
+	File.EndWriting();
 	return true;
 }
 
@@ -43,6 +44,17 @@ bool Grid::Load(const char* filepath)
 	}
 
 	return true;
+}
+
+void Grid::Reset()
+{
+	for (int y = NumberOfTilesY - 1; y >= 0; --y)
+	{
+		for (int x = 0; x < NumberOfTilesX; ++x)
+		{
+			GetCell(0, 0)->Place(x, y, 0);
+		}
+	}
 }
 
 Grid::Grid(Scene* owner) : owner(owner)

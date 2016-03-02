@@ -84,8 +84,13 @@ bool GameEngine::PopState()
 		return true;
 	}
 	else
+	{
+		Terminate();
 		return false;
+	}
 }
+
+#include "Time.h"
 
 void GameEngine::Update(float dt)
 {
@@ -102,7 +107,7 @@ void GameEngine::Update(float dt)
 
 	if (queue)
 	{
-		Rise(transition, transitionRate * dt, 1);
+		Rise(transition, transitionRate * Time.GetUnscaledTime(), 1);
 
 		if (transition == 1)
 			advance = true;
@@ -117,7 +122,7 @@ void GameEngine::Update(float dt)
 	}
 	else if (!states.empty())
 	{
-		Fall(transition, transitionRate * dt, 0);
+		Fall(transition, transitionRate *  Time.GetUnscaledTime(), 0);
 
 		states.back()->Update(dt);
 	}

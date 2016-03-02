@@ -47,6 +47,7 @@ TestState::~TestState()
 #include "Spritesheet.h"
 
 #include "Scene\Entity\Component\Script\WorldZoomScript.h"
+#include "Scene\Entity\Component\Script\HoverText.h"
 
 void TestState::Init()
 {
@@ -60,39 +61,49 @@ void TestState::Init()
 
 	Entity* editor = scene->root->AttachChild(EntityFactory::CreateSprite(Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Vector2(TileWidth, TileHeight), NULL, Vector4(1, 1, 1, 0.5f)));
 	editor->AddComponent<TileSelector>();
-	editor->AddComponent<TileEditor>();
-	editor->AddComponent<TileEditorGUI>();
-
+	
 	{
 		Entity* entity = scene->canvas->AddChild("Hotbar");
 		entity->transform->SetPosition(1200, 656);
+		entity->AddComponent<TileEditorGUI>()->SetEditor(editor->AddComponent<TileEditor>());
 
 		for (int i = 0; i < 5; ++i)
 		{
 			Entity* child = entity->AttachChild(EntityFactory::CreateButton(Vector2(0, -64 * i), Vector2(48, 48), NULL, Vector3(0.65f, 0.65f, 0.65f)));
 			child->AttachChild(EntityFactory::CreateSprite(Vector2(0, 0), Vector2(42, 42), Resource.GetSpritesheet("Tileset")->GetSprite(i), Vector4(1, 1, 1)));
 
-			editor->GetComponent<TileEditorGUI>()->AddButton(child->GetComponent<Button>());
+			entity->GetComponent<TileEditorGUI>()->AddButton(child->GetComponent<Button>());
 		}
 
-		editor->GetComponent<TileEditorGUI>()->select = entity->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), NULL, Vector4(1, 1, 1)));
+		entity->GetComponent<TileEditorGUI>()->select = entity->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(48, 48), NULL, Vector4(1, 1, 1)));
+
+		Entity* hover = EntityFactory::GenerateGraphic(Vector2(), Vector2(), NULL, Vector4(0, 0, 0, 0.75f), 1);
+		hover->AddComponent<HoverText>()->text = hover->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "", 200, false));
+		entity->GetComponent<TileEditorGUI>()->hover = hover->GetComponent<HoverText>();
 	}
 
-	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(100, 50), NULL, Vector3(0.5f, 0.5f, 0.5f));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Return", 128));
+	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
+	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Quit", 200));
 	menu = entity->GetComponent<Button>();
 
 	entity = EntityFactory::GenerateInputField(Vector2(256, 680), Vector3(0, 0, 0), 16, 200);
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(-220, 0), "File:", 256, false));
 	input = entity->GetChild("Input Field")->GetComponent<InputField>();
 
-	entity = EntityFactory::GenerateButton(Vector2(450, 680), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f));
+	entity = EntityFactory::GenerateButton(Vector2(450, 680), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Save", 200));
 	save = entity->GetComponent<Button>();
 
-	entity = EntityFactory::GenerateButton(Vector2(560, 680), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f));
+	entity = EntityFactory::GenerateButton(Vector2(560, 680), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Load", 200));
 	load = entity->GetComponent<Button>();
+
+	entity = EntityFactory::GenerateButton(Vector2(670, 680), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
+	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Delete", 200));
+	remove = entity->GetComponent<Button>();
+
+	popup = EntityFactory::GeneratePopup(Vector2(300, 150), "", 150);
+	popup->SetActive(false);
 
 	Resume();
 }
@@ -109,22 +120,72 @@ void TestState::Exit()
 }
 
 #include "MenuState.h"
+#include "Scene\Entity\Component\Script\StandardPopup.h"
+#include "Scene\Entity\Component\TextRenderer2D.h"
 
 void TestState::Update(float dt)
 {
 	scene->Update(dt);
 
+	if (popup->IsActive())
+	{
+		if (popup->GetComponent<StandardPopup>()->IsOK())
+		{
+			string text = popup->GetComponent<StandardPopup>()->text->GetText();
+
+			if (text == "Save?")
+			{
+				scene->grid->Save(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+			}
+			else if (text == "Load?")
+			{
+				scene->grid->Load(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+			}
+			else if (text == "Delete?")
+			{
+				File.Remove(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+				scene->grid->Reset();
+				input->SetOutput("");
+			}
+
+			popup->GetComponent<StandardPopup>()->Close();
+		}
+	}
+	
 	if (menu->IsState())
-		Engine.ChangeState(&MenuState::Instance());
+		Engine.PopState();
 
 	if (load->IsState())
 	{
-		scene->grid->Load(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+		string& output = input->GetOutput();
+
+		if (!File.Exists(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str()))
+			popup->GetComponent<StandardPopup>()->PopUp("Level does not exist.");
+		else
+			popup->GetComponent<StandardPopup>()->PopUp("Load?");
 	}
 
 	if (save->IsState())
 	{
-		scene->grid->Save(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+		if (!File.Exists(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str()))
+			popup->GetComponent<StandardPopup>()->PopUp("Save?");
+		else
+			popup->GetComponent<StandardPopup>()->PopUp("Overwrite existing data?");
+	}
+
+	if (remove->IsState())
+	{
+		string& output = input->GetOutput();
+
+		if (!File.Exists(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str()))
+			popup->GetComponent<StandardPopup>()->PopUp("Level does not exist.");
+		else if (output == "level1" ||
+				output == "level2" ||
+				output == "level3" ||
+				output == "level4")
+			popup->GetComponent<StandardPopup>()->PopUp("Cannot delete this level.");
+		else
+			popup->GetComponent<StandardPopup>()->PopUp("Delete?");
 	}
 }
 

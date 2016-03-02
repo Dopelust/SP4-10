@@ -25,21 +25,47 @@ LevelScript::~LevelScript()
 
 void LevelScript::Init(Entity * ent)
 {
-	AddLevel("Load Level", "", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.6f), ent);
+	AddLevel("", "", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.375f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.5f), ent);
 
-	input = ent->AttachChild(EntityFactory::CreateInputField(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.35f),
+	ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.675f - 128, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.55f + 24),
+		"Load:", 300))->GetComponent<TextRenderer2D>()->color.Set(0.7f, 0.7f, 0);
+
+	input = ent->AttachChild(EntityFactory::CreateInputField(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.675f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.55f),
 		Vector3(0, 0, 0), 16, 256))->GetChild("Input Field")->GetComponent<InputField>();
+
+	Entity* entity = ent->AttachChild(EntityFactory::CreateGraphic(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.45f),
+		Vector2(204, 50), NULL, Vector3(0.1f, 0.1f, 0.1f), false));
+		
+	entity = entity->AttachChild(EntityFactory::CreateButton(Vector2(),
+		Vector2(200, 45), NULL, Vector3(0.6f, 0.6f, 0.6f), true));
+
+	editor = entity->GetComponent<Button>();
+	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Level Editor", 200));
 }
 
 #include "Utility.h"
 #include "FileSystem.h"
 
+#include "../../../../../GameEngine.h"
+#include "../../../../../TestState.h"
+
 void LevelScript::Update(double dt)
 {
-	csv->UploadCSV(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
+	string& output = input->GetOutput();
 
-	if (File.Exists(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str()) && play->IsState())
-		PlayLevel(input->GetOutput().c_str());
+	if (output != "level1" &&
+		output != "level2" &&
+		output != "level3" &&
+		output != "level4")
+	{
+		csv->UploadCSV(ToString("Data//Levels//", output, ".csv").c_str());
+
+		if (File.Exists(ToString("Data//Levels//", output, ".csv").c_str()) && play->IsState())
+			PlayLevel(input->GetOutput().c_str());
+	}
+
+	if (editor->IsState())
+		Engine.PushState(&TestState::Instance());
 }
 
 #include "../../../../../Assets.h"

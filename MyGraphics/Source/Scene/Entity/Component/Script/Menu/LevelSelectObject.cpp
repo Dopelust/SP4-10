@@ -32,8 +32,12 @@ Entity* LevelSelectObject::AddLevel(const char * name, const char * level, const
 	entity->AttachChild(EntityFactory::CreateGraphic(Vector2(0, size.y * 0.3f), Vector2(size.x, size.y * 0.4f), NULL, Vector4(1, 1, 1, 0.1f), 1));
 
 	entity = entity->AttachChild(EntityFactory::CreateCSVGraphic(Vector2(), size, ToString("Data//Levels//", level, ".csv").c_str(), Vector4(1, 1, 1)));
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, size.y * 0.5f), name, 300))
-		->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+
+	if (!string(name).empty())
+	{
+		entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, size.y * 0.5f), name, 300))
+			->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+	}
 
 	return entity;
 }

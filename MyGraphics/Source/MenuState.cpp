@@ -110,4 +110,5 @@ void MenuState::Resume()
 {
 	Input.ShowCursor();
 	Scene::scene = scene; 
+	Camera::current = &scene->camera;
 }

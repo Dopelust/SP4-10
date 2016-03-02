@@ -173,10 +173,37 @@ void StageManager::UpdateWave(double dt)
 
 			++achievement.gamesWon;
 
+			int level = 0;
+
+			if (currentStage == "level1")
+				level = 1;
+			if (currentStage == "level2")
+				level = 2;
+			if (currentStage == "level3")
+				level = 3;
+
+			if (level)
+			{
+				vector<string>& line = File.GetLines("Data//Save//unlocked.txt");
+				
+				if (!line.empty())
+				{
+					if (level == stoi(line[0]))
+					{
+						ofstream& output = *File.BeginWriting("Data//Save//unlocked.txt");
+
+						output << level + 1;
+
+						File.EndWriting();
+					}
+				}
+			}
+
 			File.Remove("Data//Save//stats.txt");
 			File.Remove("Data//Save//save.txt");
 
 			Time.SetTimeScale(0);
+			gui->EndStage(true);
 
 			return;
 		}
@@ -249,6 +276,7 @@ bool StageManager::Hit(Entity* enemy)
 			tower->CancelPlacement();
 
 			Time.SetTimeScale(0);
+			gui->EndStage(false);
 		}
 
 		return true;

@@ -169,7 +169,7 @@ void EnemyController::Pop(int popCount)
 
 	if (particle)
 	{
-		particle->AddComponent<FadeScript>()->rate = -3;
+		particle->AddComponent<FadeScript>()->rate = -6;
 		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<SpriteRenderer>()->color.w;
 	}
 }

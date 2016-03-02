@@ -114,8 +114,12 @@ bool TowerManager::PlaceTower()
 	
 }
 
+#include "../GUI/Canvas.h"
 void TowerManager::Update(double dt)
 {
+	if (Canvas.GetPopup())
+		return;
+
 	Tile* tile = selector->GetSelection();
 
 	if (IsPlacing()) //Placing A Tower

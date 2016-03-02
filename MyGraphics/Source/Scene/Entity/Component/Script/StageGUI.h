@@ -12,6 +12,8 @@ public:
 	StageGUI();
 	~StageGUI();
 
+	void EndStage(bool win);
+
 	void Init(Entity* ent);
 	void Update(double dt);
 
@@ -19,11 +21,16 @@ public:
 	void SetPopup(const char* text);
 
 private:
+	Entity* popup;
+
 	StageManager* stage;
 
 	Button* pause;
-	
-	TextRenderer2D* popup;
+
+	Button* quit;
+	Entity* quitPopup;
+
+	TextRenderer2D* indicator;
 
 	TextRenderer2D* health;
 	TextRenderer2D* gold;

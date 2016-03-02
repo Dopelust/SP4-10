@@ -11,6 +11,8 @@
 #include "../../Entity.h"
 #include "../SpriteRenderer.h"
 
+#include "../GUI/Canvas.h"
+
 TileEditor::TileEditor() : index(0)
 {
 }
@@ -27,6 +29,9 @@ void TileEditor::Init(Entity* entity)
 
 void TileEditor::Update(double dt)
 {
+	if (Canvas.GetPopup())
+		return;
+
 	Tile* tile = NULL;
 
 	if (Input.IsMousePress(1))

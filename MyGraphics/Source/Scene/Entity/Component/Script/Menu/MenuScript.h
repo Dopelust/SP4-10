@@ -17,7 +17,6 @@ private:
 	Button* play;
 	Button* resume;
 
-	Button* editor;
 	Button* option;
 	Button* notebook;
 	Button* achievement;

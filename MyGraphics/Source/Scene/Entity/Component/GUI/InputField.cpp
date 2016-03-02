@@ -56,9 +56,15 @@ void InputField::Update(double dt)
 	{
 		focus = true;
 		timer = 0;
+
+		Input.Halt();
 	}
 	else if (Input.IsMousePress(0))
+	{
 		focus = false;
+
+		Input.Resume();
+	}
 
 	if (focus)
 	{
@@ -85,5 +91,5 @@ void InputField::Update(double dt)
 	else
 		ticker->SetActive(false);
 
-		renderer->SetText(output.c_str());
+	renderer->SetText(output.c_str());
 }
