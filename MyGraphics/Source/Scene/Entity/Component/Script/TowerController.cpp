@@ -1,5 +1,4 @@
 #include "TowerController.h"
-#include "../../Component/Graphic2D.h"
 #include "../../../../Texture.h"
 #include "../../../../Assets.h"
 #include "../../../Tower/TowerDatabase.h"
@@ -41,7 +40,6 @@ void TowerController::Init(Entity* ent)
 }
 
 #include "../../../Projectile/ProjectileDatabase.h"
-#include "../../../../Assets.h"
 #include "../Graphic2D.h"
 
 void TowerController::Init(string type)
@@ -240,6 +238,7 @@ bool TowerController::SearchForTarget()
 				}
 			}
 		}
+
 		target = closest;
 	}
 	else if (fireMode == FireMode::FIRST)
@@ -258,6 +257,7 @@ bool TowerController::SearchForTarget()
 				}
 			}
 		}
+
 		target = first;
 	}
 	else if (fireMode == FireMode::LAST)
@@ -275,6 +275,7 @@ bool TowerController::SearchForTarget()
 				}
 			}
 		}
+
 		target = last;
 	}
 	else
@@ -290,12 +291,16 @@ bool TowerController::SearchForTarget()
 				}
 			}
 		}
-		target = mostHealth;
+
+		target = mostHealth; 
 	}
 	
-	if (target != NULL)
+	if (target)
 	{
 		direction = (target->transform->GetPosition() - this->owner->transform->GetPosition()).GetVector2();
+		targetID = target->GetID();
+		target = NULL;
+
 		return true;
 	}
 
@@ -304,11 +309,18 @@ bool TowerController::SearchForTarget()
 
 bool TowerController::CheckTarget()
 {
-	if (target == NULL)
+	target = NULL;
+
+	for (auto& enemy : stageManager->Enemies())
+	{
+		if (enemy->GetID() == targetID)
+			target = enemy;
+	}
+
+	if (!target)
 	{
 		return true;
 	}
-	
 	else if (direction.LengthSquared() > GetData()->range * GetData()->range || target->GetComponent<EnemyController>()->done)
 	{
 		target = NULL;

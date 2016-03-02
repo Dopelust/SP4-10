@@ -59,6 +59,8 @@ void StageGUI::Init(Entity * ent)
 	}
 }
 
+#include "../../../../Time.h"
+
 void StageGUI::Update(double dt)
 {
 	wave->SetText(ToString("Wave ", stage->currentWave + 1).c_str());
@@ -79,7 +81,7 @@ void StageGUI::Update(double dt)
 		break;
 	}
 
-	Fall(popup->color.w, dt * 0.6f, 0);
+	Fall(popup->color.w, Time.GetUnscaledTime() * 0.6f, 0);
 }
 
 #include "../GUI/Button.h"

@@ -29,9 +29,6 @@ public:
 	bool CreateSpatialPartition(GridType type);
 
 	Grid* grid;
-	
-	float GetTimeScale();
-	void SetTimeScale(float timeScale);
 
 	void Update(double dt);
 	void Draw();
@@ -51,7 +48,6 @@ public:
 	string GetGridSavePath();
 
 private:
-	float timeScale;
 	const char* filepath;
 
 	bool Save();

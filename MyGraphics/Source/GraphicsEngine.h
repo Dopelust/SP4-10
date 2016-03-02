@@ -23,6 +23,7 @@ public:
 	void ForwardPass(bool pass);
 	void Finish();
 	
+	Texture* GetFinalOutput();
 	Texture* BlurCurrentOutput(float radius, bool halfRes = true);
 	void FinalPass(Texture* texture);
 
@@ -43,6 +44,7 @@ public:
 
 	GBuffer* gBuffer;
 	PostProcessor* pp;
+	float blur;
 
 	enum fboType
 	{

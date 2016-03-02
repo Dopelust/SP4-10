@@ -78,9 +78,11 @@ bool Button::IsState(ButtonState state)
 	{
 	case STATE_CLICK:
 		return Input.IsMousePress(0) && IsHover();
+		break;
 
 	case STATE_CLICK_HOLD:
 		return this->state == STATE_CLICK;
+		break;
 
 	case STATE_PRESS:
 
@@ -89,11 +91,15 @@ bool Button::IsState(ButtonState state)
 		else
 			return false;
 
+		break;
+
 	case STATE_HELD:
 		return this->state == STATE_PRESS;
+		break;
 
 	default:
 		return this->state == state;
+		break;
 	}
 }
 

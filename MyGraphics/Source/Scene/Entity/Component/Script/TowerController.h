@@ -91,7 +91,9 @@ private:
 	void Fire();
 
 	Entity* owner;
+
 	Entity* target;
+	int targetID;
 
 	FireMode fireMode;
 

@@ -89,6 +89,8 @@ void Application::Init()
 	Graphics.Init(Screen.width, Screen.height);
 }
 
+#include "Time.h"
+
 #include "MenuState.h"
 #include "TestState.h"
 
@@ -100,7 +102,9 @@ void Application::Run()
 	timer.startTimer();
 	while (Engine.IsActive())
 	{
-		Engine.Update(timer.getElapsedTime());
+		Time.SetDeltaTime(timer.getElapsedTime());
+
+		Engine.Update(Time.GetDeltaTime());
 		Engine.Render();
 
 		Input.Flush();

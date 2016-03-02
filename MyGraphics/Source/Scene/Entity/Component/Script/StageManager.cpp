@@ -94,6 +94,11 @@ void StageManager::UpdatePathFinders()
 #include "../../Entity.h"
 #include "../Transform.h"
 #include "TowerManager.h"
+#include "TowerGUI.h"
+
+#include "FileSystem.h"
+#include "../../../../GraphicsEngine.h"
+#include "../../../../Time.h"
 
 void StageManager::Update(double dt)
 {
@@ -110,10 +115,13 @@ void StageManager::Update(double dt)
 		if (gui->ButtonPress())
 		{
 			state = PAUSED;
-			Scene::scene->SetTimeScale(0);
+			Time.SetTimeScale(0);
 
 			tower->SetActive(false);
+			tower->gui->SetActive(false);
+
 			tower->Unselect();
+			tower->CancelPlacement();
 		}
 		else
 			UpdateWave(dt);
@@ -124,24 +132,24 @@ void StageManager::Update(double dt)
 		if (gui->ButtonPress())
 		{
 			state = WAVE;
-			Scene::scene->SetTimeScale(1);
+			Time.SetTimeScale(1);
 
 			tower->SetActive(true);
+			tower->gui->SetActive(true);
 		}
-		else
-			tower->CancelPlacement();
 
 		break;
-	case WIN:
-		gui->SetPopup("You win!");
+	case WIN:	
+		Rise(Graphics.blur, Time.GetUnscaledTime() * 64, 32);
+
+
 		break;
 	case LOSE:
-		gui->SetPopup("You lose!");
+		Rise(Graphics.blur, Time.GetUnscaledTime() * 64, 32);
+
 		break;
 	}
 }
-
-#include "FileSystem.h"
 
 void StageManager::UpdateWave(double dt)
 {	
@@ -158,10 +166,17 @@ void StageManager::UpdateWave(double dt)
 		if (currentWave >= GetData().GetNumStages())
 		{
 			state = WIN;
+
+			tower->SetActive(false);
+			tower->gui->SetActive(false);
+			tower->CancelPlacement();
+
 			++achievement.gamesWon;
 
 			File.Remove("Data//Save//stats.txt");
 			File.Remove("Data//Save//save.txt");
+
+			Time.SetTimeScale(0);
 
 			return;
 		}
@@ -228,7 +243,12 @@ bool StageManager::Hit(Entity* enemy)
 		if (health <= 0)
 		{
 			state = LOSE;
-			Scene::scene->SetTimeScale(0);
+
+			tower->SetActive(false);
+			tower->gui->SetActive(false);
+			tower->CancelPlacement();
+
+			Time.SetTimeScale(0);
 		}
 
 		return true;

@@ -47,13 +47,22 @@ void GraphicsEngine::ForwardPass(bool pass)
 
 #include "GameEngine.h"
 
-void GraphicsEngine::Finish()
+Texture* GraphicsEngine::GetFinalOutput()
 {
 	Texture* output = gBuffer->GetOutput();
 
 	output = pp->Pass(PostProcessor::BLOOM, output);
 
-	FinalPass(output);
+	if (blur)
+		output = GaussianBlur(output, blur, false);
+
+	return output;
+}
+
+
+void GraphicsEngine::Finish()
+{
+	FinalPass(GetFinalOutput());
 	Resource.shader.Flush();
 }
 
@@ -170,7 +179,8 @@ FBO * GraphicsEngine::GetFBO(fboType f)
 GraphicsEngine::GraphicsEngine() : 
 	font(&FontManager::Instance()), 
 	gBuffer(&GBuffer::Instance()), 
-	pp(&PostProcessor::Instance())
+	pp(&PostProcessor::Instance()),
+	blur(0)
 {
 	for (unsigned i = 0; i < NUM_FBO; ++i)
 		frameBuffer[i] = NULL;

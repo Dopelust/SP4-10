@@ -181,6 +181,7 @@
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Tile.cpp" />
+    <ClCompile Include="Source\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Assets.h" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Tile.h" />
+    <ClInclude Include="Source\Time.h" />
     <ClInclude Include="Source\vertex.h" />
   </ItemGroup>
   <ItemGroup>

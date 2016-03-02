@@ -287,6 +287,7 @@ void PlayState::Exit()
 }
 
 #include "MenuState.h"
+#include "Time.h"
 
 void PlayState::Update(float dt)
 {
@@ -296,7 +297,12 @@ void PlayState::Update(float dt)
 	scene->Update(dt);
 
 	if (menu->IsState())
+	{
+		Time.SetTimeScale(1);
+		Graphics.blur = 0;
+
 		Engine.ChangeState(&MenuState::Instance());
+	}
 }
 
 void PlayState::Render()
