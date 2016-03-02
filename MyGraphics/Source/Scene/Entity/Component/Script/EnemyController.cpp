@@ -176,6 +176,13 @@ void EnemyController::Pop(int popCount)
 
 void EnemyController::Slow(float slowAmount, float duration)
 {
+	if (!slowed)
+	{
+		Entity* particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(0, 15), Vector2(TileHeight * 0.5f, TileWidth * 0.5f), "Slow", "Slow"));
+		particle->AddComponent<FadeScript>()->rate -= 1;
+		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<SpriteRenderer>()->color.w;
+	}
+
 	slowed = true;
 	movementSpeed = originalSpeed * (slowAmount * 0.01);//- slowAmount;
 	statusDuration = duration;
@@ -183,6 +190,14 @@ void EnemyController::Slow(float slowAmount, float duration)
 
 void EnemyController::Stun(float duration)
 {
+	if (!stunned)
+	{
+		Entity* particle = owner->AttachChild(EntityFactory::CreateParticle(Vector2(0, 15), Vector2(TileHeight * 2, TileWidth * 0.5f), "Stun", "Stun"));
+		particle->AddComponent<FadeScript>()->rate -= 0.75f;
+		particle->GetComponent<FadeScript>()->value = &particle->GetComponent<SpriteRenderer>()->color.w;
+		particle->GetComponent<SpriteRenderer>()->SetLayer(1);
+	}
+
 	stunned = true;
 	statusDuration = duration;
 }

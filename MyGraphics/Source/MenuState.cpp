@@ -30,18 +30,23 @@ MenuState::~MenuState()
 #include "Scene\Entity\Component\Script\Menu\MenuHandler.h"
 
 #include "Screen.h"
+
+#include "Scene\Enemy\EnemyDatabase.h"
+
 void MenuState::Init()
 {
 	glClearColor(0.2, 0.2, 0.2, 1);
 
 	scene = new Scene(NULL);
 
+	EnemyDatabase::Init("jelly");
+
 	Entity* entity = scene->canvas->AddChild("Main Menu");
 	menu = entity->AddComponent<MenuHandler>();
 
 	entity = scene->canvas->AddChild("Background");
 	entity->AddComponent<InteractiveBackground>();
-	
+
 	Resume();
 }
 

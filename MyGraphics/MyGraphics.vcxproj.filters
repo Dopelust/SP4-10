@@ -116,6 +116,9 @@
     <Filter Include="Scene\Entity\Component\Script\Menu\Level Selection">
       <UniqueIdentifier>{493a615b-0cde-42d0-8aa0-4ffd50f520e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Entity\Component\Script\Menu\InfoBook">
+      <UniqueIdentifier>{ce791a9f-48dd-4fc2-89b6-4c480447576f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Grid.cpp">
@@ -386,6 +389,15 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.cpp">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -683,6 +695,15 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.h">
       <Filter>Scene\Entity\Component\Script\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.h">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

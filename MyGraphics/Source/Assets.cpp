@@ -101,6 +101,18 @@ void Assets::Init()
 	GenerateSpriteStrip("Puff", 10);
 	animator["Puff"]->AddAnimation("Puff", CreateAnimationStrip("Puff", "Puff", 10, 0.02f));
 
+	texture["Stun"] = new Texture("Assets//stun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Stun"] = new Spritesheet();
+	animator["Stun"] = new Animator();
+	GenerateSpriteStrip("Stun", 6);
+	animator["Stun"]->AddAnimation("Stun", CreateAnimationStrip("Stun", "Stun", 6, 0.15f));
+
+	texture["Slow"] = new Texture("Assets//slow.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	sprite["Slow"] = new Spritesheet();
+	animator["Slow"] = new Animator();
+	GenerateSpriteStrip("Slow", 1);
+	animator["Slow"]->AddAnimation("Slow", CreateAnimationStrip("Slow", "Slow", 1, 1.f));
+
 	texture["Splash"] = new Texture("Assets//splash.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Splash"] = new Spritesheet();
 	animator["Splash"] = new Animator();

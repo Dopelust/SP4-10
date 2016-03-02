@@ -19,6 +19,7 @@ private:
 
 	Button* editor;
 	Button* option;
+	Button* notebook;
 	Button* achievement;
 	Button* exit;
 };

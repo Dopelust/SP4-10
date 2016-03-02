@@ -100,6 +100,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\FadeScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\HoverText.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.cpp" />
@@ -197,6 +200,9 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\FadeScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\HoverText.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelScript.h" />

@@ -223,7 +223,7 @@ void PlayState::Init()
 	editor->GetComponent<TowerGUI>()->DisableUpgrades();
 	editor->GetComponent<TowerGUI>()->hover = hover->GetComponent<HoverText>();
 
-	EnemyDatabase::Init("jelly");
+//	EnemyDatabase::Init("jelly");
 
 	Entity* stageManager;
 	stageManager = new Entity();

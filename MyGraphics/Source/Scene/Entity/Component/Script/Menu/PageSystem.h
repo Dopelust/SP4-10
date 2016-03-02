@@ -15,6 +15,7 @@ public:
 
 	void AddPage(Entity* page);
 	Entity* GetPage();
+	int GetPageNo();
 	void SetPage(int page);
 
 	bool HasPreviousPage();

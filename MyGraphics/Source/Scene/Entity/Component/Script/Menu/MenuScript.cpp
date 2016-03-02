@@ -44,15 +44,19 @@ void MenuScript::Init(Entity * ent)
 	editor = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
-	option = entity->GetComponent<Button>();
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "NOTEBOOK", 400, Vector3(0.7f, 0.7f, 0)));
+	notebook = entity->GetComponent<Button>();
 
 	entity =
 		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 210), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
 	achievement = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
+	option = entity->GetComponent<Button>();
+
+	entity =
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 90), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
 	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);
@@ -65,6 +69,7 @@ void MenuScript::Init(Entity * ent)
 #include "OptionScript.h"
 #include "LevelHandler.h"
 #include "AchievementScript.h"
+#include "InfoHandler.h"
 
 #include "../../GUI/Button.h"
 #include "../../../../../GameEngine.h"
@@ -86,6 +91,9 @@ void MenuScript::Update(double dt)
 
 	else if (option->IsState())
 		menu->Push(menu->GetState<OptionScript>());
+
+	else if (notebook->IsState())
+		menu->Push(menu->GetState<InfoHandler>());
 
 	else if (achievement->IsState())
 	{

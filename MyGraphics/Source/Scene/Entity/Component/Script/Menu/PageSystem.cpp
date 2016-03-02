@@ -33,6 +33,11 @@ Entity* PageSystem::GetPage()
 	return NULL;
 }
 
+int PageSystem::GetPageNo()
+{
+	return current;
+}
+
 void PageSystem::SetPage(int page)
 {
 	if (page >= 0 && page < (int)pages.size())

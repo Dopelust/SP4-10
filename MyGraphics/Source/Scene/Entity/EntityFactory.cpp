@@ -356,6 +356,23 @@ Entity* EntityFactory::GenerateEnemy(const Vector2& position, int enemyTier, con
 	return entity;
 }
 
+Entity* EntityFactory::CreateSpriteAnimation(const Vector2& position, const Vector2& size, const char * animator, const char * animation, const Vector4 &color, int layer, bool play, bool occlusion)
+{
+	Entity* entity = new Entity();
+	entity->transform->SetPosition(position.x, position.y);
+	entity->transform->SetSize(size.x, size.y);
+
+	entity->AddComponent<SpriteRenderer>()->SetLayer(layer);
+	entity->GetComponent<SpriteRenderer>()->color = color;
+	entity->AddComponent<SpriteAnimator>()->SetAnimator(Resource.GetAnimator(animator));
+	entity->GetComponent<SpriteAnimator>()->Play(animation, play);
+
+	if (occlusion)
+		entity->AttachChild(CreateGraphic(Vector2(0, -1), Vector2(TileWidth * 0.85f, TileHeight * 0.65f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+
+	return entity;
+}
+
 #include "Component\Script\StandardParticle.h"
 
 Entity * EntityFactory::CreateParticle(const Vector2 & position, const Vector2 & size, const char * animator, const char * animation, float alpha)
