@@ -409,6 +409,9 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\SimplePopup.cpp">
       <Filter>Scene\Entity\Component\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\ShortcutInfoScript.cpp">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameState.h">
@@ -724,6 +727,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Entity\Component\Script\SimplePopup.h">
       <Filter>Scene\Entity\Component\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\ShortcutInfoScript.h">
+      <Filter>Scene\Entity\Component\Script\Menu\InfoBook</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

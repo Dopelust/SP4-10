@@ -201,6 +201,7 @@ void StageManager::UpdateWave(double dt)
 
 			File.Remove("Data//Save//stats.txt");
 			File.Remove("Data//Save//save.txt");
+			SaveAchievement("Data//Save//achievementStats.txt");
 
 			Time.SetTimeScale(0);
 			gui->EndStage(true);
@@ -277,6 +278,8 @@ bool StageManager::Hit(Entity* enemy)
 
 			Time.SetTimeScale(0);
 			gui->EndStage(false);
+
+			SaveAchievement("Data//Save//achievementStats.txt");
 		}
 
 		return true;

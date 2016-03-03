@@ -12,6 +12,7 @@
 
 #include "TowerInfoScript.h"
 #include "EnemyInfoScript.h"
+#include "ShortcutInfoScript.h"
 
 #include "../../GUI/Button.h"
 #include "../../../../../SoundEngine.h"
@@ -32,11 +33,16 @@ void InfoHandler::Init(Entity * ent)
 	page = ent->AddComponent<PageSystem>();
 
 	Entity* entity = ent->AddChild("Page 1");
-	entity->AddComponent<TowerInfoScript>();
+	entity->AddComponent<ShortcutInfoScript>();
 
 	page->AddPage(entity);
 
 	entity = ent->AddChild("Page 2");
+	entity->AddComponent<TowerInfoScript>();
+
+	page->AddPage(entity);
+
+	entity = ent->AddChild("Page 3");
 	entity->AddComponent<EnemyInfoScript>();
 
 	page->AddPage(entity);

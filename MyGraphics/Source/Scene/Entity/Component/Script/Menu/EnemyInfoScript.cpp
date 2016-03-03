@@ -116,7 +116,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			true));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y),
 			Vector2(TileWidth, TileHeight),
 			"Jellies",
 			("Jellies" + ToString(count)).c_str(),
@@ -126,7 +126,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			true));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y + 2),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y + 2),
 			Vector2(TileWidth * 1.8f, TileHeight * 1.8f),
 			"Wings",
 			"Wings",
@@ -136,7 +136,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			false));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y - 2),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y - 2),
 			Vector2(TileWidth * 1.8f, TileHeight * 1.8f),
 			"Wings",
 			"Wings",
@@ -144,9 +144,9 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			3,
 			true,
 			false));
-
+		
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y),
 			Vector2(TileWidth * 1.75f, TileHeight * 1.75f),
 			"Wings",
 			"Wings",

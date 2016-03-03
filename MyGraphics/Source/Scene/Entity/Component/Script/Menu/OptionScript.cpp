@@ -20,6 +20,7 @@ OptionScript::~OptionScript()
 
 #include "LUAEngine.h"
 #include "../../../../../SoundEngine.h"
+#include "../../TextRenderer2D.h"
 
 void OptionScript::Init(Entity * ent)
 {
@@ -27,6 +28,9 @@ void OptionScript::Init(Entity * ent)
 
 	Entity* entity = ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 200), "BACK", 400, Vector3(0.7f, 0.7f, 0)));
 	back = entity->GetComponent<Button>();
+
+	entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 610), "OPTIONS", 512, true));
+	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
 
 	Entity* SmoothSlide = ent->AttachChild(EntityFactory::CreateSlider(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5, Scene::scene->GetResolutionY(Scene::scene->canvas)*0.45f), Vector2(400, 12), "SFX", 0, LUA.GetGlobalNumber("SFX_VOLUME"), 100, true));
 	sfx = SmoothSlide->GetChild("Slider")->GetComponent<Slider>();

@@ -103,6 +103,7 @@
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.cpp" />
+    <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\ShortcutInfoScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.cpp" />
     <ClCompile Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\AchievementScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\EnemyInfoScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InfoHandler.h" />
+    <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\ShortcutInfoScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\TowerInfoScript.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\InteractiveBackground.h" />
     <ClInclude Include="Source\Scene\Entity\Component\Script\Menu\LevelHandler.h" />
