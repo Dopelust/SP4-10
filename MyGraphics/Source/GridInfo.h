@@ -17,5 +17,5 @@
 
 #define NumberOfPartitions NumberOfPartitionsX*NumberOfPartitionsY
 
-#define PartitionWidth 21.f / NumberOfPartitions
-#define PartitionHeight 13.f / NumberOfPartitions
+#define PartitionWidth GridWidth / NumberOfPartitions
+#define PartitionHeight GridHeight / NumberOfPartitions

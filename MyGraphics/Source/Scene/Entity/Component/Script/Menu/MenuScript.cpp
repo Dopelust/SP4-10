@@ -23,15 +23,15 @@ void MenuScript::Init(Entity * ent)
 	StateObject::Init(ent);
 
 	Entity* entity =
-		ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 600), "NIGHT CHANGES", 800));
+		ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 580), "NIGHT CHANGES", 800));
 	entity->GetComponent<TextRenderer2D>()->color.Set(0.7f, 0.7f, 0);
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 450), "PLAY", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 430), "PLAY", 400, Vector3(0.7f, 0.7f, 0)));
 	play = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 390), "CONTINUE", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 370), "CONTINUE", 400, Vector3(0.7f, 0.7f, 0)));
 	resume = entity->GetComponent<Button>();
 
 	if (File.Exists("Data//Save//save.txt"))
@@ -40,19 +40,19 @@ void MenuScript::Init(Entity * ent)
 		resume->Disable();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 330), "HELP", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 310), "HELP", 400, Vector3(0.7f, 0.7f, 0)));
 	notebook = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 270), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 250), "STATS", 400, Vector3(0.7f, 0.7f, 0)));
 	achievement = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 210), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 190), "OPTIONS", 400, Vector3(0.7f, 0.7f, 0)));
 	option = entity->GetComponent<Button>();
 
 	entity =
-		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 150), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
+		ent->AttachChild(EntityFactory::CreateTextButton(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 130), "QUIT", 400, Vector3(0.7f, 0.7f, 0)));
 	exit = entity->GetComponent<Button>();
 
 	target.Set(-Scene::scene->GetResolutionX(Scene::scene->canvas), 0);

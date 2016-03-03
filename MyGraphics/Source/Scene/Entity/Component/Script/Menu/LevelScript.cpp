@@ -25,19 +25,19 @@ LevelScript::~LevelScript()
 
 void LevelScript::Init(Entity * ent)
 {
-	AddLevel("", "", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.375f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.5f), ent);
+	AddLevel("", "", Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.4f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.5f), ent);
 
-	ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.675f - 128, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.55f + 24),
+	ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.4f - 128, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.725f + 24),
 		"Load:", 300))->GetComponent<TextRenderer2D>()->color.Set(0.7f, 0.7f, 0);
 
-	input = ent->AttachChild(EntityFactory::CreateInputField(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.675f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.55f),
+	input = ent->AttachChild(EntityFactory::CreateInputField(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.4f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.725f),
 		Vector3(0, 0, 0), 16, 256))->GetChild("Input Field")->GetComponent<InputField>();
 
-	Entity* entity = ent->AttachChild(EntityFactory::CreateGraphic(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.65f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.45f),
-		Vector2(204, 50), NULL, Vector3(0.1f, 0.1f, 0.1f), false));
+	Entity* entity = ent->AttachChild(EntityFactory::CreateGraphic(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.7f, Scene::scene->GetResolutionY(Scene::scene->canvas) * 0.5f),
+		Vector2(204, 40), NULL, Vector3(0.1f, 0.1f, 0.1f), false));
 		
 	entity = entity->AttachChild(EntityFactory::CreateButton(Vector2(),
-		Vector2(200, 45), NULL, Vector3(0.6f, 0.6f, 0.6f), true));
+		Vector2(200, 36), NULL, Vector3(0.6f, 0.6f, 0.6f), true));
 
 	editor = entity->GetComponent<Button>();
 	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Level Editor", 200));

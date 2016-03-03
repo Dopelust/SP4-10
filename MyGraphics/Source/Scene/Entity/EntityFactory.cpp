@@ -311,14 +311,14 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
-	else if (type == "bomber")
+	else if (type == "bubble_cannon")
 	{
 		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Bomber"));
 		entity->transform->Size() *= 1.5f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
-	else if (type == "turret")
+	else if (type == "glue_gun")
 	{
 		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Turret"));
 		entity->transform->Size() *= 2.5f;
@@ -337,16 +337,21 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 Entity* EntityFactory::GenerateProjectile(const Vector2& position, string type)
 {
-	Entity* entity = CreateGraphic(position, Vector2(), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1), 7);
+	Entity* entity = NULL;
 
 	if (type == "Bubble")
 	{
-		entity->transform->SetSize(TileWidth * 0.5f, TileHeight * 0.5f);
+		entity = CreateGraphic(position, Vector2(TileWidth * 0.5f, TileHeight * 0.5f), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1), 7);
 		entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.4f, TileHeight * 0.4f, 0);
+	}
+	else if (type == "Glue")
+	{
+		entity = CreateGraphic(position, Vector2(TileWidth * 0.9f, TileHeight * 0.9f), Resource.GetTexture("Water"), Vector4(5, 5, 5, 0.5f), 7);
+		entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.2f, TileHeight * 0.2f, 0);
 	}
 	else
 	{
-		entity->transform->SetSize(TileWidth * 0.9f, TileHeight * 0.9f);
+		entity = CreateGraphic(position, Vector2(TileWidth * 0.9f, TileHeight * 0.9f), Resource.GetTexture(type.c_str()), Vector4(1, 1, 1, 1), 7);
 		entity->AddComponent<BoxCollider>()->size = Vector3(TileWidth * 0.2f, TileHeight * 0.2f, 0);
 	}
 

@@ -45,12 +45,19 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 	Entity* entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 610), "ENEMIES", 512, true));
 	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
 
+	ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 535), "Enemies drop a tier when shot at and", 200, true));
+	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+	ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.5f, 510), "dies after dropping from Tier 1.", 200, true));
+	entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+
 	int count = 1;
-	for (int y = 500; y > 150; y -= 50)
+	for (int y = 430; y > 130; y -= 50)
 	{
-		entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.15f, y), ("Tier " + ToString(count)).c_str(), 200, false));
+		entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.2f, y), ("Tier " + ToString(count)).c_str(), 256, false));
+		entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.275f, y),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.325f, y),
 			Vector2(TileWidth, TileHeight),
 			"Jellies",
 			("Jellies" + ToString(count)).c_str(),
@@ -102,9 +109,11 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 		++count;
 	}
 
-	for (int y = 500; y > 300; y -= 50)
+	for (int y = 430; y > 180; y -= 50)
 	{
-		entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.55f, y), ("Tier " + ToString(count)).c_str(), 200, false));
+		entity = ent->AttachChild(EntityFactory::CreateTextGUI(Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.55f, y), ("Tier " + ToString(count)).c_str(), 256, false));
+		entity->GetComponent<TextRenderer2D>()->color.Set(0.75f, 0.75f, 0);
+
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
 			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.675f, y),
 			Vector2(TileWidth, TileHeight),
@@ -116,7 +125,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			true));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y),
 			Vector2(TileWidth, TileHeight),
 			"Jellies",
 			("Jellies" + ToString(count)).c_str(),
@@ -126,7 +135,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			true));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y + 2),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y + 2),
 			Vector2(TileWidth * 1.8f, TileHeight * 1.8f),
 			"Wings",
 			"Wings",
@@ -136,7 +145,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			false));
 
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y - 2),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y - 2),
 			Vector2(TileWidth * 1.8f, TileHeight * 1.8f),
 			"Wings",
 			"Wings",
@@ -146,7 +155,7 @@ void EnemyInfoScript::InitEnemy(Entity *ent)
 			false));
 		
 		entity = ent->AttachChild(EntityFactory::CreateSpriteAnimation(
-			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.8f, y),
+			Vector2(Scene::scene->GetResolutionX(Scene::scene->canvas) * 0.75f, y),
 			Vector2(TileWidth * 1.75f, TileHeight * 1.75f),
 			"Wings",
 			"Wings",

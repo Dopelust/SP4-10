@@ -49,6 +49,8 @@ TestState::~TestState()
 #include "Scene\Entity\Component\Script\WorldZoomScript.h"
 #include "Scene\Entity\Component\Script\HoverText.h"
 
+#include "Screen.h"
+
 void TestState::Init()
 {
 	glClearColor(0.2, 0.2, 0.2, 1);
@@ -64,7 +66,7 @@ void TestState::Init()
 	
 	{
 		Entity* entity = scene->canvas->AddChild("Hotbar");
-		entity->transform->SetPosition(1200, 656);
+		entity->transform->SetPosition(1200, 630);
 		entity->AddComponent<TileEditorGUI>()->SetEditor(editor->AddComponent<TileEditor>());
 
 		for (int i = 0; i < 5; ++i)
@@ -82,8 +84,9 @@ void TestState::Init()
 		entity->GetComponent<TileEditorGUI>()->hover = hover->GetComponent<HoverText>();
 	}
 
-	Entity* entity = EntityFactory::GenerateButton(Vector2(1200, 50), Vector2(96, 32), NULL, Vector3(0.5f, 0.5f, 0.5f), true);
-	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "Quit", 200));
+	Entity* entity = EntityFactory::GenerateGraphic(Vector2(Screen.GetProjectionWidth() - 24, Screen.GetProjectionHeight() - 24), Vector2(32, 32), NULL, Vector3(0.1f, 0.1f, 0.1f), false);
+	entity = entity->AttachChild(EntityFactory::CreateButton(Vector2(), Vector2(28, 28), NULL, Vector3(0.75f, 0, 0), 200));
+	entity->AttachChild(EntityFactory::CreateTextGUI(Vector2(), "X", 200));
 	menu = entity->GetComponent<Button>();
 
 	entity = EntityFactory::GenerateInputField(Vector2(256, 680), Vector3(0, 0, 0), 16, 200);
@@ -147,13 +150,20 @@ void TestState::Update(float dt)
 				scene->grid->Reset();
 				input->SetOutput("");
 			}
+			else if (text == "Quit?")
+			{
+				Engine.PopState();
+				return;
+			}
 
 			popup->GetComponent<StandardPopup>()->Close();
 		}
 	}
 	
 	if (menu->IsState())
-		Engine.PopState();
+	{
+		popup->GetComponent<StandardPopup>()->PopUp("Quit?");
+	}
 
 	if (load->IsState())
 	{

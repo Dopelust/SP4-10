@@ -94,14 +94,6 @@ bool GameEngine::PopState()
 
 void GameEngine::Update(float dt)
 {
-	if (Input.IsPress(GLFW_KEY_ESCAPE))
-	{
-		PopState();
-
-		if (states.empty())
-			active = false;
-	}
-
 	if (dt > 0.1f)
 		dt = 0.1f;
 

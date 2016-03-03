@@ -82,6 +82,10 @@ Grid::~Grid()
 #include "Scene\Entity\Component\Physics\BoxCollider.h"
 
 #include <string>
+#include <algorithm>
+#include "CollisionQuery.h"
+#include "Scene\Entity\Component\Transform.h"
+
 void Grid::PopulateCells(Entity* ent)
 {
 	BoxCollider* box = ent->GetComponent<BoxCollider>();
@@ -90,22 +94,19 @@ void Grid::PopulateCells(Entity* ent)
 	{
 		box->cell = cell;
 
-		Vector3 min = GetIndex(box->GetMinCoord()) / NumberOfTilesY;
-		Vector3 max = GetIndex(box->GetMaxCoord()) / NumberOfTilesY;
-
 		box->part.clear();
 
-		for (int i = min.x; i <= max.x; ++i)
-			for (int j = min.y; j <= max.y; ++j)
-				{
-					Partition* c = GetPartition(i, j);
+		for (int i = 0; i < NumberOfPartitionsX; ++i)
+			for (int j = 0; j < NumberOfPartitionsY; ++j)
+			{
+				Partition* c = GetPartition(i, j);
 
-					if (c)
-					{
-						c->Add(ent);
-						box->part.push_back(c);
-					}
+				if (CollisionQuery::Test(box, c->min, c->max))
+				{
+					c->Add(ent);
+					box->part.push_back(c);
 				}
+			}
 	}
 
 	for (auto &child : ent->GetChildren())
@@ -120,10 +121,6 @@ vector<Partition*> Grid::GetCellsInRange(Entity * entity, float range)
 	vector<Partition*> part;
 	return part;
 }
-
-#include <algorithm>
-#include "CollisionQuery.h"
-#include "Scene\Entity\Component\Transform.h"
 
 vector<Entity*> Grid::GetEntitiesInRange(Entity * entity, float range)
 {

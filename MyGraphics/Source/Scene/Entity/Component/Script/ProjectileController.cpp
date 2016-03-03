@@ -31,8 +31,6 @@ void Projectile::Init(Entity* ent)
 void Projectile::LateInit(string name)
 {
 	this->name = name;
-
-	owner->GetComponent<Graphic2D>()->texture = Resource.GetTexture(name.c_str());
 }
 
 
@@ -91,7 +89,6 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		case 0:
 		{
 			PlaySound();
-			col.entity->GetComponent<EnemyController>()->Pop();
 		}
 		break;
 		case 1:
@@ -107,10 +104,11 @@ void Projectile::OnCollisionEnter(const Collision& col)
 		case 3:
 		{
 			PlaySound();
-			col.entity->GetComponent<EnemyController>()->Pop((int)towerData->projectileValue);
 		}
 		break;
 		}
+
+		col.entity->GetComponent<EnemyController>()->Pop((int)towerData->pierce + 1);
 	}
 }
 

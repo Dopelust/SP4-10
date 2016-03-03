@@ -7,6 +7,7 @@
 using namespace::std;
 
 class Entity;
+class Grid;
 
 class Partition
 {
@@ -21,6 +22,8 @@ public:
 	const vector<Entity*>& GetEntities();
 
 private:
+	friend Grid;
+
 	vector<Entity*> entityList;
 	Vector3 min, max;
 };
