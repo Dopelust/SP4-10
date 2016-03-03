@@ -9,8 +9,13 @@
 #define CellWidth NumberOfTilesX * TileWidth
 #define CellHeight NumberOfTilesY * TileHeight
 
-#define NumberOfCellsX 1
-#define NumberOfCellsY 1
+#define GridWidth CellWidth
+#define GridHeight CellHeight
 
-#define GridWidth NumberOfCellsX * CellWidth
-#define GridHeight NumberOfCellsY * CellHeight
+#define NumberOfPartitionsX 4
+#define NumberOfPartitionsY 4
+
+#define NumberOfPartitions NumberOfPartitionsX*NumberOfPartitionsY
+
+#define PartitionWidth 21.f / NumberOfPartitions
+#define PartitionHeight 13.f / NumberOfPartitions

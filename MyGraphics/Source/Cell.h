@@ -13,14 +13,8 @@ class Entity;
 class Cell
 {
 public:
-	Cell(int x, int y);
+	Cell();
 	~Cell();
-
-	void Add(Entity* entity);
-	void Remove(Entity* entity);
-
-	void Reset();
-	const vector<Entity*>& GetEntities();
 
 	void Place(int i, int j, int index);
 
@@ -31,10 +25,7 @@ public:
 	void Draw(int i, int j); 
 
 private:
-	vector<Entity*> entityList;
 	Tile tile[NumberOfTilesX][NumberOfTilesY];
-
-	int x, y;
 };
 
 #endif

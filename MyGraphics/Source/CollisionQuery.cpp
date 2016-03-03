@@ -14,7 +14,8 @@ bool CollisionQuery::Test(BoxCollider * a, const Vector3 & minB, const Vector3 &
 
 bool CollisionQuery::Test(const Vector3 & minA, const Vector3 & maxA, const Vector3 & minB, const Vector3 & maxB)
 {
-	return minA.x < maxB.x && maxA.x > minB.x && minA.y < maxB.y && maxA.y > minB.y && minA.z <= maxB.z && maxA.z >= minB.z;
+	//return minA.x < maxB.x && maxA.x > minB.x && minA.y < maxB.y && maxA.y > minB.y && minA.z <= maxB.z && maxA.z >= minB.z;
+	return minA.x < maxB.x && maxA.x > minB.x && minA.y < maxB.y && maxA.y > minB.y;
 }
 
 bool CollisionQuery::Test(BoxCollider * box, const Vector3 & position, float radius)

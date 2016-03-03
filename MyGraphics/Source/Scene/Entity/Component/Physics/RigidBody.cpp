@@ -47,7 +47,9 @@ void RigidBody::Update(double dt)
 	transform->Position() += velocity * dt;
 }
 
+#include "../../../../Partition.h"
 #include "../../../../Cell.h"
+#include "../../../../Grid.h"
 #include "../../../../CollisionQuery.h"
 #include <functional>
 
@@ -63,7 +65,7 @@ struct CollisionEntry
 
 void RigidBody::ResolveCollisions()
 {
-	for (auto& cell : box->GetCells())
+	for (auto& cell : box->GetPartitions())
 	{
 		for (auto& entity : cell->GetEntities())
 		{
@@ -75,17 +77,19 @@ void RigidBody::ResolveCollisions()
 				owner->OnCollisionEnter(Collision(Collision::UNDEFINED, entity));
 			}
 		}
+	}
 
-		for (int i = 0; i < NumberOfTilesX; ++i)
-		for (int j = 0; j < NumberOfTilesY; ++j)
+	Vector2& position = Grid::GetIndex(transform->GetPosition()).GetVector2();
+
+	for (int i = Math::Max(0, (int)position.x - 1); i <= Math::Min(NumberOfTilesX, (int)position.x + 1); ++i)
+	for (int j = Math::Max(0, (int)position.y - 1); j <= Math::Min(NumberOfTilesY, (int)position.y + 1); ++j)
+	{
+		switch (box->GetCell()->GetTile(i, j).index)
 		{
-			switch (cell->GetTile(i, j).index)
-			{
-			case 2:
-				if (CollisionQuery::Test(box, cell->GetTileMinCoord(i, j), cell->GetTileMaxCoord(i, j)))
-					owner->OnCollisionEnter(Collision(Collision::UNDEFINED, NULL));
-				break;
-			}
+		case 2:
+			if (CollisionQuery::Test(box, box->GetCell()->GetTileMinCoord(i, j), box->GetCell()->GetTileMaxCoord(i, j)))
+				owner->OnCollisionEnter(Collision(Collision::UNDEFINED, NULL));
+			break;
 		}
 	}
 }

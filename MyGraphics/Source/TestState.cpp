@@ -133,7 +133,7 @@ void TestState::Update(float dt)
 		{
 			string text = popup->GetComponent<StandardPopup>()->text->GetText();
 
-			if (text == "Save?")
+			if (text == "Save?" || text == "Overwrite existing data?")
 			{
 				scene->grid->Save(ToString("Data//Levels//", input->GetOutput(), ".csv").c_str());
 			}

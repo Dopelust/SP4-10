@@ -63,7 +63,7 @@ bool TowerManager::IsPlacing()
 }
 
 #include "../Physics/BoxCollider.h"
-#include "../../../../Cell.h"
+#include "../../../../Partition.h"
 #include "../../../../CollisionQuery.h"
 
 bool TowerManager::CanPlace(Tile* tile)
@@ -72,7 +72,7 @@ bool TowerManager::CanPlace(Tile* tile)
 	{
 		if (!tile->index && !GetTower(selector->transform->GetPosition()))
 		{
-			for (auto& cell : box->GetCells())
+			for (auto& cell : box->GetPartitions())
 			{
 				for (auto& entity : cell->GetEntities())
 				{

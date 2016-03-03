@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace::std;
 
-Cell::Cell(int x, int y) : x(x), y(y)
+Cell::Cell()
 {
 }
 
@@ -11,28 +11,6 @@ Cell::~Cell()
 {
 }
 
-void Cell::Add(Entity* entity)
-{
-	entityList.push_back(entity);
-}
-
-void Cell::Remove(Entity * entity)
-{
-	auto it = find(entityList.begin(), entityList.end(), entity);
-
-	if (it != entityList.end())
-		entityList.erase(it);
-}
-
-void Cell::Reset()
-{
-	entityList.clear();
-}
-
-const vector<Entity*>& Cell::GetEntities()
-{
-	return entityList;
-}
 
 void Cell::Place(int i, int j, int index)
 {
@@ -81,7 +59,7 @@ Tile& Cell::GetTile(int i, int j)
 
 Vector3 Cell::GetTileMinCoord(int i, int j)
 {
-	return Vector3(x * CellWidth + i * TileWidth, y * CellHeight + j * TileHeight); 
+	return Vector3(i * TileWidth, j * TileHeight); 
 }
 Vector3 Cell::GetTileMaxCoord(int i, int j)
 {

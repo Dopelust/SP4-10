@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="Source\GBuffer.cpp" />
     <ClCompile Include="Source\MenuState.cpp" />
+    <ClCompile Include="Source\Partition.cpp" />
     <ClCompile Include="Source\PlayState.cpp" />
     <ClCompile Include="Source\Scene\AStar\ASnode.cpp" />
     <ClCompile Include="Source\Scene\AStar\AStar.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Source\GBuffer.h" />
     <ClInclude Include="Source\MenuState.h" />
     <ClInclude Include="Source\MeshLayer.h" />
+    <ClInclude Include="Source\Partition.h" />
     <ClInclude Include="Source\PlayState.h" />
     <ClInclude Include="Source\Scene\AStar\ASnode.h" />
     <ClInclude Include="Source\Scene\AStar\AStar.h" />

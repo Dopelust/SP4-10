@@ -305,10 +305,12 @@ void StageManager::AddGold(int gold)
 
 void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 {
-	obstructionMap.resize(NumberOfCellsX * NumberOfTilesX);
+	obstructionMap.reserve(NumberOfTilesX);
+	obstructionMap.resize(NumberOfTilesX);
 	for (unsigned i = 0; i < obstructionMap.size(); ++i)
 	{
-		obstructionMap[i].resize(NumberOfCellsY * NumberOfTilesY);
+		obstructionMap[i].reserve(NumberOfTilesY);
+		obstructionMap[i].resize(NumberOfTilesY);
 	}
 
 	for (unsigned i = 0; i < obstructionMap.size(); ++i)
@@ -319,10 +321,12 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 		}
 	}
 
-	obstacleMap.resize(NumberOfCellsX * NumberOfTilesX);
+	obstacleMap.reserve(NumberOfTilesX);
+	obstacleMap.resize(NumberOfTilesX);
 	for (unsigned i = 0; i < obstacleMap.size(); ++i)
 	{
-		obstacleMap[i].resize(NumberOfCellsY * NumberOfTilesY);
+		obstacleMap[i].reserve(NumberOfTilesY);
+		obstacleMap[i].resize(NumberOfTilesY);
 	}
 
 	for (unsigned i = 0; i < obstacleMap.size(); ++i)
@@ -334,9 +338,9 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 	}
 
 	// Init tileMap
-	for (unsigned i = 0; i < NumberOfCellsX * NumberOfTilesX; ++i)
+	for (unsigned i = 0; i < NumberOfTilesX; ++i)
 	{
-		for (unsigned j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
+		for (unsigned j = 0; j < NumberOfTilesY; ++j)
 		{
 			obstructionMap[i][j] = false;
 			for (unsigned k = 0; k < obstructionIndex.size(); ++k)
@@ -350,9 +354,9 @@ void StageManager::CreateTileMap(vector<int>& obstructionIndex)
 		}
 	}
 
-	for (unsigned i = 0; i < NumberOfCellsX * NumberOfTilesX; ++i)
+	for (unsigned i = 0; i <  NumberOfTilesX; ++i)
 	{
-		for (unsigned j = 0; j < NumberOfCellsY * NumberOfTilesY; ++j)
+		for (unsigned j = 0; j < NumberOfTilesY; ++j)
 		{
 			obstacleMap[i][j] = false;
 			for (unsigned k = 0; k < obstructionIndex.size(); ++k)

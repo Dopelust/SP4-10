@@ -35,3 +35,5 @@ protected:
 	Vector3 GetLastMaxCoord();
 	Vector3 GetLastMinCoord();
 };
+
+

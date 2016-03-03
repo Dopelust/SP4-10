@@ -9,6 +9,7 @@ struct Vector2;
 #include <vector>
 using namespace::std;
 
+class Partition;
 class Tile;
 class Scene;
 class Cell;
@@ -29,20 +30,21 @@ public:
 	virtual void Render();
 
 	void ResolveCollisions(Entity* ent);
-	Vector3 GetIndex(const Vector3& position);
+	static Vector3 GetIndex(const Vector3& position);
 
-	vector<Cell*> GetCellsInRange(Entity* entity, float range);
+	vector<Partition*> GetCellsInRange(Entity* entity, float range);
 	vector<Entity*> GetEntitiesInRange(Entity* entity, float range);
 
-	Cell* GetCell(int x, int y);
+	Partition* GetPartition(int x, int y);
 	Tile* GetTile(int x, int y);
 
 	vector<Vector2> GetTilesWithIndex(int index);
-	Vector3 GetPosition(const Vector2& index);
+	static Vector3 GetPosition(const Vector2& index);
 
 protected:
 	Scene* owner;
-	Cell* cell[NumberOfCellsX][NumberOfCellsY];
+	Cell* cell;
+	Partition* part[NumberOfPartitionsX][NumberOfPartitionsY];
 
 private:
 	void PopulateCells(Entity* ent);

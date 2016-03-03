@@ -1,7 +1,12 @@
 // Starting Health, Gold
-Wave,	20,	500
+Wave,	20123321,	5000000
 // Wave 1
 // Tier, Delay, Count, flying
-11, 0.1, 1, 0
-
+11, 0.01, 1000, 0
+//Wave 2
+11, 0.01, 1000, 0
+//Wave 3
+11, 0.01, 1000, 0
+//Wave 2
+11, 0.01, 1000, 0
 //Ignore this

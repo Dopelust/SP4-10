@@ -25,7 +25,12 @@ void BoxCollider::Init(Entity * ent)
 	transform = ent->transform;
 }
 
-const vector<Cell*>& BoxCollider::GetCells()
+const vector<Partition*>& BoxCollider::GetPartitions()
 {
-	return cells;
+	return part;
+}
+
+Cell* BoxCollider::GetCell()
+{
+	return cell;
 }

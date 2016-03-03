@@ -8,6 +8,7 @@
 using namespace::std;
 
 class Cell;
+class Partition;
 class RigidBody;
 class Grid;
 class Transform;
@@ -27,12 +28,14 @@ public:
 
 //	void Draw(const Mtx44& parent);
 
-	const vector<Cell*>& GetCells();
+	const vector<Partition*>& GetPartitions();
+	Cell* GetCell();
 
 private:
 	friend Grid;
 	friend RigidBody;
 
 	Transform* transform;
-	vector<Cell*> cells;
+	vector<Partition*> part;
+	Cell* cell;
 };

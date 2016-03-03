@@ -3,9 +3,6 @@
 
 #include "GridInfo.h"
 
-#include <vector>
-using namespace::std;
-
 class Mtx44;
 
 class Tile

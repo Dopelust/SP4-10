@@ -23,9 +23,9 @@ bool StageDatabase::Init(const char * fileData)
 {
 	cout << "Initializing projectile database" << endl;
 
-	const char* file = ToString("Data//Levels//", fileData, ".txt").c_str();
+	string& file = ToString("Data//Levels//", fileData, ".txt");
 
-	if (!File.Exists(file))
+	if (!File.Exists(file.c_str()))
 		file = "Data//Levels//level1.txt";
 
 	vector<string>& lines = File.GetLines(file);

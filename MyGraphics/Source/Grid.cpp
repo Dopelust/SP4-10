@@ -8,6 +8,9 @@
 #include "FileSystem.h"
 #include "Utility.h"
 
+
+#include "Partition.h"
+
 bool Grid::Save(const char* filepath)
 {
 	ofstream& output = *File.BeginWriting(filepath);
@@ -16,7 +19,7 @@ bool Grid::Save(const char* filepath)
 	{
 		for (int x = 0; x < NumberOfTilesX; ++x)
 		{
-			output << GetCell(0, 0)->GetTile(x, y).index << ',';
+			output << GetTile(x, y)->index << ',';
 		}
 
 		output << endl;
@@ -39,7 +42,7 @@ bool Grid::Load(const char* filepath)
 
 		for (int x = 0; x < NumberOfTilesX; ++x)
 		{
-			GetCell(0, 0)->Place(x, y, tiles[x]);
+			GetTile(x, y)->index = tiles[x];
 		}
 	}
 
@@ -52,23 +55,27 @@ void Grid::Reset()
 	{
 		for (int x = 0; x < NumberOfTilesX; ++x)
 		{
-			GetCell(0, 0)->Place(x, y, 0);
+			GetTile(x, y)->index = 0;
 		}
 	}
 }
 
 Grid::Grid(Scene* owner) : owner(owner)
 {
-	for (int i = 0; i < NumberOfCellsX; ++i)
-	for (int j = 0; j < NumberOfCellsY; ++j)
-		cell[i][j] = new Cell(i, j);
+	cell = new Cell();
+
+	for (int i = 0; i < NumberOfPartitionsX; ++i)
+	for (int j = 0; j < NumberOfPartitionsY; ++j)
+		part[i][j] = new Partition(i * PartitionWidth, j * PartitionHeight);
 }
 
 Grid::~Grid()
 {
-	for (int i = 0; i < NumberOfCellsX; ++i)
-	for (int j = 0; j < NumberOfCellsY; ++j)
-		delete cell[i][j];
+	delete cell;
+
+	for (int i = 0; i < NumberOfPartitionsX; ++i)
+	for (int j = 0; j < NumberOfPartitionsY; ++j)
+		delete part[i][j];
 }
 
 #include "Scene\Entity\Component\Physics\RigidBody.h"
@@ -81,20 +88,22 @@ void Grid::PopulateCells(Entity* ent)
 
 	if (box)
 	{
-		Vector3 min = GetIndex(box->GetMinCoord()) / NumberOfTilesX;
+		box->cell = cell;
+
+		Vector3 min = GetIndex(box->GetMinCoord()) / NumberOfTilesY;
 		Vector3 max = GetIndex(box->GetMaxCoord()) / NumberOfTilesY;
 
-		box->cells.clear();
+		box->part.clear();
 
 		for (int i = min.x; i <= max.x; ++i)
 			for (int j = min.y; j <= max.y; ++j)
 				{
-					Cell* c = GetCell(i, j);
+					Partition* c = GetPartition(i, j);
 
 					if (c)
 					{
 						c->Add(ent);
-						box->cells.push_back(c);
+						box->part.push_back(c);
 					}
 				}
 	}
@@ -106,10 +115,10 @@ void Grid::PopulateCells(Entity* ent)
 	}
 }
 
-vector<Cell*> Grid::GetCellsInRange(Entity * entity, float range)
+vector<Partition*> Grid::GetCellsInRange(Entity * entity, float range)
 {
-	vector<Cell*> cell;
-	return cell;
+	vector<Partition*> part;
+	return part;
 }
 
 #include <algorithm>
@@ -140,19 +149,19 @@ vector<Entity*> Grid::GetEntitiesInRange(Entity * entity, float range)
 	return entityList;
 }
 
-Cell * Grid::GetCell(int x, int y)
+Partition* Grid::GetPartition(int x, int y)
 {
-	if (x >= 0 && y >= 0 && x < NumberOfCellsX && y < NumberOfCellsY)
-		return cell[x][y];
+	if (x >= 0 && y >= 0 && x < NumberOfPartitionsX && y < NumberOfPartitionsY)
+		return part[x][y];
 
 	return NULL;
 }
 
 Tile* Grid::GetTile(int x, int y)
 {
-	if (x >= 0 && y >= 0 && x < NumberOfCellsX * NumberOfTilesX && y < NumberOfCellsY * NumberOfTilesY)
+	if (x >= 0 && y >= 0 && x < NumberOfTilesX && y < NumberOfTilesY)
 	{
-		return &GetCell(x / (NumberOfCellsX * NumberOfTilesX), y / (NumberOfCellsY * NumberOfTilesY))->GetTile(x % NumberOfTilesX, y % NumberOfTilesY);
+		return &cell->GetTile(x % NumberOfTilesX, y % NumberOfTilesY);
 	}
 
 	return NULL;
@@ -167,18 +176,16 @@ void Grid::Init()
 
 void Grid::Update()
 {
-	for (int i = 0; i < NumberOfCellsX; ++i)
-	for (int j = 0; j < NumberOfCellsY; ++j)
-				cell[i][j]->Reset();
+	for (int i = 0; i < NumberOfPartitionsX; ++i)
+	for (int j = 0; j < NumberOfPartitionsY; ++j)
+				part[i][j]->Reset();
 
 	PopulateCells(owner->root);
 }
 
 void Grid::Render()
 {
-	for (int i = 0; i < NumberOfCellsX; ++i)
-	for (int j = 0; j < NumberOfCellsY; ++j)
-		cell[i][j]->Draw(i, j);
+	cell->Draw(0, 0);
 }
 
 #include "Scene\Entity\Collision.h"
@@ -212,8 +219,8 @@ void Grid::ResolveCollisions(Entity* ent)
 Vector3 Grid::GetIndex(const Vector3& position)
 {
 	Vector3 pos = position;
-	pos.x /= GridWidth; pos.x *= NumberOfCellsX * NumberOfTilesX;
-	pos.y /= GridHeight; pos.y *= NumberOfCellsY * NumberOfTilesY;
+	pos.x /= GridWidth; pos.x *= NumberOfTilesX;
+	pos.y /= GridHeight; pos.y *= NumberOfTilesY;
 
 	return Vector3((int)pos.x,  (int)pos.y, (int)pos.z);
 }
@@ -222,19 +229,13 @@ vector<Vector2> Grid::GetTilesWithIndex(int index)
 {
 	vector<Vector2> indexes;
 
-	for (int i = 0; i < NumberOfCellsX; ++i)
+	for (int k = 0; k < NumberOfTilesX; ++k)
 	{
-		for (int j = 0; j < NumberOfCellsY; ++j)
+		for (int l = 0; l < NumberOfTilesY; ++l)
 		{
-			for (int k = 0; k < NumberOfTilesX; ++k)
+			if (cell->GetTile(k, l).index == index)
 			{
-				for (int l = 0; l < NumberOfTilesY; ++l)
-				{
-					if (cell[i][j]->GetTile(k, l).index == index)
-					{
-						indexes.push_back(Vector2(i * NumberOfTilesX + k, j * NumberOfTilesY + l));
-					}
-				}
+				indexes.push_back(Vector2(k, l));
 			}
 		}
 	}
@@ -250,16 +251,11 @@ Vector3 Grid::GetPosition(const Vector2& index)
 	pos.x += 0.5f;
 	pos.y += 0.5f;
 
-	pos.x /= NumberOfCellsX * NumberOfTilesX;
+	pos.x /= NumberOfTilesX;
 	pos.x *= GridWidth;
 
-	pos.y /= NumberOfCellsY * NumberOfTilesY;
+	pos.y /=  NumberOfTilesY;
 	pos.y *= GridHeight;
 
 	return pos;
-
-	/*pos.x /= GridWidth; pos.x *= NumberOfCellsX * NumberOfTilesX;
-	pos.y /= GridHeight; pos.y *= NumberOfCellsY * NumberOfTilesY;
-
-	return Vector3((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), (int)(pos.z + 0.5f));*/
 }
