@@ -118,23 +118,23 @@ void PlayState::Init()
 			->GetComponent<TextRenderer2D>();
 		editor->GetComponent<TowerGUI>()->AddButton("dispenser", child->GetComponent<Button>());
 
-		TowerDatabase::Init("bomb");
+		TowerDatabase::Init("bomber");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -72), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
-		//child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Bomb"), Vector4(1, 1, 1, 1)));
-		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bomb")[0].cost, 'G').c_str(), 200))
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(80, 80), Resource.GetTexture("Bomber"), Vector4(1, 1, 1, 1)));
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("bomber")[0].cost, 'G').c_str(), 200))
 			->GetComponent<TextRenderer2D>();
-		editor->GetComponent<TowerGUI>()->AddButton("bomb", child->GetComponent<Button>());
+		editor->GetComponent<TowerGUI>()->AddButton("bomber", child->GetComponent<Button>());
 
-		TowerDatabase::Init("gun");
+		TowerDatabase::Init("turret");
 		child = entity->AttachChild(EntityFactory::CreateButton(Vector2(100, -144), Vector2(48, 48), NULL, Vector3(0.9f, 0.9f, 0.9f)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(42, 42), NULL, Vector4(0, 0, 0)));
 		child->AttachChild(EntityFactory::CreateGraphic(Vector2(0, 10.5f), Vector2(42, 21), NULL, Vector4(1, 1, 1, 0.33f)));
-		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(96, 96), Resource.GetTexture("Gun"), Vector4(1, 1, 1, 1)));
-		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("gun")[0].cost, 'G').c_str(), 200))
+		child->AttachChild(EntityFactory::CreateGraphic(Vector2(), Vector2(96, 96), Resource.GetTexture("Turret"), Vector4(1, 1, 1, 1)));
+		child->GetComponent<Button>()->text = child->AttachChild(EntityFactory::CreateTextGUI(Vector2(0, -24), ToString(TowerDatabase::GetData("turret")[0].cost, 'G').c_str(), 200))
 			->GetComponent<TextRenderer2D>();
-		editor->GetComponent<TowerGUI>()->AddButton("gun", child->GetComponent<Button>());
+		editor->GetComponent<TowerGUI>()->AddButton("turret", child->GetComponent<Button>());
 	}
 
 	{

@@ -311,9 +311,16 @@ Entity* EntityFactory::GenerateTower(const Vector2& position, string type)
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
 	}
-	else if (type == "gun")
+	else if (type == "bomber")
 	{
-		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Gun"));
+		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Bomber"));
+		entity->transform->Size() *= 1.5f;
+
+		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth * 0.8f, TileHeight * 0.8f), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));
+	}
+	else if (type == "turret")
+	{
+		entity->GetComponent<Graphic2D>()->texture = (Resource.GetTexture("Turret"));
 		entity->transform->Size() *= 2.5f;
 
 		entity->AttachChild(CreateGraphic(Vector2(), Vector2(TileWidth, TileHeight), Resource.GetTexture("Occlusion"), Vector4(1, 1, 1, 1)));

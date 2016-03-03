@@ -92,8 +92,8 @@ void Assets::Init()
 	texture["Occlusion"] = new Texture("Assets//occlusion.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Bubble Blower"] = new Texture("Assets//archer.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	texture["Range"] = new Texture("Assets//range_indicator.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	//texture["Bomb"] = new Texture("Assets//bomb.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
-	texture["Gun"] = new Texture("Assets//gun.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Bomber"] = new Texture("Assets//bomber.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
+	texture["Turret"] = new Texture("Assets//turret.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 
 	texture["Puff"] = new Texture("Assets//puff.tga", GL_NEAREST, GL_NEAREST_MIPMAP_LINEAR);
 	sprite["Puff"] = new Spritesheet();
