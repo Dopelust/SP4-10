@@ -125,13 +125,12 @@ void Projectile::PlaySound()
 	}
 	else if (name == "Water")
 	{
-		Audio.Play2D("splash", 0.33f);
+		Audio.Play2D(Audio.GetSoundPack("splash"), 0.33f);
 	}
 }
 
 #include "FadeScript.h"
 #include "../SpriteRenderer.h"
-#include "../Graphic2D.h"
 
 void Projectile::GenerateParticle()
 {

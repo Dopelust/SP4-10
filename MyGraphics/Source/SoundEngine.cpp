@@ -104,7 +104,15 @@ void SoundEngine::Init()
 	audio["hover"] = "Assets//Sound//hover.ogg";
 
 	audio["bubble"] = "Assets//Sound//bubble.mp3";
-	audio["splash"] = "Assets//Sound//splash.mp3";
+
+	soundPack["splash"].AddSound("Assets//Sound//splash1.mp3");
+	soundPack["splash"].AddSound("Assets//Sound//splash2.mp3");
+	soundPack["splash"].AddSound("Assets//Sound//splash3.mp3");
+
+	soundPack["shoot"].AddSound("Assets//Sound//fire1.mp3");
+	soundPack["shoot"].AddSound("Assets//Sound//fire2.mp3");
+	soundPack["shoot"].AddSound("Assets//Sound//fire3.mp3");
+
 	audio["Night Changes"] = "Assets//Sound//NightChanges.mp3";
 
 	soundPack["bgm"].AddSound("Assets//Sound//bgm//war1.mp3");

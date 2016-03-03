@@ -347,6 +347,8 @@ void TowerController::TargetRotation(float dt)
 #include "ProjectileController.h"
 #include "MyMath.h"
 
+#include "../../../../SoundEngine.h"
+
 void TowerController::Fire()
 {
 	switch (GetData()->projectileStyle)
@@ -386,4 +388,6 @@ void TowerController::Fire()
 		}
 		break;
 	}
+
+	Audio.Play2D(Audio.GetSoundPack("shoot"));
 }

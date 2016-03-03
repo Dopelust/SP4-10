@@ -101,9 +101,6 @@ void GameEngine::Update(float dt)
 	{
 		Rise(transition, transitionRate * Time.GetUnscaledTime(), 1);
 
-		if (transition == 1)
-			advance = true;
-		
 		if (advance)
 		{
 			ChangeState();
@@ -111,6 +108,8 @@ void GameEngine::Update(float dt)
 
 			advance = false;
 		}
+		else if (transition == 1)
+			advance = true;
 	}
 	else if (!states.empty())
 	{

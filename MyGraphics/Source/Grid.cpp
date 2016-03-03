@@ -95,13 +95,29 @@ void Grid::PopulateCells(Entity* ent)
 		box->cell = cell;
 
 		box->part.clear();
+		
+		Vector3 min = box->GetMinCoord();
+		Vector3 max = box->GetMaxCoord();
 
-		for (int i = 0; i < NumberOfPartitionsX; ++i)
-			for (int j = 0; j < NumberOfPartitionsY; ++j)
+		min.x /= GridWidth;
+		min.x *= NumberOfPartitionsX;
+
+		max.x /= GridWidth;
+		max.x *= NumberOfPartitionsX;
+
+		min.y /= GridHeight;
+		min.y *= NumberOfPartitionsY;
+
+		max.y /= GridHeight;
+		max.y *= NumberOfPartitionsY;
+
+
+		for (int i = min.x; i <= max.x; ++i)
+			for (int j = min.y; j <= max.y; ++j)
 			{
 				Partition* c = GetPartition(i, j);
 
-				if (CollisionQuery::Test(box, c->min, c->max))
+				if (c)
 				{
 					c->Add(ent);
 					box->part.push_back(c);
