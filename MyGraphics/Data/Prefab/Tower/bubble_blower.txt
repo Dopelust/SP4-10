@@ -1,6 +1,6 @@
 //Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,		AI,	Projectile, 	Type,	Val,	Dura,	Style,	Description
-5,	128,	1,		1,	0,	300,	Bubble Blower,		0,	Bubble,		0,	0,	0,	0,	Shoots
-10,	150,	1,		1,	1,	300,	Bubble Blower,		0,	Bubble, 		0,	0,	0,	0,	Even
-25,	170,	0.8,		1,	1,	300,	Bubble Blower,		0,	Bubble, 		0,	0,	0,	0,	Longer
-50,	170,	0.8,		3,	1,	300,	Bubble Blower,		0,	Bubble, 		0,	0,	0,	1,	Longer
-100,	170,	0.6,		3,	2,	300,	Bubble Blower,		0,	Bubble, 		0,	0,	0,	1,	Longer
+10,	120,	1,		1,	0,	300,	Bubble Blower,		0,	Bubble,		0,	0,	0,	0,	Shoots
+50,	150,	1,		1,	1,	300,	Bubble Blower,		0,	Bubble, 	0,	0,	0,	0,	Even
+100,	170,	0.8,		1,	1,	300,	Bubble Blower,		0,	Bubble, 	0,	0,	0,	0,	Longer
+300,	180,	0.8,		3,	1,	300,	Bubble Blower,		0,	Bubble, 	0,	0,	0,	1,	Longer
+500,	190,	0.6,		3,	2,	300,	Bubble Blower,		0,	Bubble, 	0,	0,	0,	1,	Longer

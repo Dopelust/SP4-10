@@ -1,6 +1,6 @@
 //Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	AI,	Projectile, 	Type,	Val,	Dura,	Style,	Description
 25, 	64,	1,		4, 	0,	200,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
-50, 	64,	0.75,		6, 	0,	300,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
-100, 	64,	0.75,		8, 	0,	300,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
-200, 	64,	0.5,		16, 	0,	400,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
+70, 	64,	0.75,		6, 	0,	300,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
+150, 	64,	0.75,		8, 	0,	300,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
+400, 	64,	0.5,		16, 	0,	400,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction
 1000, 	64,	0.5,		32, 	0,	400,	Fountain,	1,	Water,		0,	0,	0,	2,	Splashes water in every direction

@@ -1,6 +1,0 @@
-//Cost, Range, 	Cooldown,	Shots,	Pierce,	Speed,	Texture,	AI,	Projectile, 	Type,	Val,	Dura,	Style,	Description
-100, 	100,	1.5,		4, 	2,	300,	ArrowTower0, 	0,	normalArrow, 	0,	0,	0,	3,	Splashes water
-80, 	150,	1.5,		4, 	2,	300,	ArrowTower0, 	0,	normalArrow, 	0,	0,	0,	3,	Splashes water
-200, 	150,	1.5,		8, 	2,	300,	ArrowTower0, 	0,	normalArrow, 	0,	0,	0,	3,	Splashes water
-500, 	150,	1,		8, 	2,	300,	ArrowTower0, 	0,	normalArrow, 	0,	0,	0,	3,	Splashes water
-950, 	200,	1,		16, 	2,	300,	ArrowTower0, 	0,	normalArrow, 	0,	0,	0,	3,	Splashes water
